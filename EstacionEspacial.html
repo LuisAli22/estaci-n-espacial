@@ -7,6 +7,7 @@
 
 <script type="text/javascript" src="js/glMatrix-0.9.5.min.js"></script>
 <script type="text/javascript" src="js/webgl-utils.js"></script>
+<script type="text/javascript" src="js/definitions.js"></script>
 
 <script id="shader-fs" type="x-shader/x-fragment">
     precision mediump float;
@@ -95,16 +96,17 @@
 <script type="text/javascript">
 
     var gl;
-
+    function createDrawingContextInCanvas(canvas){
+      gl = canvas.getContext("experimental-webgl");
+      if (!gl) throw new Error(CANVASERRORMESSAGE);
+      gl.viewportWidth = canvas.width;
+      gl.viewportHeight = canvas.height;
+    }
     function initGL(canvas) {
-        try {
-            gl = canvas.getContext("experimental-webgl");
-            gl.viewportWidth = canvas.width;
-            gl.viewportHeight = canvas.height;
+      try {
+            createDrawingContextInCanvas(canvas);
         } catch (e) {
-        }
-        if (!gl) {
-            alert("Could not initialise WebGL, sorry :-(");
+            alert(e.name+" "+e.message);
         }
     }
 
