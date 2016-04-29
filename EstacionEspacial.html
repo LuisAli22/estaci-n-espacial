@@ -2,10 +2,10 @@
 <html>
 
 <head>
-  <title>Trabajo Pr&#225;ctico</title>
+<title>Trabajo Pr&#225;ctico</title>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
-<script type="text/javascript" src="js/glMatrix-0.9.5.min.js"></script>
+<script type="text/javascript" src="js/gl-matrix.js"></script>
 <script type="text/javascript" src="js/webgl-utils.js"></script>
 <script type="text/javascript" src="js/definitions.js"></script>
 
@@ -33,59 +33,39 @@
     uniform mat4 uPMatrix;
     uniform mat3 uNMatrix;
 
-
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Variables uniformes involucradas en la iluminación de la escena
-    // 
-    // uAmbientColor - representa una intensidad de luz constante que
-    // ilumina a todos los objetos sin provenir de una dirección o fuente de luz determinada
-    // Es un nivel de intensidad de luz omni-presente
-    //
-    // uLightPosition - Representa la posición en coordenadas de la escena o mundo donde
-    // donde se ubica una luz puntual. Este tipo de luz irradia en todas direcciones.
-    // Las superficies (triángulos) cuya normal apunte a esta posición será las que recibirán
-    // la máxima intensidad y por lo tanto serán las más iluminadas.
-    // A medida que la normal se aparte de esta dirección la intensidad disminuye y en caso que se
-    // ubique de manera ortogonal la intensidad será nula
-    //
-    // uDirectionalColor - Representa el color de la luz puntual
-    //
-    // uUseLighting - Variable booleana que activa / descativa el cálculo de la iluminación
     uniform vec3 uAmbientColor;
+
     uniform vec3 uLightPosition;
     uniform vec3 uDirectionalColor;
+
     uniform bool uUseLighting;
-    //
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    
+
     varying vec2 vTextureCoord;
     varying vec3 vLightWeighting;
 
     void main(void) {
-	
-		// Transformamos al vértice al espacio de la cámara
+
+		// Transformamos al vï¿½rtice al espacio de la cï¿½mara
 		vec4 pos_camera_view = uViewMatrix * uModelMatrix * vec4(aVertexPosition, 1.0);
-		
-		// Transformamos al vértice al espacio de la proyección
+
+		// Transformamos al vï¿½rtice al espacio de la proyecciï¿½n
         gl_Position = uPMatrix * pos_camera_view;
-		
+
 		// Coordenada de textura sin modifiaciones
         vTextureCoord = aTextureCoord;
-							
+
 		////////////////////////////////////////////
-		// Calculos de la iluminación
-		vec3 light_dir_normalized =  normalize(uLightPosition - vec3( pos_camera_view ) );
-        if (!uUseLighting) 
+		// Calculos de la iluminaciï¿½n
+		vec3 light_dir =  uLightPosition - vec3( pos_camera_view );
+		normalize(light_dir);
+        if (!uUseLighting)
 		{
             vLightWeighting = vec3(1.0, 1.0, 1.0);
         }
-		else 
+		else
 		{
             vec3 transformedNormal = normalize(uNMatrix * aVertexNormal);
-
-            float directionalLightWeighting = max(dot(transformedNormal, light_dir_normalized), 0.0);
-
+            float directionalLightWeighting = max(dot(transformedNormal, light_dir), 0.0);
             vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
         }
 		////////////////////////////////////////////
@@ -104,11 +84,11 @@
     }
     function initGL(canvas) {
       try {
-            createDrawingContextInCanvas(canvas);
-        } catch (e) {
-            alert(e.name+" "+e.message);
-        }
-    }
+        createDrawingContextInCanvas(canvas);
+      } catch (e) {
+        alert(e.name+" "+e.message);
+      }
+  }
 
 
     function getShader(gl, id) {
@@ -188,8 +168,8 @@
 
     function handleLoadedTexture() {
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-        gl.bindTexture(gl.TEXTURE_2D, sun.texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, sun.texture.image);
+        gl.bindTexture(gl.TEXTURE_2D, mars.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, mars.texture.image);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
         gl.generateMipmap(gl.TEXTURE_2D);
@@ -197,8 +177,8 @@
         gl.bindTexture(gl.TEXTURE_2D, null);
 
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-        gl.bindTexture(gl.TEXTURE_2D, earth.texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, earth.texture.image);
+        gl.bindTexture(gl.TEXTURE_2D, deimos.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, deimos.texture.image);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
         gl.generateMipmap(gl.TEXTURE_2D);
@@ -206,8 +186,8 @@
         gl.bindTexture(gl.TEXTURE_2D, null);
 
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-        gl.bindTexture(gl.TEXTURE_2D, moon.texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, moon.texture.image);
+        gl.bindTexture(gl.TEXTURE_2D, phobos.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, phobos.texture.image);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
         gl.generateMipmap(gl.TEXTURE_2D);
@@ -224,15 +204,15 @@
     var lastMouseX = null;
     var lastMouseY = null;
 
-    var earth = null;
-    var sun = null;
-    var moon = null;
+    var deimos = null;
+    var mars = null;
+    var phobos = null;
 
-    var earthRotationMatrix = mat4.create();
-    mat4.identity(earthRotationMatrix);
+    var deimosRotationMatrix = mat4.create();
+    mat4.identity(deimosRotationMatrix);
 
-    var earthRotationAngleSun = 0.0;
-    var moonRotationAngleEarth = 0.0;
+    var deimosRotationAnglemars = 0.0;
+    var phobosRotationAngledeimos = 0.0;
 
     function mvPushMatrix() {
         var copy = mat4.create();
@@ -249,7 +229,7 @@
 
     function setViewProjectionMatrix() {
         gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
-        gl.uniformMatrix4fv(shaderProgram.ViewMatrixUniform, false, CameraMatrix);        
+        gl.uniformMatrix4fv(shaderProgram.ViewMatrixUniform, false, CameraMatrix);
     }
 
 
@@ -262,7 +242,7 @@
 
         this.latitudeBands = latitude_bands;
         this.longitudeBands = longitude_bands;
-        
+
         this.position_buffer = null;
         this.normal_buffer = null;
         this.texture_coord_buffer = null;
@@ -272,11 +252,11 @@
         this.webgl_normal_buffer = null;
         this.webgl_texture_coord_buffer = null;
         this.webgl_index_buffer = null;
-        
+
         this.texture = null;
 
         this.initTexture = function(texture_file){
-            
+
             var aux_texture = gl.createTexture();
             this.texture = aux_texture;
             this.texture.image = new Image();
@@ -289,9 +269,9 @@
 
 
         // Se generan los vertices para la esfera, calculando los datos para una esfera de radio 1
-        // Y también la información de las normales y coordenadas de textura para cada vertice de la esfera
-        // La esfera se renderizara utilizando triangulos, para ello se arma un buffer de índices 
-        // a todos los triángulos de la esfera
+        // Y tambiï¿½n la informaciï¿½n de las normales y coordenadas de textura para cada vertice de la esfera
+        // La esfera se renderizara utilizando triangulos, para ello se arma un buffer de ï¿½ndices
+        // a todos los triï¿½ngulos de la esfera
         this.initBuffers = function(){
 
             this.position_buffer = [];
@@ -323,7 +303,7 @@
 
                     this.texture_coord_buffer.push(u);
                     this.texture_coord_buffer.push(v);
-                    
+
                     this.position_buffer.push(x);
                     this.position_buffer.push(y);
                     this.position_buffer.push(z);
@@ -332,7 +312,7 @@
 
             // Buffer de indices de los triangulos
             this.index_buffer = [];
-          
+
             for (latNumber=0; latNumber < this.latitudeBands; latNumber++) {
                 for (longNumber=0; longNumber < this.longitudeBands; longNumber++) {
                     var first = (latNumber * (this.longitudeBands + 1)) + longNumber;
@@ -347,7 +327,7 @@
                 }
             }
 
-            // Creación e Inicialización de los buffers a nivel de OpenGL
+            // Creaciï¿½n e Inicializaciï¿½n de los buffers a nivel de OpenGL
             this.webgl_normal_buffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_normal_buffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.normal_buffer), gl.STATIC_DRAW);
@@ -375,7 +355,7 @@
 
         this.draw = function(modelMatrix){
 
-            // Se configuran los buffers que alimentarán el pipeline
+            // Se configuran los buffers que alimentarï¿½n el pipeline
             gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_position_buffer);
             gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, this.webgl_position_buffer.itemSize, gl.FLOAT, false, 0, 0);
 
@@ -391,71 +371,82 @@
 
             gl.uniformMatrix4fv(shaderProgram.ModelMatrixUniform, false, modelMatrix);
             var normalMatrix = mat3.create();
-            mat4.toInverseMat3(modelMatrix, normalMatrix);
-            mat3.transpose(normalMatrix);
+            mat3.fromMat4(normalMatrix, modelMatrix);
+            mat3.invert(normalMatrix, normalMatrix);
+            mat3.transpose(normalMatrix, normalMatrix);
             gl.uniformMatrix3fv(shaderProgram.nMatrixUniform, false, normalMatrix);
 
             gl.bindTexture(gl.TEXTURE_2D, this.texture);
-            
+
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.webgl_index_buffer);
             //gl.drawElements(gl.LINE_LOOP, this.webgl_index_buffer.numItems, gl.UNSIGNED_SHORT, 0);
             gl.drawElements(gl.TRIANGLES, this.webgl_index_buffer.numItems, gl.UNSIGNED_SHORT, 0);
             /////////////////////////////////
         }
-        
+
     }
 
 
     function drawScene() {
-	
-		// Se configura el vierport dentro de área ¨canvas¨. en este caso se utiliza toda 
-		// el área disponible
+
+		// Se configura el vierport dentro de ï¿½rea ï¿½canvasï¿½. en este caso se utiliza toda
+		// el ï¿½rea disponible
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-		
+
 		// Se habilita el color de borrado para la pantalla (Color Buffer) y otros buffers
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-		// Se configura la matriz de proyección
-        mat4.perspective(30, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+		// Se configura la matriz de proyecciï¿½n
+        mat4.perspective(pMatrix, 3.14/12.0, gl.viewportWidth / gl.viewportHeight, 0.1, 1000.0);
 
         /////////////////////////////////////////////////////
-        // Configuración de la luz
-        // Se inicializan las variables asociadas con la Iluminación
+        // Configuraciï¿½n de la luz
+        // Se inicializan las variables asociadas con la Iluminaciï¿½n
         var lighting;
         lighting = true;
-        gl.uniform1i(shaderProgram.useLightingUniform, lighting);       
-        var lightPosition = [0.0, 0.0, 0.0];
-        mat4.multiplyVec3(CameraMatrix, lightPosition);
-        gl.uniform3fv(shaderProgram.lightingDirectionUniform, lightPosition);       	
-		
+        gl.uniform1i(shaderProgram.useLightingUniform, lighting);
+        var lightPosition = vec3.fromValues(-100.0, 0.0, -60.0);
+        //vec3.transformMat4(lightPosition, lightPosition, CameraMatrix);
+        gl.uniform3fv(shaderProgram.lightingDirectionUniform, lightPosition);
+
         /////////////////////////////////////////////////////
-		// Definimos la ubicación de la camara
-		// Pensamos por el momento sunamente la posición de la cámara, la cual siempre mira al sun.
+		// Definimos la ubicaciï¿½n de la camara
+		// Pensamos por el momento marsamente la posiciï¿½n de la cï¿½mara, la cual siempre mira al mars.
 		var matriz_camara = mat4.create();
-		mat4.identity(CameraMatrix);
-		mat4.translate(CameraMatrix, [0, 0, -60]);
-		
+        mat4.identity(matriz_camara);
+		//mat4.identity(CameraMatrix);
+		//mat4.translate(CameraMatrix, CameraMatrix, [0, 0, -60]);
+        var eye_point = vec3.create();
+        vec3.set(eye_point, 30, 65, -90);
+        var at_point = vec3.create();
+        vec3.set(at_point, 0, 0, 0);
+        var up_point = vec3.create();
+        vec3.set(up_point, 0, 1, 0);
+
+        mat4.lookAt(CameraMatrix, eye_point, at_point, up_point);
+        mat4.multiply(CameraMatrix, CameraMatrix, matriz_camara);
+
         setViewProjectionMatrix();
 
         ///////////////////////////////////////////////////////
         //
         // Dibujamos la Tierra
 
-        // Configuramos la iluminación para la Tierra
+        // Configuramos la iluminaciï¿½n para la Tierra
         gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
-        gl.uniform3f(shaderProgram.directionalColorUniform, 0.8, 0.8, 0.8);
-        
-        // Matriz de modelado de la Tierra
-        var model_matrix_earth = mat4.create();
-        mat4.identity(model_matrix_earth)        ;
-        var translate_earth = mat4.create();
-        mat4.identity(translate_earth);
-        mat4.translate(translate_earth, [20, 0, 0 ]);
+        gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
 
-        // Matriz de rotación del eje sobre el plano de la eclíptica a 23 grados
+        // Matriz de modelado de la Tierra
+        var model_matrix_deimos = mat4.create();
+        mat4.identity(model_matrix_deimos)        ;
+        var translate_deimos = mat4.create();
+        mat4.identity(translate_deimos);
+        mat4.translate(translate_deimos, translate_deimos, [10, 0, 0 ]);
+
+        // Matriz de rotaciï¿½n del eje sobre el plano de la eclï¿½ptica a 23 grados
         var axis_inclination_matrix = mat4.create();
         mat4.identity(axis_inclination_matrix);
-        mat4.rotate(axis_inclination_matrix, -0.4014, [0, 0, 1]);
+        mat4.rotate(axis_inclination_matrix, axis_inclination_matrix, -0.4014, [0, 0, 1]);
 
         var translation_movement = mat4.create();
         var inverse_translation_movement = mat4.create();
@@ -463,33 +454,33 @@
         mat4.identity(translation_movement);
         mat4.identity(inverse_translation_movement);
 
-        mat4.rotate(translation_movement, earthRotationAngleSun, [0, 1, 0]);
-        mat4.rotate(inverse_translation_movement, -earthRotationAngleSun, [0, 1, 0]);
+        mat4.rotate(translation_movement, translation_movement, deimosRotationAnglemars, [0, 1, 0]);
+        mat4.rotate(inverse_translation_movement, inverse_translation_movement, -deimosRotationAnglemars, [0, 1, 0]);
 
         // Las transformaciones aplicadas a la Tierra son:
-        // (el órden es el inverso al de las llamadas a la función multiply)
+        // (el ï¿½rden es el inverso al de las llamadas a la funciï¿½n multiply)
         //
-        // 1. Se aplica el movimiento de rotación de la Tierra
-        // 2. Se inclina el eje de rotación 23 grados
-        // 3. Se aplica la inversa del ángulo de rotación del movimiento alrededor del Sol
-        //    con el fin de luego compensar dicha rotación y mantener el Eje de la Tierra siempre 
-        //    en la misma orientación
-        // 4. A partir de acá se aplican las dos transformaciones que son comunes con la Tierra
-        //          4.1 La traslación para poner al sistema Tierra-Luna en orbita alrededor del Sol
-        //          4.2 La rotación para poner al sistema Tierra-Luna a girar en torno al Sol.
-        mat4.multiply(model_matrix_earth, translation_movement);
-        mat4.multiply(model_matrix_earth, translate_earth);
-        mat4.multiply(model_matrix_earth, inverse_translation_movement);
-        mat4.multiply(model_matrix_earth, axis_inclination_matrix);
-        mat4.multiply(model_matrix_earth, earthRotationMatrix);
+        // 1. Se aplica el movimiento de rotaciï¿½n de la Tierra
+        // 2. Se inclina el eje de rotaciï¿½n 23 grados
+        // 3. Se aplica la inversa del ï¿½ngulo de rotaciï¿½n del movimiento alrededor del Sol
+        //    con el fin de luego compensar dicha rotaciï¿½n y mantener el Eje de la Tierra siempre
+        //    en la misma orientaciï¿½n
+        // 4. A partir de acï¿½ se aplican las dos transformaciones que son comunes con la Tierra
+        //          4.1 La traslaciï¿½n para poner al sistema Tierra-Luna en orbita alrededor del Sol
+        //          4.2 La rotaciï¿½n para poner al sistema Tierra-Luna a girar en torno al Sol.
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, translation_movement);
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, translate_deimos);
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, inverse_translation_movement);
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, axis_inclination_matrix);
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, deimosRotationMatrix);
 
-        var scale_earth_matrix = mat4.create();
-        mat4.identity(scale_earth_matrix);
-        mat4.scale(scale_earth_matrix, [2.0, 2.0, 2.0]);
+        var scale_deimos_matrix = mat4.create();
+        mat4.identity(scale_deimos_matrix);
+        mat4.scale(scale_deimos_matrix, scale_deimos_matrix, [1.8, 1.8, 1.8]);
 
-        mat4.multiply(model_matrix_earth, scale_earth_matrix);
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, scale_deimos_matrix);
 
-        earth.draw(model_matrix_earth);
+        deimos.draw(model_matrix_deimos);
         //
         ////////////////////////////////////////////////////////
 
@@ -497,63 +488,69 @@
         //
         // Dibujamos la Luna
 
-        // Configuramos la iluminación para la Luna
-        gl.uniform3f(shaderProgram.ambientColorUniform, 0.1, 0.1, 0.1 );
-        gl.uniform3f(shaderProgram.directionalColorUniform, 0.8, 0.8, 0.8);
-        
+        // Configuramos la iluminaciï¿½n para la Luna
+        gl.uniform3f(shaderProgram.ambientColorUniform, 0.3, 0.3, 0.3 );
+        gl.uniform3f(shaderProgram.directionalColorUniform, 0.1, 0.1, 0.1);
+
         // Matriz de modelado de la Luna, respecto de la Tierra
-        var model_matrix_moon = mat4.create();
-        mat4.identity(model_matrix_moon);
+        var model_matrix_phobos = mat4.create();
+        mat4.identity(model_matrix_phobos);
 
-        // Traslación de la Luna respecto de la Tierra
-        // Es la traslación que la pone en órbita
-        var moon_transalte_from_earth_matrix = mat4.create();
-        mat4.identity(moon_transalte_from_earth_matrix);
-        mat4.translate(moon_transalte_from_earth_matrix, [5, 0,0]);
+        // Traslaciï¿½n de la Luna respecto de la Tierra
+        // Es la traslaciï¿½n que la pone en ï¿½rbita
+        var phobos_transalte_from_deimos_matrix = mat4.create();
+        mat4.identity(phobos_transalte_from_deimos_matrix);
+        mat4.translate(phobos_transalte_from_deimos_matrix, phobos_transalte_from_deimos_matrix, [25, 0,0]);
 
-        // Matríz de rotación de la Luna respecto de la tierra.
-        // Como la luna tiene un periodo de rotación sobre su eje que coincide
-        // con el de rotación alrededor de la Tierra, usamos la misma matríz
+        // Matrï¿½z de rotaciï¿½n de la Luna respecto de la tierra.
+        // Como la luna tiene un periodo de rotaciï¿½n sobre su eje que coincide
+        // con el de rotaciï¿½n alrededor de la Tierra, usamos la misma matrï¿½z
         // para ambos movimientos.
-        var moon_rotation_matrix = mat4.create();
-        mat4.identity(moon_rotation_matrix);
-        mat4.rotate(moon_rotation_matrix, moonRotationAngleEarth, [0, 1 , 0]);
+        var phobos_rotation_matrix = mat4.create();
+        mat4.identity(phobos_rotation_matrix);
+        mat4.rotate(phobos_rotation_matrix, phobos_rotation_matrix, phobosRotationAngledeimos, [0, 1 , 0]);
 
         // Secuencia de transformaciones
         // A la luna se le aplican las siguientes transformaciones:
-        // (el órden es el inverso al de las llamadas a la función multiply)
-        // 
-        // 1. Se aplica una rotación sobre el propio eje de la Luna
-        // 2. Se aplica una traslación que representa la distancia entre la Tierra y la Luna
-        // 3. Se aplica una rotación para hacer rotar la Luna alrededor de la Tierra
-        // 4. A partir de acá se aplican las dos transformaciones que son comunes con la Tierra
-        //          4.1 La traslación para poner al sistema Tierra-Luna en orbita alrededor del Sol
-        //          4.2 La rotación para poner al sistema Tierra-Luna a girar en torno al Sol.
-        mat4.multiply(model_matrix_moon, translation_movement);
-        mat4.multiply(model_matrix_moon, translate_earth);
-        mat4.multiply(model_matrix_moon, moon_rotation_matrix);
-        mat4.multiply(model_matrix_moon, moon_transalte_from_earth_matrix);
-        mat4.multiply(model_matrix_moon, moon_rotation_matrix);
+        // (el ï¿½rden es el inverso al de las llamadas a la funciï¿½n multiply)
+        //
+        // 1. Se aplica una rotaciï¿½n sobre el propio eje de la Luna
+        // 2. Se aplica una traslaciï¿½n que representa la distancia entre la Tierra y la Luna
+        // 3. Se aplica una rotaciï¿½n para hacer rotar la Luna alrededor de la Tierra
+        // 4. A partir de acï¿½ se aplican las dos transformaciones que son comunes con la Tierra
+        //          4.1 La traslaciï¿½n para poner al sistema Tierra-Luna en orbita alrededor del Sol
+        //          4.2 La rotaciï¿½n para poner al sistema Tierra-Luna a girar en torno al Sol.
+        //mat4.multiply(model_matrix_phobos, model_matrix_phobos, translation_movement);
+        //mat4.multiply(model_matrix_phobos, model_matrix_phobos, translate_deimos);
+        mat4.multiply(model_matrix_phobos, model_matrix_phobos, phobos_rotation_matrix);
+        mat4.multiply(model_matrix_phobos, model_matrix_phobos, phobos_transalte_from_deimos_matrix);
+        mat4.multiply(model_matrix_phobos, model_matrix_phobos, phobos_rotation_matrix);
 
-        moon.draw(model_matrix_moon);
+        var scale_phobos_matrix = mat4.create();
+        mat4.identity(scale_phobos_matrix);
+        mat4.scale(scale_phobos_matrix, scale_phobos_matrix, [1.0, 0.84, 0.7]);
+
+        mat4.multiply(model_matrix_phobos, model_matrix_phobos, scale_phobos_matrix);
+
+
+        phobos.draw(model_matrix_phobos);
 
         ////////////////////////////////////////////////////////
-        //     
-        // Dibujamos al sun
-        
-        // Configuramos la iluminación para el Sol
-        // Para que parezca que está irradiando luz, subimos al máximo la iluminación ambiente entonces se verá iluminado desde todos lados
-        // 
-        gl.uniform3f(shaderProgram.ambientColorUniform, 1.0, 1.0, 1.0 );
+        //
+        // Dibujamos al mars
 
-        // Matriz de modelado del sun
-        var model_matrix_sun = mat4.create();
-        mat4.identity(model_matrix_sun);
-        mat4.scale(model_matrix_sun, [3.0, 3.0, 3.0]);
-        sun.draw(model_matrix_sun);
+        // Configuramos la iluminaciï¿½n para el Sol
+        gl.uniform3f(shaderProgram.ambientColorUniform, 0.3, 0.3, 0.3 );
+        gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
+
+        // Matriz de modelado del mars
+        var model_matrix_mars = mat4.create();
+        mat4.identity(model_matrix_mars);
+        mat4.scale(model_matrix_mars, model_matrix_mars, [7.0, 7.0, 7.0]);
+        mars.draw(model_matrix_mars);
         //
         ////////////////////////////////////////////////////////
-       
+
     }
 
 
@@ -561,33 +558,33 @@
         requestAnimFrame(tick);
 		var newRotationMatrix = mat4.create();
         mat4.identity(newRotationMatrix);
-        mat4.rotate(newRotationMatrix, 0.025, [0, 1, 0]);
-		mat4.multiply(newRotationMatrix, earthRotationMatrix, earthRotationMatrix);
+        mat4.rotate(newRotationMatrix, newRotationMatrix, 0.025, [0, 1, 0]);
+		mat4.multiply(newRotationMatrix, deimosRotationMatrix, deimosRotationMatrix);
 
-        earthRotationAngleSun += 0.005;
-        moonRotationAngleEarth += 0.06;
+        deimosRotationAnglemars += 0.0045;
+        phobosRotationAngledeimos += 0.0005;
         drawScene();
     }
 
 
 
     function webGLStart() {
-        var canvas = document.getElementById("clase03-vertex shader");
+        var canvas = document.getElementById("TpSistemasGraficosCanvas");
         initGL(canvas);
         initShaders();
 
-        earth = new TexturedSphere(64, 64);
-        earth.initBuffers();
-        earth.initTexture("img/earth.jpg");
+        deimos = new TexturedSphere(64, 64);
+        deimos.initBuffers();
+        deimos.initTexture(IMGMOONPATH);
 
-        sun = new TexturedSphere(64,64);
-        sun.initBuffers();
-        sun.initTexture("img/sun.jpg");
+        mars = new TexturedSphere(64,64);
+        mars.initBuffers();
+        mars.initTexture(IMGMARSPATH);
 
-        moon = new TexturedSphere(64, 64);
-        moon.initBuffers();
-        moon.initTexture("img/moon.gif");
-        
+        phobos = new TexturedSphere(64, 64);
+        phobos.initBuffers();
+        phobos.initTexture(IMGMOONPATH);
+
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
 
@@ -602,11 +599,13 @@
 
 <body onload="webGLStart();">
     <center>
-      <canvas id="clase03-vertex shader" style="border: none;" width="1280" height="720"> </canvas>
-        <p>Tp  Sistemas gráficos - Ali, Luis / Vidal, Mariano - 1er. cuatrimestre de 2016</p>
+            <canvas id="TpSistemasGraficosCanvas" style="border: none;" width="1280" height="720">
+            Your browser does not support the HTML5 canvas element.
+            </scanvas>
+            <p>Tp  Sistemas grï¿½ficos - Ali, Luis / Vidal, Mariano - 1er. cuatrimestre de 2016</p>
         </center>
     <br/>
-    Las texturas son cortesía de <a href="http://maps.jpl.nasa.gov/">Jet Propulsion Laboratory</a>.
+    Las texturas son cortesï¿½a de <a href="http://maps.jpl.nasa.gov/">Jet Propulsion Laboratory</a>.
     <br/>
     <br/>
 
