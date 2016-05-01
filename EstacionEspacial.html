@@ -7,8 +7,11 @@
 
 <script type="text/javascript" src="js/gl-matrix.js"></script>
 <script type="text/javascript" src="js/webgl-utils.js"></script>
-<script type="text/javascript" src="js/definitions.js"></script>
+<script type="text/javascript" src="js/Definitions/definitions.js"></script>
+<script type="text/javascript" src="js/shader/shaderScript.js"></script>
+<script type="text/javascript" src="js/shader/setUpExecutableProgram.js"></script>
 
+<!--<script id=FRAGMENTSHADERID type=XSHADERXFRAGMENT>-->
 <script id="shader-fs" type="x-shader/x-fragment">
     precision mediump float;
 
@@ -23,6 +26,7 @@
     }
 </script>
 
+<!--<script id=VERTEXSHADERID type=XSHADERXVERTEX>-->
 <script id="shader-vs" type="x-shader/x-vertex">
     attribute vec3 aVertexPosition;
     attribute vec3 aVertexNormal;
@@ -76,93 +80,40 @@
 <script type="text/javascript">
 
     var gl;
+    var shaderProgram;
     function createDrawingContextInCanvas(canvas){
+      console.log("Obtengo el contexto del canvas y se lo asigno a la variable gl");
       gl = canvas.getContext("experimental-webgl");
-      if (!gl) throw new Error(CANVASERRORMESSAGE);
+      console.log("si no pudo obtener el contexto (gl es null) va a lanzar un error a continuación");
+      if (!gl) throw new Error(CANVASCTXERRORMESSAGE);
+      console.log("Asigna ancho de viewport= ancho del canvas");
       gl.viewportWidth = canvas.width;
+      console.log("Asigna altura del viewport= altura del canvas");
       gl.viewportHeight = canvas.height;
     }
     function initGL(canvas) {
       try {
+        console.log("initGL: va a crear el viewport dentro del canvas");
         createDrawingContextInCanvas(canvas);
       } catch (e) {
         alert(e.name+" "+e.message);
       }
   }
 
-
-    function getShader(gl, id) {
-        var shaderScript = document.getElementById(id);
-        if (!shaderScript) {
-            return null;
+        function getCompiledShader(id){
+          console.log("Estacion espacial: getCompiledShader()");
+          var shScript=new shaderScript(gl,id);
+          console.log("Obtengo un shader compilado");
+          return shScript.getCompiledShader();
         }
-
-        var str = "";
-        var k = shaderScript.firstChild;
-        while (k) {
-            if (k.nodeType == 3) {
-                str += k.textContent;
-            }
-            k = k.nextSibling;
-        }
-
-        var shader;
-        if (shaderScript.type == "x-shader/x-fragment") {
-            shader = gl.createShader(gl.FRAGMENT_SHADER);
-        } else if (shaderScript.type == "x-shader/x-vertex") {
-            shader = gl.createShader(gl.VERTEX_SHADER);
-        } else {
-            return null;
-        }
-
-        gl.shaderSource(shader, str);
-        gl.compileShader(shader);
-
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-            alert(gl.getShaderInfoLog(shader));
-            return null;
-        }
-
-        return shader;
-    }
-
-
-    var shaderProgram;
-
-
        function initShaders() {
-        var fragmentShader = getShader(gl, "shader-fs");
-        var vertexShader = getShader(gl, "shader-vs");
+         console.log("initShaders: Comienza la inicializacion de shaders");
+         var fragmentShader = getCompiledShader(FRAGMENTSHADERID);
+         var vertexShader = getCompiledShader(VERTEXSHADERID);
 
-        shaderProgram = gl.createProgram();
-        gl.attachShader(shaderProgram, vertexShader);
-        gl.attachShader(shaderProgram, fragmentShader);
-        gl.linkProgram(shaderProgram);
-
-        if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-            alert("Could not initialise shaders");
-        }
-
-        gl.useProgram(shaderProgram);
-
-        shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
-        gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-
-        shaderProgram.textureCoordAttribute = gl.getAttribLocation(shaderProgram, "aTextureCoord");
-        gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
-
-        shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, "aVertexNormal");
-        gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
-
-        shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
-        shaderProgram.ViewMatrixUniform = gl.getUniformLocation(shaderProgram, "uViewMatrix");
-        shaderProgram.ModelMatrixUniform = gl.getUniformLocation(shaderProgram, "uModelMatrix");
-        shaderProgram.nMatrixUniform = gl.getUniformLocation(shaderProgram, "uNMatrix");
-        shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, "uSampler");
-        shaderProgram.useLightingUniform = gl.getUniformLocation(shaderProgram, "uUseLighting");
-        shaderProgram.ambientColorUniform = gl.getUniformLocation(shaderProgram, "uAmbientColor");
-        shaderProgram.lightingDirectionUniform = gl.getUniformLocation(shaderProgram, "uLightPosition");
-        shaderProgram.directionalColorUniform = gl.getUniformLocation(shaderProgram, "uDirectionalColor");
+         var setUpExecProgram= new setUpExecutableProgram(gl,vertexShader,fragmentShader);
+         setUpExecProgram.start();
+         shaderProgram=setUpExecProgram.getShaderPogram();
     }
 
 
@@ -567,28 +518,38 @@
     }
 
 
-
+    function getCanvas(){
+      console.log("Obtengo el canvas con getElementById");
+      var newCanvas=document.getElementById("TpSistemasGraficosCanvas");
+      console.log("Si el canvas es null, lanza un error");
+      if (!newCanvas) throw Error(CANVASERRORMESSAGE);
+      console.log("Obtuvo correctamente el canvas");
+      return newCanvas;
+    }
+    function createSphere(imgFilePath){
+      var sphere = new TexturedSphere(64, 64);
+      sphere.initBuffers();
+      sphere.initTexture(imgFilePath);
+      return sphere;
+    }
     function webGLStart() {
-        var canvas = document.getElementById("TpSistemasGraficosCanvas");
+      try{
+        console.log("Comienza webGLStart");
+        var canvas = getCanvas();
         initGL(canvas);
         initShaders();
 
-        deimos = new TexturedSphere(64, 64);
-        deimos.initBuffers();
-        deimos.initTexture(IMGMOONPATH);
-
-        mars = new TexturedSphere(64,64);
-        mars.initBuffers();
-        mars.initTexture(IMGMARSPATH);
-
-        phobos = new TexturedSphere(64, 64);
-        phobos.initBuffers();
-        phobos.initTexture(IMGMOONPATH);
+        deimos=createSphere(IMGMOONPATH);
+        mars=createSphere(IMGMARSPATH);
+        phobos= createSphere(IMGMOONPATH);
 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
 
         tick();
+      }catch (e) {
+        alert(e.name+" "+e.message);
+      }
     }
 
 </script>
@@ -602,10 +563,12 @@
             <canvas id="TpSistemasGraficosCanvas" style="border: none;" width="1280" height="720">
             Your browser does not support the HTML5 canvas element.
             </scanvas>
-            <p>Tp  Sistemas gr�ficos - Ali, Luis / Vidal, Mariano - 1er. cuatrimestre de 2016</p>
-        </center>
+    </center>
+    <center>
+        <p>Tp  Sistemas gr&aacuteficos - Ali, Luis / Vidal, Mariano - 1er. cuatrimestre de 2016</p>
+      </center>
     <br/>
-    Las texturas son cortes�a de <a href="http://maps.jpl.nasa.gov/">Jet Propulsion Laboratory</a>.
+    Las texturas son cortes&iacutea de <a href="http://maps.jpl.nasa.gov/">Jet Propulsion Laboratory</a>.
     <br/>
     <br/>
 
