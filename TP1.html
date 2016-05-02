@@ -1,0 +1,545 @@
+
+<html>
+
+<head>
+<title>Trabajo Pr&#225;ctico</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<script type="text/javascript" src="js/gl-matrix.js"></script>
+<script type="text/javascript" src="js/webgl-utils.js"></script>
+<script type="text/javascript" src="js/Definitions/definitions.js"></script>
+<script type="text/javascript" src="js/shader/shaderScript.js"></script>
+<script type="text/javascript" src="js/shader/setUpExecutableProgram.js"></script>
+<script type="text/javascript" src="js/sceneObjects/texturedSphere.js"></script>
+<script type="text/javascript" src="js/sceneObjects/EstacionEspacial.js"></script>
+<script type="text/javascript" src="js/sceneObjects/InteriorEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/sceneObjects/ExteriorEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/sceneObjects/TapaEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/Transformar.js"></script>
+
+<script id="shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec4 vTextureCoord;
+    varying vec3 vLightWeighting;
+
+    uniform sampler2D uSampler;
+
+    // material:
+    // 1 : dorado
+    // 2 : violeta
+    // 3 : celeste
+    vec4 tablaMateriales(float material,vec3 vLightWeighting){
+
+        vec4 color;
+
+        color.a = 1.0;
+        
+        if ( material == 1.0){
+            color.x = 1.0;
+            color.y = 215.0/255.0;
+            color.z = 0.0;
+        }else if (material == 2.0){
+            color.x = 223.0/255.0;
+            color.y = 0.0;
+            color.z = 1.0;
+        }else if (material == 3.0){
+            color.x = 0.0;
+            color.y = 204.0/255.0;
+            color.z = 1.0;
+        }else if (material == 4.0){
+            color.x = 1.0;
+            color.y = 1.0;
+            color.z = 0.0;
+        }
+
+        color.x = color.x * vLightWeighting.x;
+        color.y = color.y * vLightWeighting.y;
+        color.z = color.z * vLightWeighting.z;
+
+        return color;
+
+    }
+
+    void main(void) {
+
+        vec4 aux = tablaMateriales(vTextureCoord.z,vLightWeighting);
+        gl_FragColor = aux;
+
+        //vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+        //gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+
+    }
+
+</script>
+
+<script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;
+    attribute vec3 aVertexNormal;
+    attribute vec4 aTextureCoord;
+
+    uniform mat4 uViewMatrix;
+    uniform mat4 uModelMatrix;
+    uniform mat4 uPMatrix;
+    uniform mat3 uNMatrix;
+
+    uniform vec3 uAmbientColor;
+
+    uniform vec3 uLightPosition;
+    uniform vec3 uDirectionalColor;
+
+    uniform bool uUseLighting;
+
+    varying vec4 vTextureCoord;
+    varying vec3 vLightWeighting;
+
+    void main(void) {
+
+		// Transformamos al v�rtice al espacio de la c�mara
+		vec4 pos_camera_view = uViewMatrix * uModelMatrix * vec4(aVertexPosition, 1.0);
+
+		// Transformamos al v�rtice al espacio de la proyecci�n
+        gl_Position = uPMatrix * pos_camera_view;
+
+		// Coordenada de textura sin modifiaciones
+        vTextureCoord = aTextureCoord;
+
+		////////////////////////////////////////////
+		// Calculos de la iluminaci�n
+		vec3 light_dir =  uLightPosition - vec3( pos_camera_view );
+		normalize(light_dir);
+        if (!uUseLighting)
+		{
+            vLightWeighting = vec3(1.0, 1.0, 1.0);
+        }
+		else
+		{
+            vec3 transformedNormal = normalize(uNMatrix * aVertexNormal);
+            float directionalLightWeighting = max(dot(transformedNormal, light_dir), 0.0);
+            vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+        }
+		////////////////////////////////////////////
+    }
+</script>
+
+
+<script type="text/javascript">
+
+    var gl;
+    var shaderProgram;
+    function createDrawingContextInCanvas(canvas){
+      console.log("Obtengo el contexto del canvas y se lo asigno a la variable gl");
+      gl = canvas.getContext("experimental-webgl");
+      console.log("si no pudo obtener el contexto (gl es null) va a lanzar un error a continuación");
+      if (!gl) throw new Error(CANVASCTXERRORMESSAGE);
+      console.log("Asigna ancho de viewport= ancho del canvas");
+      gl.viewportWidth = canvas.width;
+      console.log("Asigna altura del viewport= altura del canvas");
+      gl.viewportHeight = canvas.height;
+    }
+    function initGL(canvas) {
+        try {
+            console.log("initGL: va a crear el viewport dentro del canvas");
+            createDrawingContextInCanvas(canvas);
+        } catch (e) {
+            alert(e.name+" "+e.message);
+        }
+    }
+
+    function getCompiledShader(id){
+        console.log("Estacion espacial: getCompiledShader()");
+        var shScript=new shaderScript(gl,id);
+        console.log("Obtengo un shader compilado");
+        return shScript.getCompiledShader();
+    }
+    function initShaders() {
+        console.log("initShaders: Comienza la inicializacion de shaders");
+        var fragmentShader = getCompiledShader(FRAGMENTSHADERID);
+        var vertexShader = getCompiledShader(VERTEXSHADERID);
+
+        var setUpExecProgram= new setUpExecutableProgram(gl,vertexShader,fragmentShader);
+        setUpExecProgram.start();
+        shaderProgram=setUpExecProgram.getShaderPogram();
+    }
+
+
+    function handleLoadedTexture() {
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.bindTexture(gl.TEXTURE_2D, mars.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, mars.texture.image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+        gl.generateMipmap(gl.TEXTURE_2D);
+
+        gl.bindTexture(gl.TEXTURE_2D, null);
+
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.bindTexture(gl.TEXTURE_2D, deimos.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, deimos.texture.image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+        gl.generateMipmap(gl.TEXTURE_2D);
+
+        gl.bindTexture(gl.TEXTURE_2D, null);
+
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.bindTexture(gl.TEXTURE_2D, phobos.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, phobos.texture.image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+        gl.generateMipmap(gl.TEXTURE_2D);
+
+        gl.bindTexture(gl.TEXTURE_2D, null);
+
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.bindTexture(gl.TEXTURE_2D, estacionEspacial.interiorEstacionEspacial.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, estacionEspacial.interiorEstacionEspacial.texture.image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+        gl.generateMipmap(gl.TEXTURE_2D);
+
+        gl.bindTexture(gl.TEXTURE_2D, null);
+
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.bindTexture(gl.TEXTURE_2D, estacionEspacial.exteriorEstacionEspacial.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, estacionEspacial.exteriorEstacionEspacial.texture.image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+        gl.generateMipmap(gl.TEXTURE_2D);
+
+        gl.bindTexture(gl.TEXTURE_2D, null);
+
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.bindTexture(gl.TEXTURE_2D, estacionEspacial.tapaFinal.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, estacionEspacial.tapaFinal.texture.image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+        gl.generateMipmap(gl.TEXTURE_2D);
+
+        gl.bindTexture(gl.TEXTURE_2D, null);
+
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.bindTexture(gl.TEXTURE_2D, estacionEspacial.tapaInicial.texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, estacionEspacial.tapaInicial.texture.image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+        gl.generateMipmap(gl.TEXTURE_2D);
+
+        gl.bindTexture(gl.TEXTURE_2D, null);
+    }
+
+    var CameraMatrix = mat4.create();
+    var mvMatrix = mat4.create();
+    var mvMatrixStack = [];
+    var pMatrix = mat4.create();
+
+    var mouseDown = false;
+    var lastMouseX = null;
+    var lastMouseY = null;
+
+    var deimos = null;
+    var mars = null;
+    var phobos = null;
+    var estacionEspacial = null;
+
+    var deimosRotationMatrix = mat4.create();
+    mat4.identity(deimosRotationMatrix);
+
+    var deimosRotationAnglemars = 0.0;
+    var phobosRotationAngledeimos = 0.0;
+    var estacionEspacialRotationAngle = 1.57;
+
+    function mvPushMatrix() {
+        var copy = mat4.create();
+        mat4.set(mvMatrix, copy);
+        mvMatrixStack.push(copy);
+    }
+
+    function mvPopMatrix() {
+        if (mvMatrixStack.length == 0) {
+            throw "Invalid popMatrix!";
+        }
+        mvMatrix = mvMatrixStack.pop();
+    }
+
+    function setViewProjectionMatrix() {
+        gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
+        gl.uniformMatrix4fv(shaderProgram.ViewMatrixUniform, false, CameraMatrix);
+    }
+
+
+    function degToRad(degrees) {
+        return degrees * Math.PI / 180;
+    }
+
+
+
+
+
+    function drawScene() {
+
+		// Se configura el vierport dentro de �rea �canvas�. en este caso se utiliza toda
+		// el �rea disponible
+        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+
+		// Se habilita el color de borrado para la pantalla (Color Buffer) y otros buffers
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+		// Se configura la matriz de proyecci�n
+        mat4.perspective(pMatrix, 3.14/12.0, gl.viewportWidth / gl.viewportHeight, 0.1, 1000.0);
+
+        /////////////////////////////////////////////////////
+        // Configuraci�n de la luz
+        // Se inicializan las variables asociadas con la Iluminaci�n
+        var lighting;
+        lighting = true;
+        gl.uniform1i(shaderProgram.useLightingUniform, lighting);
+        var lightPosition = vec3.fromValues(-100.0, 0.0, -60.0);
+        //vec3.transformMat4(lightPosition, lightPosition, CameraMatrix);
+        gl.uniform3fv(shaderProgram.lightingDirectionUniform, lightPosition);
+
+        /////////////////////////////////////////////////////
+		// Definimos la ubicaci�n de la camara
+		// Pensamos por el momento marsamente la posici�n de la c�mara, la cual siempre mira al mars.
+		var matriz_camara = mat4.create();
+        mat4.identity(matriz_camara);
+		//mat4.identity(CameraMatrix);
+		//mat4.translate(CameraMatrix, CameraMatrix, [0, 0, -60]);
+        var eye_point = vec3.create();
+        vec3.set(eye_point, 30, 65, -90);
+        var at_point = vec3.create();
+        vec3.set(at_point, 0, 0, 0);
+        var up_point = vec3.create();
+        vec3.set(up_point, 0, 1, 0);
+
+        mat4.lookAt(CameraMatrix, eye_point, at_point, up_point);
+        mat4.multiply(CameraMatrix, CameraMatrix, matriz_camara);
+
+        setViewProjectionMatrix();
+
+        ///////////////////////////////////////////////////////
+        //
+        // Dibujamos la Tierra
+
+        // Configuramos la iluminaci�n para la Tierra
+        gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
+        gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
+
+        // Matriz de modelado de la Tierra
+        var model_matrix_deimos = mat4.create();
+        mat4.identity(model_matrix_deimos)        ;
+        var translate_deimos = mat4.create();
+        mat4.identity(translate_deimos);
+        mat4.translate(translate_deimos, translate_deimos, [10, 0, 0 ]);
+
+        // Matriz de rotaci�n del eje sobre el plano de la ecl�ptica a 23 grados
+        var axis_inclination_matrix = mat4.create();
+        mat4.identity(axis_inclination_matrix);
+        mat4.rotate(axis_inclination_matrix, axis_inclination_matrix, -0.4014, [0, 0, 1]);
+
+        var translation_movement = mat4.create();
+        var inverse_translation_movement = mat4.create();
+
+        mat4.identity(translation_movement);
+        mat4.identity(inverse_translation_movement);
+
+        mat4.rotate(translation_movement, translation_movement, deimosRotationAnglemars, [0, 1, 0]);
+        mat4.rotate(inverse_translation_movement, inverse_translation_movement, -deimosRotationAnglemars, [0, 1, 0]);
+
+        // Las transformaciones aplicadas a la Tierra son:
+        // (el �rden es el inverso al de las llamadas a la funci�n multiply)
+        //
+        // 1. Se aplica el movimiento de rotaci�n de la Tierra
+        // 2. Se inclina el eje de rotaci�n 23 grados
+        // 3. Se aplica la inversa del �ngulo de rotaci�n del movimiento alrededor del Sol
+        //    con el fin de luego compensar dicha rotaci�n y mantener el Eje de la Tierra siempre
+        //    en la misma orientaci�n
+        // 4. A partir de ac� se aplican las dos transformaciones que son comunes con la Tierra
+        //          4.1 La traslaci�n para poner al sistema Tierra-Luna en orbita alrededor del Sol
+        //          4.2 La rotaci�n para poner al sistema Tierra-Luna a girar en torno al Sol.
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, translation_movement);
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, translate_deimos);
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, inverse_translation_movement);
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, axis_inclination_matrix);
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, deimosRotationMatrix);
+
+        var scale_deimos_matrix = mat4.create();
+        mat4.identity(scale_deimos_matrix);
+        mat4.scale(scale_deimos_matrix, scale_deimos_matrix, [1.8, 1.8, 1.8]);
+
+        mat4.multiply(model_matrix_deimos, model_matrix_deimos, scale_deimos_matrix);
+
+        deimos.draw(model_matrix_deimos);
+        //
+        ////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////
+        //
+        // Dibujamos la Luna
+
+        // Configuramos la iluminaci�n para la Luna
+        gl.uniform3f(shaderProgram.ambientColorUniform, 0.3, 0.3, 0.3 );
+        gl.uniform3f(shaderProgram.directionalColorUniform, 0.1, 0.1, 0.1);
+
+        // Matriz de modelado de la Luna, respecto de la Tierra
+        var model_matrix_phobos = mat4.create();
+        mat4.identity(model_matrix_phobos);
+
+        // Traslaci�n de la Luna respecto de la Tierra
+        // Es la traslaci�n que la pone en �rbita
+        var phobos_transalte_from_deimos_matrix = mat4.create();
+        mat4.identity(phobos_transalte_from_deimos_matrix);
+        mat4.translate(phobos_transalte_from_deimos_matrix, phobos_transalte_from_deimos_matrix, [25, 0,0]);
+
+        // Matr�z de rotaci�n de la Luna respecto de la tierra.
+        // Como la luna tiene un periodo de rotaci�n sobre su eje que coincide
+        // con el de rotaci�n alrededor de la Tierra, usamos la misma matr�z
+        // para ambos movimientos.
+        var phobos_rotation_matrix = mat4.create();
+        mat4.identity(phobos_rotation_matrix);
+        mat4.rotate(phobos_rotation_matrix, phobos_rotation_matrix, phobosRotationAngledeimos, [0, 1 , 0]);
+
+        // Secuencia de transformaciones
+        // A la luna se le aplican las siguientes transformaciones:
+        // (el �rden es el inverso al de las llamadas a la funci�n multiply)
+        //
+        // 1. Se aplica una rotaci�n sobre el propio eje de la Luna
+        // 2. Se aplica una traslaci�n que representa la distancia entre la Tierra y la Luna
+        // 3. Se aplica una rotaci�n para hacer rotar la Luna alrededor de la Tierra
+        // 4. A partir de ac� se aplican las dos transformaciones que son comunes con la Tierra
+        //          4.1 La traslaci�n para poner al sistema Tierra-Luna en orbita alrededor del Sol
+        //          4.2 La rotaci�n para poner al sistema Tierra-Luna a girar en torno al Sol.
+        //mat4.multiply(model_matrix_phobos, model_matrix_phobos, translation_movement);
+        //mat4.multiply(model_matrix_phobos, model_matrix_phobos, translate_deimos);
+        mat4.multiply(model_matrix_phobos, model_matrix_phobos, phobos_rotation_matrix);
+        mat4.multiply(model_matrix_phobos, model_matrix_phobos, phobos_transalte_from_deimos_matrix);
+        mat4.multiply(model_matrix_phobos, model_matrix_phobos, phobos_rotation_matrix);
+
+        var scale_phobos_matrix = mat4.create();
+        mat4.identity(scale_phobos_matrix);
+        mat4.scale(scale_phobos_matrix, scale_phobos_matrix, [1.0, 0.84, 0.7]);
+
+        mat4.multiply(model_matrix_phobos, model_matrix_phobos, scale_phobos_matrix);
+
+
+        phobos.draw(model_matrix_phobos);
+
+        ////////////////////////////////////////////////////////
+        //
+        // Dibujamos al mars
+
+        // Configuramos la iluminaci�n para el Sol
+        gl.uniform3f(shaderProgram.ambientColorUniform, 0.3, 0.3, 0.3 );
+        gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
+
+        // Matriz de modelado del mars
+        var model_matrix_mars = mat4.create();
+        mat4.identity(model_matrix_mars);
+        mat4.scale(model_matrix_mars, model_matrix_mars, [7.0, 7.0, 7.0]);
+        mars.draw(model_matrix_mars);
+        //
+        ////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////
+        //
+        // Dibujamos la Estacion Espacial
+
+        // Configuramos la iluminaci�n para la Tierra
+        gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
+        gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
+        
+        var model_matrix_EstacionEspacial = mat4.create();
+        var rotate_EstacionEspacial = mat4.create();
+        mat4.rotateY(rotate_EstacionEspacial,rotate_EstacionEspacial,estacionEspacialRotationAngle);
+        var traslate_EstacionEspacial = mat4.create();
+        mat4.translate(traslate_EstacionEspacial, traslate_EstacionEspacial, [10, 0, 0 ]);
+        //var scale_EstacionEspacial = mat4.create();
+        //mat4.scale(scale_EstacionEspacial,scale_EstacionEspacial,[2.0,2.0,2.0]);
+
+        mat4.multiply(model_matrix_EstacionEspacial,model_matrix_EstacionEspacial,rotate_EstacionEspacial);
+        mat4.multiply(model_matrix_EstacionEspacial,model_matrix_EstacionEspacial,traslate_EstacionEspacial);
+        //mat4.multiply(model_matrix_EstacionEspacial,model_matrix_EstacionEspacial,scale_EstacionEspacial);
+
+        estacionEspacial.draw(model_matrix_EstacionEspacial);
+
+    }
+
+
+    function tick() {
+        requestAnimFrame(tick);
+		var newRotationMatrix = mat4.create();
+        mat4.identity(newRotationMatrix);
+        mat4.rotate(newRotationMatrix, newRotationMatrix, 0.025, [0, 1, 0]);
+		mat4.multiply(newRotationMatrix, deimosRotationMatrix, deimosRotationMatrix);
+
+        deimosRotationAnglemars += 0.0045;
+        phobosRotationAngledeimos += 0.0005;
+        estacionEspacialRotationAngle += 0.0045;
+        drawScene();
+    }
+
+
+    function getCanvas(){
+      console.log("Obtengo el canvas con getElementById");
+      var newCanvas=document.getElementById("TpSistemasGraficosCanvas");
+      console.log("Si el canvas es null, lanza un error");
+      if (!newCanvas) throw Error(CANVASERRORMESSAGE);
+      console.log("Obtuvo correctamente el canvas");
+      return newCanvas;
+    }
+    function createSphere(imgFilePath,material){
+      var sphere = new TexturedSphere(64, 64,material);
+      sphere.initBuffers();
+      sphere.initTexture(imgFilePath);
+      return sphere;
+    }
+    function webGLStart() {
+      try{
+        console.log("Comienza webGLStart");
+        var canvas = getCanvas();
+        initGL(canvas);
+        initShaders();
+
+        estacionEspacial = new EstacionEspacial();
+        estacionEspacial.initBuffers();
+        estacionEspacial.interiorEstacionEspacial.initTexture(IMGMARSPATH);
+        estacionEspacial.exteriorEstacionEspacial.initTexture(IMGMARSPATH);
+        estacionEspacial.tapaInicial.initTexture(IMGMARSPATH);
+        estacionEspacial.tapaFinal.initTexture(IMGMARSPATH);
+
+        deimos=createSphere(IMGMOONPATH,AMARILLO);
+        mars=createSphere(IMGMARSPATH,CELESTE);
+        phobos= createSphere(IMGMOONPATH,AMARILLO);
+
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.enable(gl.DEPTH_TEST);
+
+        tick();
+      }catch (e) {
+        alert(e.name+" "+e.message);
+      }
+    }
+
+</script>
+
+
+</head>
+
+
+<body onload="webGLStart();">
+    <center>
+            <canvas id="TpSistemasGraficosCanvas" style="border: none;" width="1280" height="720">
+            Your browser does not support the HTML5 canvas element.
+            </scanvas>
+    </center>
+    <center>
+        <p>Tp  Sistemas gr&aacuteficos - Ali, Luis / Vidal, Mariano - 1er. cuatrimestre de 2016</p>
+      </center>
+    <br/>
+    Las texturas son cortes&iacutea de <a href="http://maps.jpl.nasa.gov/">Jet Propulsion Laboratory</a>.
+    <br/>
+    <br/>
+
+ </body>
+
+</html>

@@ -1,7 +1,9 @@
-function TexturedSphere(latitude_bands, longitude_bands){
+function TexturedSphere(latitude_bands, longitude_bands,_material){
 
     this.latitudeBands = latitude_bands;
     this.longitudeBands = longitude_bands;
+
+    this.material = _material;
 
     this.position_buffer = null;
     this.normal_buffer = null;
@@ -57,7 +59,7 @@ function TexturedSphere(latitude_bands, longitude_bands){
       this.texture_coord_buffer.push(u);
       this.texture_coord_buffer.push(v);
       //Coordenada del material
-      this.texture_coord_buffer.push(1);
+      this.texture_coord_buffer.push(this.material);
       this.texture_coord_buffer.push(0);
     }
     this.loadCoordinatesInPositionNormalAndTextureBuffers=function(){
