@@ -21,3 +21,6 @@ const UAMBIENTCOLOR="uAmbientColor";
 const ULIGHTPOSITION="uLightPosition";
 const UDIRECTIONALCOLOR="uDirectionalColor";
 const PROGRAMPARAM="Could not initialise shaders. Error en el parametro del programa";
+const XCOORD="x";
+const YCOORD="y";
+const ZCOORD="z";
