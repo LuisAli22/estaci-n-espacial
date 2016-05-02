@@ -56,6 +56,9 @@ function TexturedSphere(latitude_bands, longitude_bands){
       var v = 1.0 - (this.latNumber / this.latitudeBands);
       this.texture_coord_buffer.push(u);
       this.texture_coord_buffer.push(v);
+      //Coordenada del material
+      this.texture_coord_buffer.push(1);
+      this.texture_coord_buffer.push(0);
     }
     this.loadCoordinatesInPositionNormalAndTextureBuffers=function(){
       for (this.latNumber=0; this.latNumber <= this.latitudeBands; this.latNumber++) {
@@ -104,8 +107,8 @@ function TexturedSphere(latitude_bands, longitude_bands){
         this.webgl_texture_coord_buffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_texture_coord_buffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.texture_coord_buffer), gl.STATIC_DRAW);
-        this.webgl_texture_coord_buffer.itemSize = 2;
-        this.webgl_texture_coord_buffer.numItems = this.texture_coord_buffer.length / 2;
+        this.webgl_texture_coord_buffer.itemSize = 4;
+        this.webgl_texture_coord_buffer.numItems = this.texture_coord_buffer.length / 4;
 
         this.webgl_position_buffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_position_buffer);

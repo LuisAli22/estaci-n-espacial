@@ -15,21 +15,54 @@
 <script id="shader-fs" type="x-shader/x-fragment">
     precision mediump float;
 
-    varying vec2 vTextureCoord;
+    varying vec4 vTextureCoord;
     varying vec3 vLightWeighting;
 
     uniform sampler2D uSampler;
 
-    void main(void) {
-        vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-        gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+    // material:
+    // 1 : dorado
+    // 2 : violeta
+    vec4 tablaMateriales(int material,vec3 vLightWeighting){
+
+        vec4 color;
+
+        color.a = 1.0;
+        
+        if ( material == 1){
+            color.x = 1.0;
+            color.y = 215.0/255.0;
+            color.z = 0.0;
+        }else if (material == 2){
+            color.x = 223.0/255.0;
+            color.y = 0.0;
+            color.z = 1.0;
+        }
+
+        color.x = color.x * vLightWeighting.x;
+        color.y = color.y * vLightWeighting.y;
+        color.z = color.z * vLightWeighting.z;
+
+        return color;
+
     }
+
+    void main(void) {
+
+        vec4 aux = tablaMateriales(2,vLightWeighting);
+        gl_FragColor = aux;
+
+        //vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+        //gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+
+    }
+
 </script>
 
 <script id="shader-vs" type="x-shader/x-vertex">
     attribute vec3 aVertexPosition;
     attribute vec3 aVertexNormal;
-    attribute vec2 aTextureCoord;
+    attribute vec4 aTextureCoord;
 
     uniform mat4 uViewMatrix;
     uniform mat4 uModelMatrix;
@@ -43,7 +76,7 @@
 
     uniform bool uUseLighting;
 
-    varying vec2 vTextureCoord;
+    varying vec4 vTextureCoord;
     varying vec3 vLightWeighting;
 
     void main(void) {
