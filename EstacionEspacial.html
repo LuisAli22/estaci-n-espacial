@@ -28,7 +28,7 @@
         vec4 color;
 
         color.a = 1.0;
-        
+
         if ( material == 1){
             color.x = 1.0;
             color.y = 215.0/255.0;
@@ -143,8 +143,8 @@
          var fragmentShader = getCompiledShader(FRAGMENTSHADERID);
          var vertexShader = getCompiledShader(VERTEXSHADERID);
 
-         var setUpExecProgram= new setUpExecutableProgram(gl,vertexShader,fragmentShader);
-         setUpExecProgram.start();
+         var setUpExecProgram= new setUpExecutableProgram(gl);
+         setUpExecProgram.start(gl,vertexShader,fragmentShader);
          shaderProgram=setUpExecProgram.getShaderPogram();
     }
 
