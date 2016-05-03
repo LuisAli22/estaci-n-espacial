@@ -123,7 +123,7 @@ function ExteriorEstacionEspacial(){
             bufferInicialCoordenadas.push(z);
 
             var nx = 0.0;
-            var ny = 1.0;
+            var ny = -1.0;
             var nz = 0.0;
 
             bufferInicialNormales.push(nx);
@@ -251,9 +251,9 @@ function ExteriorEstacionEspacial(){
 
             var vectorNormal = vec3.fromValues(nx,ny,nz);
             vec3.normalize(vectorNormal,vectorNormal);
-            bufferInicialNormales.push(vectorNormal[0]);
-            bufferInicialNormales.push(vectorNormal[1]);
-            bufferInicialNormales.push(vectorNormal[2]);
+            bufferInicialNormales.push(-1.0*vectorNormal[0]);
+            bufferInicialNormales.push(-1.0*vectorNormal[1]);
+            bufferInicialNormales.push(-1.0*vectorNormal[2]);
 
         };
 

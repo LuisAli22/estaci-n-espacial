@@ -1,5 +1,5 @@
 function InteriorEstacionEspacial(){
-    
+
     //Llamo a la clase padre
     DrawObject.call(this);
     //Seteo las dimensiones de la grilla
