@@ -22,7 +22,7 @@ function EstacionEspacial(){
     }
 
     this.draw = function(modelMatrix){
-
+        
         drawElement(this.interiorEstacionEspacial,modelMatrix);
         drawElement(this.exteriorEstacionEspacial,modelMatrix);
         drawElement(this.tapaInicial,modelMatrix);

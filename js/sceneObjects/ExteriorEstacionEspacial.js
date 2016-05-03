@@ -165,8 +165,8 @@ function ExteriorEstacionEspacial(){
 
         };
         
-        //Puntos de control para la curba de bezier del recorrido del perfil
-        var puntosDeControlXTransformar = vec4.fromValues(-48.0,72.0,-18.0,3.0);
+        //Puntos de control para la curva de bezier del recorrido del perfil
+        var puntosDeControlXTransformar = vec4.fromValues(-48.0,72.0,-18.0,-3.0);
         var puntosDeControlZTransformar = vec4.fromValues(0.0,-30.0,30.0,0.0);
 
         //Calculo las coordenadas para el perfil rotado
