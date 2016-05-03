@@ -9,65 +9,14 @@ function TapaEstacionEspacial(_bufferExterior,_bufferInterior){
 	const COLUMNAS = 120;
 	const FILAS = 2;
 
-	this.position_buffer = null;
-    this.normal_buffer = null;
-    this.texture_coord_buffer = null;
-    this.index_buffer = null;
 
-    this.webgl_position_buffer = null;
-    this.webgl_normal_buffer = null;
-    this.webgl_texture_coord_buffer = null;
-    this.webgl_index_buffer = null;
     
-    this.texture = null;
+    //this.texture = null;
 
-    this.getIndices = function(){
-
-        return (FILAS-1) * (2*COLUMNAS);
-
-    }
-
-    this.initTexture = function(texture_file){
-        
-        var aux_texture = gl.createTexture();
-        this.texture = aux_texture;
-        this.texture.image = new Image();
-
-        this.texture.image.onload = function () {
-               handleLoadedTexture()
-        }
-        this.texture.image.src = texture_file;
-
-    }
-
-    this.createIndexBuffer = function(){
-
-        this.index_buffer = [];
-        this.index_buffer.push(0);
-        var indices = (2*COLUMNAS)*(FILAS-1);
-        var sumador = 1;
-
-        for (var i = 1;i<indices;i++) {
-
-            if ( i % (2*COLUMNAS) == 0 ){
-
-                this.index_buffer.push(this.index_buffer[i-1]);
-                sumador = sumador * -1;
-
-
-            }else if ( i % 2 != 0 ){
-
-                this.index_buffer.push(this.index_buffer[i-1] + COLUMNAS);
-            
-            }else{
-
-                this.index_buffer.push(this.index_buffer[i-2] + sumador );
-        
-            }
-
-        }
-
-    }
+    //Llamo a la clase padre
+    DrawObject.call(this);
+    //Seteo las dimensiones de la grilla
+    DrawObject.call(this.setDimensions(FILAS,COLUMNAS));
 
     this.initBuffers = function(){
 
@@ -75,11 +24,11 @@ function TapaEstacionEspacial(_bufferExterior,_bufferInterior){
         this.normal_buffer = [];
 
         //Cargo las coordenadas de textura
-        for (var i = 0.0; i < FILAS; i++){
-            for (var j = 0.0; j < COLUMNAS; j++){
+        for (var i = 0.0; i < this.rows; i++){
+            for (var j = 0.0; j < this.cols; j++){
 
-                var u = 1.0 - (j / (COLUMNAS-1.0));
-                var v = 1.0 - (i / (FILAS-1.0));
+                var u = 1.0 - (j / (this.cols-1.0));
+                var v = 1.0 - (i / (this.rows-1.0));
 
                 this.texture_coord_buffer.push(u);
                 this.texture_coord_buffer.push(v);
@@ -131,3 +80,5 @@ function TapaEstacionEspacial(_bufferExterior,_bufferInterior){
     }
 
 }
+
+inheritPrototype(TapaEstacionEspacial, DrawObject);
