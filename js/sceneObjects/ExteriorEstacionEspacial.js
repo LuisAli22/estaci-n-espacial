@@ -1,76 +1,14 @@
 function ExteriorEstacionEspacial(){
 
-
     const PUNTOSCURVASUPERIOR = 30;
     const PUNTOSCURVAINFERIOR = 30;
     const PUNTOSCURVALATERAL = 10;
     const PUNTOSUNIONDECURVAS = 10;
 
-    this.cols = 120;
-    this.rows = 120;
-
-    this.bufferInicial = null;
-    this.bufferFinal = null;
-    
-    this.position_buffer = null;
-    this.normal_buffer = null;
-    this.texture_coord_buffer = null;
-    this.index_buffer = null;
-
-    this.webgl_position_buffer = null;
-    this.webgl_normal_buffer = null;
-    this.webgl_texture_coord_buffer = null;
-    this.webgl_index_buffer = null;
-    
-    this.texture = null;
-
-    this.getIndices = function(){
-
-        return (this.rows-1) * (2*this.cols);
-
-    }
-
-    this.initTexture = function(texture_file){
-        
-        var aux_texture = gl.createTexture();
-        this.texture = aux_texture;
-        this.texture.image = new Image();
-
-        this.texture.image.onload = function () {
-               handleLoadedTexture()
-        }
-        this.texture.image.src = texture_file;
-
-    }
-
-    this.createIndexBuffer = function(){
-
-        this.index_buffer = [];
-        this.index_buffer.push(0);
-        var indices = (2*this.cols)*(this.rows-1);
-        var sumador = 1;
-
-        for (var i = 1;i<indices;i++) {
-
-            if ( i % (2*this.cols) == 0 ){
-
-                this.index_buffer.push(this.index_buffer[i-1]);
-                sumador = sumador * -1;
-
-
-            }else if ( i % 2 != 0 ){
-
-                this.index_buffer.push(this.index_buffer[i-1] + this.cols);
-            
-            }else{
-
-                this.index_buffer.push(this.index_buffer[i-2] + sumador );
-        
-            }
-
-        }
-
-    }
+    //Llamo a la clase padre
+    DrawObject.call(this);
+    //Seteo las dimensiones de la grilla
+    DrawObject.call(this.setDimensions(FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL));
 
     this.cargarPerfil = function(bufferInicialCoordenadas,bufferInicialNormales){
         
@@ -322,3 +260,5 @@ function ExteriorEstacionEspacial(){
     }
 
 }
+
+inheritPrototype(ExteriorEstacionEspacial, DrawObject);

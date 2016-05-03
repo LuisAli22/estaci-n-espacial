@@ -4,19 +4,12 @@ function TapaEstacionEspacial(_bufferExterior,_bufferInterior){
 	this.bufferExterior = _bufferExterior;
 	this.bufferInterior = _bufferInterior;
 
-	//Tiene que tener la misma cantidad que los puntos
-	//de los buffers
-	const COLUMNAS = 120;
 	const FILAS = 2;
-
-
-    
-    //this.texture = null;
 
     //Llamo a la clase padre
     DrawObject.call(this);
     //Seteo las dimensiones de la grilla
-    DrawObject.call(this.setDimensions(FILAS,COLUMNAS));
+    DrawObject.call(this.setDimensions(FILAS,COLUMNASESTACIONESPACIAL));
 
     this.initBuffers = function(){
 
