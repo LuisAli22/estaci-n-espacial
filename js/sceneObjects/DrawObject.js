@@ -1,12 +1,13 @@
-function inheritPrototype(childObject, parentObject) {
-	
+/*function inheritPrototype(childObject, parentObject) {
+
     var copyOfParent = Object.create(parentObject.prototype);
     copyOfParent.constructor = childObject;
 
     childObject.prototype = copyOfParent;   // finalmente este es el nuevo prototype del hijo
 
-}
-
+}*/
+DrawObject.prototype=new SceneObject;
+DrawObject.prototype.constructor=DrawObject;
 function DrawObject(){
 
 	this.rows;
@@ -17,26 +18,11 @@ function DrawObject(){
     this.texture_coord_buffer = null;
     this.index_buffer = null;
 
-    this.webgl_position_buffer = null;
-    this.webgl_normal_buffer = null;
-    this.webgl_texture_coord_buffer = null;
-    this.webgl_index_buffer = null;
-
-    this.texture = null;
+  
     this.indices;
 
 }
 
-DrawObject.prototype.initTexture=function(texture_file){
-    var aux_texture = gl.createTexture();
-    this.texture = aux_texture;
-    this.texture.image = new Image();
-
-    this.texture.image.onload = function () {
-           handleLoadedTexture()
-    }
-    this.texture.image.src = texture_file;
-}
 
 DrawObject.prototype.setDimensions=function(_rows,_cols){
      this.rows = _rows;
@@ -66,11 +52,11 @@ DrawObject.prototype.createIndexBuffer=function(){
         }else if ( i % 2 != 0 ){
 
             this.index_buffer.push(this.index_buffer[i-1] + this.cols);
-        
+
         }else{
 
             this.index_buffer.push(this.index_buffer[i-2] + sumador );
-    
+
         }
 
     }

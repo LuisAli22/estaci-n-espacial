@@ -1,13 +1,17 @@
 function EstacionEspacial(){
 
-	this.interiorEstacionEspacial = null;
-	this.exteriorEstacionEspacial = null;
-    this.tapaInicial = null;
-    this.tapaFinal = null;
+	this.interiorEstacionEspacial = new InteriorEstacionEspacial();
+	this.exteriorEstacionEspacial = new ExteriorEstacionEspacial();
+    this.tapaInicial = new TapaEstacionEspacial(this.exteriorEstacionEspacial.bufferInicial,this.interiorEstacionEspacial.bufferInicial);
+    this.tapaFinal = new TapaEstacionEspacial(this.exteriorEstacionEspacial.bufferFinal,this.interiorEstacionEspacial.bufferFinal);
+this.components=[];
 
 	this.initBuffers = function(){
-
-		this.interiorEstacionEspacial = new InteriorEstacionEspacial();
+				this.components.push(this.interiorEstacionEspacial);
+				this.components.push(this.exteriorEstacionEspacial);
+				this.components.push(this.tapaInicial);
+				this.components.push(this.tapaFinal );
+		/*this.interiorEstacionEspacial = new InteriorEstacionEspacial();
 		this.exteriorEstacionEspacial = new ExteriorEstacionEspacial();
 
         this.interiorEstacionEspacial.initBuffers();
@@ -17,20 +21,31 @@ function EstacionEspacial(){
         this.tapaFinal = new TapaEstacionEspacial(this.exteriorEstacionEspacial.bufferFinal,this.interiorEstacionEspacial.bufferFinal);
 
         this.tapaInicial.initBuffers();
-        this.tapaFinal.initBuffers();
+        this.tapaFinal.initBuffers();*/
 
     }
 
     this.draw = function(modelMatrix){
-        
-        drawElement(this.interiorEstacionEspacial,modelMatrix);
+			for(idxComponent in this.components){
+				this.components[idxComponent].draw(modelMatrix);
+			}
+        /*drawElement(this.interiorEstacionEspacial,modelMatrix);
         drawElement(this.exteriorEstacionEspacial,modelMatrix);
         drawElement(this.tapaInicial,modelMatrix);
-        drawElement(this.tapaFinal,modelMatrix);
+        drawElement(this.tapaFinal,modelMatrix);*/
 
     }
-
-    function drawElement(element,modelMatrix){
+		this.initTexture=function(){
+					for(idxComponent in this.components){
+						this.components[idxComponent].initTexture(IMGMARSPATH);
+					}
+				}
+				this.generateMipMap=function (){
+					for(idxComponent in this.components){
+						this.components[idxComponent].generateMipMap();
+					}
+				}
+    /*function drawElement(element,modelMatrix){
 
         gl.bindBuffer(gl.ARRAY_BUFFER, element.webgl_position_buffer);
         gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, element.webgl_position_buffer.itemSize, gl.FLOAT, false, 0, 0);
@@ -53,13 +68,13 @@ function EstacionEspacial(){
         gl.uniformMatrix3fv(shaderProgram.nMatrixUniform, false, normalMatrix);
 
         gl.bindTexture(gl.TEXTURE_2D, element.texture);
-        
+
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, element.webgl_index_buffer);
         //gl.drawElements(gl.LINE_LOOP, this.webgl_index_buffer.numItems, gl.UNSIGNED_SHORT, 0);
         var indices = 59 * 120;
 
         gl.drawElements(gl.TRIANGLE_STRIP, element.getIndices(), gl.UNSIGNED_SHORT, 0);
 
-    }
-
+    }*/
+		this.initBuffers();
 }

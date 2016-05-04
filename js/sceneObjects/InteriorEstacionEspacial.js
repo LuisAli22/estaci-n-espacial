@@ -1,12 +1,14 @@
+InteriorEstacionEspacial.prototype=new DrawObject;
+InteriorEstacionEspacial.prototype.constructor=InteriorEstacionEspacial;
 function InteriorEstacionEspacial(){
 
     //Llamo a la clase padre
-    DrawObject.call(this);
+//    DrawObject.call(this);
     //Seteo las dimensiones de la grilla
-    DrawObject.call(this.setDimensions(FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL));
-
+//    DrawObject.call(this.setDimensions(FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL));
+this.setDimensions(FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL)
     this.cargarPerfil = function(bufferInicialCoordenadas,bufferInicialNormales){
-        
+
         //Curva superior del perfil
         var puntosDeControlX = vec4.fromValues(-0.5,0.75,0.75,-0.5);
         var puntosDeControlY = vec4.fromValues(0.0,-1.5,1.5,0.5);
@@ -132,7 +134,7 @@ function InteriorEstacionEspacial(){
             };
 
         };
-        
+
         //Puntos de control para la curba de bezier del recorrido del perfil
         var puntosDeControlXTransformar = vec4.fromValues(-48.0,72.0,-18.0,-3.0);
         var puntosDeControlZTransformar = vec4.fromValues(0.0,-30.0,30.0,0.0);
@@ -168,35 +170,12 @@ function InteriorEstacionEspacial(){
 
         // Buffer de indices de los triangulos
         this.createIndexBuffer();
+        this.bindBuffers(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
-        // Creación e Inicialización de los buffers a nivel de OpenGL
-        this.webgl_normal_buffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_normal_buffer);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.normal_buffer), gl.STATIC_DRAW);
-        this.webgl_normal_buffer.itemSize = 3;
-        this.webgl_normal_buffer.numItems = this.normal_buffer.length / 3;
-
-        this.webgl_texture_coord_buffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_texture_coord_buffer);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.texture_coord_buffer), gl.STATIC_DRAW);
-        this.webgl_texture_coord_buffer.itemSize = 4;
-        this.webgl_texture_coord_buffer.numItems = this.texture_coord_buffer.length / 4;
-
-        this.webgl_position_buffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_position_buffer);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.position_buffer), gl.STATIC_DRAW);
-        this.webgl_position_buffer.itemSize = 3;
-        this.webgl_position_buffer.numItems = this.position_buffer.length / 3;
-
-        this.webgl_index_buffer = gl.createBuffer();
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.webgl_index_buffer);
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.index_buffer), gl.STATIC_DRAW);
-        this.webgl_index_buffer.itemSize = 1;
-        this.webgl_index_buffer.numItems = this.index_buffer.length;
 
     }
 
-
+    this.initBuffers();
 }
 
-inheritPrototype(InteriorEstacionEspacial, DrawObject);
+//inheritPrototype(InteriorEstacionEspacial, DrawObject);

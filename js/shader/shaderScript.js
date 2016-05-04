@@ -1,16 +1,14 @@
-function shaderScript(gl,id){
+function shaderScript(id){
   console.log("Constructor de shaderScript");
   this.script=document.getElementById(id);
-  this.gl=gl;
-
   console.log("Si no puede obtener un script con el id "+id+" a continuacion va a tirar un Error");
   if (!this.script) throw new Error(SHADERERRORMESSAGE+": "+id);
   console.log("Si el script no es de tipo"+ XSHADERXFRAGMENT+" ni de tipo"+XSHADERXVERTEX+" va a tirar un error");
   if (this.isNotXFragmentAndNotXVertex()) throw new Error(SCRIPTTYPEINCORRECT);
   this.textContent=this.calculateTextContent();
   this.shader=(this.isTypeXFragment())?
-              (this.gl.createShader(this.gl.FRAGMENT_SHADER)):
-              (this.gl.createShader(this.gl.VERTEX_SHADER));
+              (gl.createShader(gl.FRAGMENT_SHADER)):
+              (gl.createShader(gl.VERTEX_SHADER));
   console.log("Sale del constructor de shaderScript");
 }
 shaderScript.prototype.isNotXFragmentAndNotXVertex=function(){
@@ -40,9 +38,9 @@ shaderScript.prototype.calculateTextContent=function (){
   return str;
 }
 shaderScript.prototype.getCompiledShader=function(){
-  this.gl.shaderSource(this.shader, this.textContent);
-  this.gl.compileShader(this.shader);
-  if (!this.gl.getShaderParameter(this.shader, this.gl.COMPILE_STATUS))
-      throw new Error(this.gl.getShaderInfoLog(this.shader));
+  gl.shaderSource(this.shader, this.textContent);
+  gl.compileShader(this.shader);
+  if (!gl.getShaderParameter(this.shader, gl.COMPILE_STATUS))
+      throw new Error(gl.getShaderInfoLog(this.shader));
   return this.shader;
 }

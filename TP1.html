@@ -10,6 +10,7 @@
 <script type="text/javascript" src="js/Definitions/definitions.js"></script>
 <script type="text/javascript" src="js/shader/shaderScript.js"></script>
 <script type="text/javascript" src="js/shader/setUpExecutableProgram.js"></script>
+<script type="text/javascript" src="js/sceneObjects/sceneObject.js"></script>
 <script type="text/javascript" src="js/sceneObjects/texturedSphere.js"></script>
 <script type="text/javascript" src="js/sceneObjects/DrawObject.js"></script>
 <script type="text/javascript" src="js/sceneObjects/EstacionEspacial.js"></script>
@@ -149,7 +150,7 @@
 
     function getCompiledShader(id){
         console.log("Estacion espacial: getCompiledShader()");
-        var shScript=new shaderScript(gl,id);
+        var shScript=new shaderScript(id);
         console.log("Obtengo un shader compilado");
         return shScript.getCompiledShader();
     }
@@ -158,28 +159,22 @@
         var fragmentShader = getCompiledShader(FRAGMENTSHADERID);
         var vertexShader = getCompiledShader(VERTEXSHADERID);
 
-        var setUpExecProgram= new setUpExecutableProgram(gl);
-        setUpExecProgram.start(gl,vertexShader,fragmentShader);
-        shaderProgram=setUpExecProgram.getShaderPogram();
+        var setUpExecProgram= new setUpExecutableProgram();
+        setUpExecProgram.start(vertexShader,fragmentShader);
     }
 
-    function generateMipMap(sceneObject){
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-      gl.bindTexture(gl.TEXTURE_2D, sceneObject.texture);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, sceneObject.texture.image);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.bindTexture(gl.TEXTURE_2D, null);
-    }
     function handleLoadedTexture() {
-      generateMipMap(Mars);
+      mars.generateMipMap();
+      deimos.generateMipMap();
+      phobos.generateMipMap();
+      estacionEspacial.generateMipMap();
+      /*generateMipMap(mars);
       generateMipMap(deimos);
       generateMipMap(phobos);
       generateMipMap(estacionEspacial.interiorEstacionEspacial);
       generateMipMap(estacionEspacial.exteriorEstacionEspacial);
       generateMipMap(estacionEspacial.tapaFinal);
-      generateMipMap(estacionEspacial.tapaInicial);
+      generateMipMap(estacionEspacial.tapaInicial);*/
     }
 
     var CameraMatrix = mat4.create();
@@ -443,7 +438,6 @@
     }
     function createSphere(imgFilePath,material){
       var sphere = new TexturedSphere(64, 64,material);
-      sphere.initBuffers();
       sphere.initTexture(imgFilePath);
       return sphere;
     }
@@ -455,11 +449,12 @@
         initShaders();
 
         estacionEspacial = new EstacionEspacial();
-        estacionEspacial.initBuffers();
+        estacionEspacial.initTexture();
+        /*estacionEspacial.initBuffers();
         estacionEspacial.interiorEstacionEspacial.initTexture(IMGMARSPATH);
         estacionEspacial.exteriorEstacionEspacial.initTexture(IMGMARSPATH);
         estacionEspacial.tapaInicial.initTexture(IMGMARSPATH);
-        estacionEspacial.tapaFinal.initTexture(IMGMARSPATH);
+        estacionEspacial.tapaFinal.initTexture(IMGMARSPATH);*/
 
         deimos=createSphere(IMGMOONPATH,AMARILLO);
         mars=createSphere(IMGMARSPATH,CELESTE);
