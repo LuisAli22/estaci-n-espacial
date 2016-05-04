@@ -12,8 +12,8 @@
 <script type="text/javascript" src="js/shader/setUpExecutableProgram.js"></script>
 <script type="text/javascript" src="js/sceneObjects/sceneObject.js"></script>
 <script type="text/javascript" src="js/sceneObjects/texturedSphere.js"></script>
-<script type="text/javascript" src="js/sceneObjects/DrawObject.js"></script>
-<script type="text/javascript" src="js/sceneObjects/EstacionEspacial.js"></script>
+<script type="text/javascript" src="js/sceneObjects/ComponenteEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/sceneObjects/composedSceneObject.js"></script>
 <script type="text/javascript" src="js/sceneObjects/InteriorEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/sceneObjects/ExteriorEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/sceneObjects/TapaEstacionEspacial.js"></script>
@@ -168,13 +168,6 @@
       deimos.generateMipMap();
       phobos.generateMipMap();
       estacionEspacial.generateMipMap();
-      /*generateMipMap(mars);
-      generateMipMap(deimos);
-      generateMipMap(phobos);
-      generateMipMap(estacionEspacial.interiorEstacionEspacial);
-      generateMipMap(estacionEspacial.exteriorEstacionEspacial);
-      generateMipMap(estacionEspacial.tapaFinal);
-      generateMipMap(estacionEspacial.tapaInicial);*/
     }
 
     var CameraMatrix = mat4.create();
@@ -441,6 +434,19 @@
       sphere.initTexture(imgFilePath);
       return sphere;
     }
+    function createEstacionEspacial(){
+      var estacion=new composedSceneObject();
+      var interiorEstacionEspacial = new InteriorEstacionEspacial();
+    	var exteriorEstacionEspacial = new ExteriorEstacionEspacial();
+      var tapaInicial = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferInicial,interiorEstacionEspacial.bufferInicial);
+      var tapaFinal = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferFinal,interiorEstacionEspacial.bufferFinal);
+      estacion.push(interiorEstacionEspacial);
+      estacion.push(exteriorEstacionEspacial);
+      estacion.push(tapaInicial);
+      estacion.push(tapaFinal );
+      estacion.initTexture();
+      return estacion;
+    }
     function webGLStart() {
       try{
         console.log("Comienza webGLStart");
@@ -448,13 +454,7 @@
         initGL(canvas);
         initShaders();
 
-        estacionEspacial = new EstacionEspacial();
-        estacionEspacial.initTexture();
-        /*estacionEspacial.initBuffers();
-        estacionEspacial.interiorEstacionEspacial.initTexture(IMGMARSPATH);
-        estacionEspacial.exteriorEstacionEspacial.initTexture(IMGMARSPATH);
-        estacionEspacial.tapaInicial.initTexture(IMGMARSPATH);
-        estacionEspacial.tapaFinal.initTexture(IMGMARSPATH);*/
+        estacionEspacial = createEstacionEspacial();
 
         deimos=createSphere(IMGMOONPATH,AMARILLO);
         mars=createSphere(IMGMARSPATH,CELESTE);

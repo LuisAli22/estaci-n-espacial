@@ -1,4 +1,4 @@
-function SceneObject(){
+function sceneObject(){
 
    this.webgl_position_buffer = null;
    this.webgl_normal_buffer = null;

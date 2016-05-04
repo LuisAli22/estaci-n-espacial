@@ -1,4 +1,4 @@
-TapaEstacionEspacial.prototype=new DrawObject;
+TapaEstacionEspacial.prototype=new ComponenteEstacionEspacial;
 TapaEstacionEspacial.prototype.constructor=TapaEstacionEspacial;
 
 //bufferExterior y bufferInterior deben tener la misma cantidad de puntos
@@ -9,11 +9,7 @@ function TapaEstacionEspacial(_bufferExterior,_bufferInterior){
 
 	const FILAS = 2;
 
-    //Llamo a la clase padre
-//    DrawObject.call(this);
-    //Seteo las dimensiones de la grilla
-//    DrawObject.call(this.setDimensions(FILAS,COLUMNASESTACIONESPACIAL));
-this.setDimensions(FILAS,COLUMNASESTACIONESPACIAL);
+ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL);
     this.initBuffers = function(){
 
         this.texture_coord_buffer = [];

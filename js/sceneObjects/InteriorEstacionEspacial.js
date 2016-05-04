@@ -1,12 +1,8 @@
-InteriorEstacionEspacial.prototype=new DrawObject;
+InteriorEstacionEspacial.prototype=new ComponenteEstacionEspacial;
 InteriorEstacionEspacial.prototype.constructor=InteriorEstacionEspacial;
 function InteriorEstacionEspacial(){
 
-    //Llamo a la clase padre
-//    DrawObject.call(this);
-    //Seteo las dimensiones de la grilla
-//    DrawObject.call(this.setDimensions(FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL));
-this.setDimensions(FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL)
+    ComponenteEstacionEspacial.call(this,FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL);
     this.cargarPerfil = function(bufferInicialCoordenadas,bufferInicialNormales){
 
         //Curva superior del perfil

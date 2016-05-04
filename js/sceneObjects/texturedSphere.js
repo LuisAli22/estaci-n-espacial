@@ -1,4 +1,4 @@
-TexturedSphere.prototype=new SceneObject;
+TexturedSphere.prototype=new sceneObject;
 TexturedSphere.prototype.constructor=TexturedSphere;
 function TexturedSphere(latitude_bands, longitude_bands,_material){
   this.latitudeBands = latitude_bands;

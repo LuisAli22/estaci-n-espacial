@@ -1,4 +1,4 @@
-ExteriorEstacionEspacial.prototype=new DrawObject;
+ExteriorEstacionEspacial.prototype=new ComponenteEstacionEspacial;
 ExteriorEstacionEspacial.prototype.constructor=ExteriorEstacionEspacial;
 function ExteriorEstacionEspacial(){
 
@@ -7,11 +7,7 @@ function ExteriorEstacionEspacial(){
     const PUNTOSCURVALATERAL = 10;
     const PUNTOSUNIONDECURVAS = 10;
 
-    //Llamo a la clase padre
-//    DrawObject.call(this);
-    //Seteo las dimensiones de la grilla
-//    DrawObject.call(this.setDimensions(FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL));
-this.setDimensions(FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL);
+ComponenteEstacionEspacial.call(this,FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL);
     this.cargarPerfil = function(bufferInicialCoordenadas,bufferInicialNormales){
 
         //Curva superior del perfil
