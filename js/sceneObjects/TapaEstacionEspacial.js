@@ -2,14 +2,14 @@ TapaEstacionEspacial.prototype=new ComponenteEstacionEspacial;
 TapaEstacionEspacial.prototype.constructor=TapaEstacionEspacial;
 
 //bufferExterior y bufferInterior deben tener la misma cantidad de puntos
-function TapaEstacionEspacial(_bufferExterior,_bufferInterior){
+function TapaEstacionEspacial(_bufferExterior,_bufferInterior,material){
 
 	this.bufferExterior = _bufferExterior;
 	this.bufferInterior = _bufferInterior;
 
 	const FILAS = 2;
 
-ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL);
+ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL,material);
     this.initBuffers = function(){
 
         this.texture_coord_buffer = [];
@@ -40,7 +40,7 @@ ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL);
                 this.texture_coord_buffer.push(u);
                 this.texture_coord_buffer.push(v);
                 //Defino material --> color dorado
-                this.texture_coord_buffer.push(DORADO);
+                this.texture_coord_buffer.push(this.material);
                 this.texture_coord_buffer.push(0);
 
                 this.normal_buffer.push(-1.0*vectorNormal[0]);

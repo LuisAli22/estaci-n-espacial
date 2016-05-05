@@ -7,11 +7,10 @@ function AnilloEstacionEspacial(material){
     const PUNTOSCURVALATERAL = 10;
     const PUNTOSUNIONDECURVAS = 10;
     
-    this.material = material;
     this.bufferInicialCoordenadas = [];
     this.bufferInicialNormales = [];
 
-    ComponenteEstacionEspacial.call(this,FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL);
+    ComponenteEstacionEspacial.call(this,FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL,material);
     this.cargarPerfilExterior = function(bufferInicialCoordenadas,bufferInicialNormales){
 
         //Curva superior del perfil

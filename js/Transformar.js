@@ -76,3 +76,52 @@ function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,punto
     };
 
 };
+
+function obternerPuntosDeBSpline(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales){
+    
+    var cantidadDePuntosDeControl = bufferPuntosDeControl.length / 3;
+
+    for (var i = 2; i < cantidadDePuntosDeControl; i++) {
+        for (var j = 0; j < intervaloDelPaso; j++) {
+            
+            var u = j/(intervaloDelPaso-1);
+            
+            var punto0 = vec3.fromValues(bufferPuntosDeControl[3*(i-2)],bufferPuntosDeControl[3*(i-2)+1],bufferPuntosDeControl[3*(i-2)+2]);
+            var punto1 = vec3.fromValues(bufferPuntosDeControl[3*(i-1)],bufferPuntosDeControl[3*(i-1)+1],bufferPuntosDeControl[3*(i-1)+2]);
+            var punto2 = vec3.fromValues(bufferPuntosDeControl[3*i],bufferPuntosDeControl[3*i+1],bufferPuntosDeControl[3*i+2]);
+            var punto3 = vec3.fromValues(bufferPuntosDeControl[3*(i+1)],bufferPuntosDeControl[3*(i+1)+1],bufferPuntosDeControl[3*(i+1)+2]);
+
+            var x,y,z;
+
+            
+            x = Base0Spline(u)*punto0[0]+Base1Spline(u)*punto1[0]+Base2Spline(u)*punto2[0]+Base3Spline(u)*punto3[0];
+            y = Base0Spline(u)*punto0[1]+Base1Spline(u)*punto1[1]+Base2Spline(u)*punto2[1]+Base3Spline(u)*punto3[1];
+            z = Base0Spline(u)*punto0[2]+Base1Spline(u)*punto1[2]+Base2Spline(u)*punto2[2]+Base3Spline(u)*punto3[2];
+
+            bufferCoordenadas.push(x);
+            bufferCoordenadas.push(y);
+            bufferCoordenadas.push(z);
+
+            bufferNormales.push(1.0);
+            bufferNormales.push(0.0);
+            bufferNormales.push(0.0);
+
+        };
+    };
+};
+
+function Base0Spline(u) { 
+    return (1-3*u+3*u*u-u*u*u)*1/6;
+}
+
+function Base1Spline(u) { 
+    return (4-6*u*u+3*u*u*u)*1/6;
+}
+
+function Base2Spline(u) { 
+    return (1+3*u+3*u*u-3*u*u*u)*1/6
+}
+
+function Base3Spline(u) { 
+    return (u*u*u)*1/6;
+}

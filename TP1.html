@@ -19,6 +19,9 @@
 <script type="text/javascript" src="js/sceneObjects/composedSceneObject.js"></script>
 <script type="text/javascript" src="js/sceneObjects/AnilloEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/sceneObjects/TapaEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/sceneObjects/CentroEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/sceneObjects/CilindrosLaterales.js"></script>
+<script type="text/javascript" src="js/sceneObjects/Cilindro.js"></script>
 <script type="text/javascript" src="js/Transformar.js"></script>
 
 <script id="shader-fs" type="x-shader/x-fragment">
@@ -33,6 +36,8 @@
     // 1 : dorado
     // 2 : violeta
     // 3 : celeste
+    // 4 : amarillo
+    // 5 : Beis
     vec4 tablaMateriales(float material,vec3 vLightWeighting){
 
         vec4 color;
@@ -55,6 +60,10 @@
             color.x = 1.0;
             color.y = 1.0;
             color.z = 0.0;
+        }else if (material == 5.0){
+            color.x = 232.0/255.0;
+            color.y = 195.0/255.0;
+            color.z = 158.0/255.0;
         }
 
         color.x = color.x * vLightWeighting.x;

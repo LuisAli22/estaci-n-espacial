@@ -1,6 +1,7 @@
 ComponenteEstacionEspacial.prototype=new sceneObject;
 ComponenteEstacionEspacial.prototype.constructor=ComponenteEstacionEspacial;
-function ComponenteEstacionEspacial(rows,cols){
+function ComponenteEstacionEspacial(rows,cols,material){
+	this.material=material
 	this.rows=rows;
 	this.cols=cols;
 	this.position_buffer = [];
