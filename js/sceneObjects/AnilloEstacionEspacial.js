@@ -258,15 +258,34 @@ function AnilloEstacionEspacial(material){
 
         };
 
-        //Puntos de control para la curva de bezier del recorrido del perfil
-        var puntosDeControlXTransformar = vec4.fromValues(-48.0,72.0,-18.0,-3.0);
-        var puntosDeControlZTransformar = vec4.fromValues(0.0,-30.0,30.0,0.0);
+        var puntoDeControlXInicial = vec4.fromValues(0.0,12.0,-12.0,0.0);
+        var puntoDeControlZInicial = vec4.fromValues(-12.0,18.0,0.0,-3.0);
 
+        this.inicio = 0.25;
+        this.fin = 1.0;
+
+        this.transformar(puntoDeControlXInicial,puntoDeControlZInicial,bufferInicialCoordenadas,bufferInicialNormales);
+        
+        var puntoDeControlXFinal = vec4.fromValues(0.0,-12.0,12.0,0.0);
+        var puntoDeControlZFinal = vec4.fromValues(12.0,-18.0,0.0,3.0);
+
+        this.inicio = 0.0;
+        this.fin = 0.75;
+
+        this.transformar(puntoDeControlXFinal,puntoDeControlZFinal,bufferInicialCoordenadas,bufferInicialNormales);
+
+
+        // Buffer de indices de los triangulos
+        this.createIndexBuffer();
+        this.bindBuffers(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+
+    }
+
+    this.transformar = function(puntosDeControlXTransformar,puntosDeControlZTransformar,bufferInicialCoordenadas,bufferInicialNormales,t0,tf){
         //Calculo las coordenadas para el perfil rotado
-        for (var i = 0.0; i < this.rows; i++) {
-
+        for (var i = 0.0; i < this.rows/2; i++) {
             //Parametro t de la curva
-            var t = i / (this.rows-1);
+            var t = this.inicio + i *(this.fin-this.inicio)/ (this.rows/2-1);
 
             //Buffers auxiliares para no modificar los valores de los buffers iniciales
             var bufferCoordenadasATransformar = [];
@@ -280,23 +299,19 @@ function AnilloEstacionEspacial(material){
             this.position_buffer = this.position_buffer.concat(bufferCoordenadasATransformar);
             this.normal_buffer = this.normal_buffer.concat(bufferNormalesATransformar);
 
-            if( i == (this.rows-1) ){
+            if( i == (this.rows/2-1) && this.fin == 0.75 ){
 
                 this.bufferFinal = this.bufferFinal.concat(bufferCoordenadasATransformar);
 
             }
 
-            if ( i == 0.0 ){
+            if ( i == 0.0 && this.inicio == 0.25 ){
 
                 this.bufferInicial = this.bufferInicial.concat(bufferCoordenadasATransformar);
 
             }
 
         };
-
-        // Buffer de indices de los triangulos
-        this.createIndexBuffer();
-        this.bindBuffers(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
     }
 
