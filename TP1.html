@@ -11,6 +11,9 @@
 <script type="text/javascript" src="js/shader/shaderScript.js"></script>
 <script type="text/javascript" src="js/shader/setUpExecutableProgram.js"></script>
 <script type="text/javascript" src="js/sceneObjects/sceneObject.js"></script>
+<script type="text/javascript" src="js/sceneObjects/Factory/FactoryEsferaMarte.js"></script>
+<script type="text/javascript" src="js/sceneObjects/Factory/FactoryEsferaLuna.js"></script>
+<script type="text/javascript" src="js/sceneObjects/Factory/FactoryEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/sceneObjects/texturedSphere.js"></script>
 <script type="text/javascript" src="js/sceneObjects/ComponenteEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/sceneObjects/composedSceneObject.js"></script>
@@ -429,36 +432,20 @@
       console.log("Obtuvo correctamente el canvas");
       return newCanvas;
     }
-    function createSphere(imgFilePath,material){
-      var sphere = new TexturedSphere(64, 64,material);
-      sphere.initTexture(imgFilePath);
-      return sphere;
-    }
-    function createEstacionEspacial(){
-      var estacion=new composedSceneObject();
-      var interiorEstacionEspacial = new InteriorEstacionEspacial();
-    	var exteriorEstacionEspacial = new ExteriorEstacionEspacial();
-      var tapaInicial = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferInicial,interiorEstacionEspacial.bufferInicial);
-      var tapaFinal = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferFinal,interiorEstacionEspacial.bufferFinal);
-      estacion.push(interiorEstacionEspacial);
-      estacion.push(exteriorEstacionEspacial);
-      estacion.push(tapaInicial);
-      estacion.push(tapaFinal );
-      estacion.initTexture();
-      return estacion;
-    }
     function webGLStart() {
       try{
         console.log("Comienza webGLStart");
         var canvas = getCanvas();
         initGL(canvas);
         initShaders();
+        var factoryEstEspacial= new FactoryEstacionEspacial();
+        var factoryEsferaLuna= new FactoryEsferaLuna();
+        var factoryEsferaMarte= new FactoryEsferaMarte();
+        estacionEspacial = factoryEstEspacial.crear();
 
-        estacionEspacial = createEstacionEspacial();
-
-        deimos=createSphere(IMGMOONPATH,AMARILLO);
-        mars=createSphere(IMGMARSPATH,CELESTE);
-        phobos= createSphere(IMGMOONPATH,AMARILLO);
+        deimos=factoryEsferaLuna.crear();
+        mars=factoryEsferaMarte.crear();
+        phobos=factoryEsferaLuna.crear();
 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
