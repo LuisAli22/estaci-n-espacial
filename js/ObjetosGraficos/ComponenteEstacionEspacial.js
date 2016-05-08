@@ -1,6 +1,6 @@
-ComponenteEstacionEspacial.prototype=new sceneObject;
+ComponenteEstacionEspacial.prototype=new ObjetoGrafico;
 ComponenteEstacionEspacial.prototype.constructor=ComponenteEstacionEspacial;
-function ComponenteEstacionEspacial(rows,cols,material){
+function ComponenteEstacionEspacial(rows,cols,material,matrizModelado){
 	this.material=material
 	this.rows=rows;
 	this.cols=cols;
@@ -10,6 +10,7 @@ function ComponenteEstacionEspacial(rows,cols,material){
     this.index_buffer = [];
 		this.indices=(this.rows-1) * (2*this.cols);
 		this.sumador=1;
+		ObjetoGrafico.call(this,matrizModelado);
 }
 ComponenteEstacionEspacial.prototype.esMultiploDeDosVecesLaCantidadDeColumnas=function(pos){
 	return ( pos % (2*this.cols) == 0 );
@@ -31,7 +32,7 @@ ComponenteEstacionEspacial.prototype.agregarUnValorAIndexBuffer=function(pos){
 	}else this.asignarValorAIndexBufferEnUnaPosicionDistintaADosVecesCantidadColumnas(pos);
 
 }
-ComponenteEstacionEspacial.prototype.createIndexBuffer=function(){
+ComponenteEstacionEspacial.prototype.crearBufferDeIndices=function(){
     this.index_buffer.push(0);
     for (var i = 1;i<this.indices;i++) {
 			this.agregarUnValorAIndexBuffer(i);

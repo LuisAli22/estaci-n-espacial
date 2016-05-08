@@ -1,9 +1,9 @@
-function setUpExecutableProgram(){
+function PrepararProgramaEjecutable(){
   console.log("setUpProgram: Create shader program");
   shaderProgram = gl.createProgram();
 
 }
-setUpExecutableProgram.prototype.start=function(vertexShader,fragmentShader){
+PrepararProgramaEjecutable.prototype.comenzar=function(vertexShader,fragmentShader){
   console.log("attach vertex shader");
   gl.attachShader(shaderProgram, vertexShader);
   console.log("attach fragment shader")
@@ -33,4 +33,5 @@ setUpExecutableProgram.prototype.start=function(vertexShader,fragmentShader){
   shaderProgram.ambientColorUniform = gl.getUniformLocation(shaderProgram, UAMBIENTCOLOR);
   shaderProgram.lightingDirectionUniform = gl.getUniformLocation(shaderProgram, ULIGHTPOSITION);
   shaderProgram.directionalColorUniform = gl.getUniformLocation(shaderProgram, UDIRECTIONALCOLOR);
+  console.log("Termina el set up de programa ejecutable");
 }

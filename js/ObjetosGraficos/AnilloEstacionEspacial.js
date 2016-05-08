@@ -1,16 +1,16 @@
 AnilloEstacionEspacial.prototype=new ComponenteEstacionEspacial;
 AnilloEstacionEspacial.prototype.constructor=AnilloEstacionEspacial;
-function AnilloEstacionEspacial(material){
+function AnilloEstacionEspacial(material,matrizModelado){
 
     const PUNTOSCURVASUPERIOR = 30;
     const PUNTOSCURVAINFERIOR = 30;
     const PUNTOSCURVALATERAL = 10;
     const PUNTOSUNIONDECURVAS = 10;
-    
+
     this.bufferInicialCoordenadas = [];
     this.bufferInicialNormales = [];
 
-    ComponenteEstacionEspacial.call(this,FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL,material);
+    ComponenteEstacionEspacial.call(this,FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL,material,matrizModelado);
     this.cargarPerfilExterior = function(bufferInicialCoordenadas,bufferInicialNormales){
 
         //Curva superior del perfil
@@ -232,7 +232,7 @@ function AnilloEstacionEspacial(material){
         };
     }
 
-    this.initBuffers = function(bufferInicialCoordenadas,bufferInicialNormales){
+    this.inicializarLosBuffer = function(bufferInicialCoordenadas,bufferInicialNormales){
 
         this.texture_coord_buffer = [];
         this.position_buffer = [];
@@ -264,7 +264,7 @@ function AnilloEstacionEspacial(material){
         this.fin = 1.0;
 
         this.transformar(puntoDeControlXInicial,puntoDeControlZInicial,bufferInicialCoordenadas,bufferInicialNormales);
-        
+
         var puntoDeControlXFinal = vec4.fromValues(0.0,-12.0,12.0,0.0);
         var puntoDeControlZFinal = vec4.fromValues(12.0,-18.0,0.0,3.0);
 
@@ -275,8 +275,8 @@ function AnilloEstacionEspacial(material){
 
 
         // Buffer de indices de los triangulos
-        this.createIndexBuffer();
-        this.bindBuffers(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+        this.crearBufferDeIndices();
+        this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
     }
 
@@ -344,12 +344,12 @@ function AnilloEstacionEspacial(material){
     this.cargarExteriorEstacionEspacial = function(){
 
         this.cargarPerfilExterior(this.bufferInicialCoordenadas,this.bufferInicialNormales);
-        this.initBuffers(this.bufferInicialCoordenadas,this.bufferInicialNormales);
+        this.inicializarLosBuffer(this.bufferInicialCoordenadas,this.bufferInicialNormales);
     }
     this.cargarInteriorEstacionEspacial = function(){
 
         this.cargarPerfilInterior(this.bufferInicialCoordenadas,this.bufferInicialNormales);
-        this.initBuffers(this.bufferInicialCoordenadas,this.bufferInicialNormales);
+        this.inicializarLosBuffer(this.bufferInicialCoordenadas,this.bufferInicialNormales);
     }
 }
 

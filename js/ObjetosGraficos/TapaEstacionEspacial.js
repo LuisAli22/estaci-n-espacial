@@ -2,14 +2,14 @@ TapaEstacionEspacial.prototype=new ComponenteEstacionEspacial;
 TapaEstacionEspacial.prototype.constructor=TapaEstacionEspacial;
 
 //bufferExterior y bufferInterior deben tener la misma cantidad de puntos
-function TapaEstacionEspacial(_bufferExterior,_bufferInterior,material){
+function TapaEstacionEspacial(_bufferExterior,_bufferInterior,material,matrizModelado){
 
 	this.bufferExterior = _bufferExterior;
 	this.bufferInterior = _bufferInterior;
 
 	const FILAS = 2;
 
-ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL,material);
+ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL,material,matrizModelado);
     this.initBuffers = function(){
 
         this.texture_coord_buffer = [];
@@ -52,11 +52,10 @@ ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL,material);
         };
 
         // Buffer de indices de los triangulos
-        this.createIndexBuffer();
-				this.bindBuffers(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+				this.crearBufferDeIndices();
+
+				this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
     }
 		this.initBuffers();
 }
-
-//inheritPrototype(TapaEstacionEspacial, DrawObject);

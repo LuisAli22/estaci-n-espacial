@@ -1,13 +1,11 @@
 function CilindrosLaterales(material){
 
-	const CANTIDADDECILINDROS = 7;
-	const ANGULOINCIALCILINDRO = -60.0;
-	const VARIACIONDELANGULO = 20.0;
+
 
 	this.cilindros = [];
 	this.material = material;
 
-	this.initBuffers = function(){
+	this.inicializarLosBuffer = function(){
 
 		for (var i = 0; i < CANTIDADDECILINDROS; i++) {
 			var cilindro = new Cilindro(64,64,this.material);
@@ -16,17 +14,17 @@ function CilindrosLaterales(material){
 
 	}
 
-	this.generateMipMap = function (){
+	this.generarMipMap = function (){
   		for(idxCilindro in this.cilindros){
-    		this.cilindros[idxCilindro].generateMipMap();
+    		this.cilindros[idxCilindro].generarMipMap();
   		}
 	}
 
-	this.draw = function(modelMatrix){
+	this.dibujar = function(matrizModelado){
 
 
 		for(var idxCilindro = 0;idxCilindro<CANTIDADDECILINDROS; idxCilindro++){
-			var modelClone = mat4.clone(modelMatrix);
+			var matrizModeladoClonada = mat4.clone(matrizModelado);
 			var matrizEscalado = mat4.create();
         	mat4.scale(matrizEscalado,matrizEscalado,[0.2,0.2,2.5]);
     	    var matrizTraslacion = mat4.create();
@@ -35,18 +33,18 @@ function CilindrosLaterales(material){
 			var matrizRotacion = mat4.create();
 			var anguloRotacion = ((ANGULOINCIALCILINDRO + VARIACIONDELANGULO * idxCilindro)*2.0*Math.PI)/180;
         	mat4.rotateY(matrizRotacion,matrizRotacion,anguloRotacion);
-        	mat4.multiply(modelClone,modelClone,matrizRotacion);
-        	mat4.multiply(modelClone,modelClone,matrizEscalado);
-        	mat4.multiply(modelClone,modelClone,matrizTraslacion);
-			this.cilindros[idxCilindro].draw(modelClone);
+        	mat4.multiply(matrizModeladoClonada,matrizModeladoClonada,matrizRotacion);
+        	mat4.multiply(matrizModeladoClonada,matrizModeladoClonada,matrizEscalado);
+        	mat4.multiply(matrizModeladoClonada,matrizModeladoClonada,matrizTraslacion);
+			this.cilindros[idxCilindro].dibujar(matrizModeladoClonada);
 		}
 	}
 
-	this.initTexture=function(IMGMARSPATH){
+	this.inicializarTextura=function(){
 		for(idxCilindro in this.cilindros){
-			this.cilindros[idxCilindro].initTexture(IMGMARSPATH);
+			this.cilindros[idxCilindro].inicializarTextura(RUTAIMAGENMARTE);
 		}
 	}
 
-	this.initBuffers();
+	this.inicializarLosBuffer();
 }

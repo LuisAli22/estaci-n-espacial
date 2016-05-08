@@ -1,36 +1,36 @@
 CentroEstacionEspacial.prototype=new ComponenteEstacionEspacial;
 CentroEstacionEspacial.prototype.constructor=CentroEstacionEspacial;
-function CentroEstacionEspacial(material){
+function CentroEstacionEspacial(material,matrizModelado){
 
     //Puntos de control para la curva de B-spline para definir el centro
     //de la estacion espacial
-    var puntosDeControl = [ 0.0, 1.75, 0.0, 0.0, 1.75, 0.0, 0.0, 1.75, 0.0, 0.0, 1.75, 0.0, 
-                            0.25, 1.75, 0.0, 0.25, 1.75, 0.0, 0.25, 1.75, 0.0, 0.25, 1.75, 0.0, 
-                            0.25, 1.64, 0.0, 0.25, 1.64, 0.0, 0.25, 1.64, 0.0, 0.25, 1.64, 0.0, 
+    var puntosDeControl = [ 0.0, 1.75, 0.0, 0.0, 1.75, 0.0, 0.0, 1.75, 0.0, 0.0, 1.75, 0.0,
+                            0.25, 1.75, 0.0, 0.25, 1.75, 0.0, 0.25, 1.75, 0.0, 0.25, 1.75, 0.0,
+                            0.25, 1.64, 0.0, 0.25, 1.64, 0.0, 0.25, 1.64, 0.0, 0.25, 1.64, 0.0,
                             0.375, 1.60, 0.0, 0.375, 1.47, 0.0, 0.375, 1.47, 0.0, 0.375, 1.47, 0.0,
-                            0.375, 1.47, 0.0, 0.4375, 1.47, 0.0, 0.4375, 1.47, 0.0, 0.4375, 1.47, 0.0, 
-                            0.4375, 1.47, 0.0, 0.4375, 0.91, 0.0, 0.4375, 0.91, 0.0, 0.4375, 0.91, 0.0, 
-                            0.4375, 0.91, 0.0, 1.0, 0.84, 0.0, 1.125, 0.63, 0.0, 1.125, 0.63, 0.0, 
-                            1.125, 0.63, 0.0, 1.125, 0.63, 0.0, 1.125, 0.42, 0.0, 1.125, 0.42, 0.0, 
-                            1.125, 0.42, 0.0, 1.125, 0.42, 0.0, 1.375, 0.42, 0.0, 1.375, 0.23, 0.0, 
-                            1.125, 0.21, 0.0, 1.125, 0.21, 0.0, 1.125, 0.21, 0.0, 1.125, 0.21, 0.0, 
-                            1.125, -0.21, 0.0, 1.125, -0.21, 0.0, 1.125, -0.21, 0.0, 1.125, -0.21, 0.0, 
-                            1.1875, -0.21, 0.0, 1.1875, -0.21, 0.0, 1.1875, -0.21, 0.0, 1.1875, -0.21, 0.0, 
-                            1.1875, -0.35, 0.0, 1.1875, -0.35, 0.0, 1.1875, -0.35, 0.0, 1.1875, -0.35, 0.0, 
-                            0.875, -0.49, 0.0, 0.875, -0.49, 0.0, 0.875, -0.49, 0.0, 0.875, -0.49, 0.0, 
-                            0.9375, -0.49, 0.0, 0.9375, -0.49, 0.0, 0.9375, -0.49, 0.0, 0.9375, -0.49, 0.0, 
-                            0.4375, -0.7, 0.0, 0.25, -0.77, 0.0, 0.25, -0.77, 0.0, 0.25, -0.77, 0.0, 
-                            0.25, -0.77, 0.0, 0.25, -1.61, 0.0, 0.25, -1.61, 0.0, 0.25, -1.61, 0.0, 
-                            0.25, -1.61, 0.0, 0.0, -1.61, 0.0, 0.0, -1.61, 0.0, 0.0, -1.61, 0.0, 
+                            0.375, 1.47, 0.0, 0.4375, 1.47, 0.0, 0.4375, 1.47, 0.0, 0.4375, 1.47, 0.0,
+                            0.4375, 1.47, 0.0, 0.4375, 0.91, 0.0, 0.4375, 0.91, 0.0, 0.4375, 0.91, 0.0,
+                            0.4375, 0.91, 0.0, 1.0, 0.84, 0.0, 1.125, 0.63, 0.0, 1.125, 0.63, 0.0,
+                            1.125, 0.63, 0.0, 1.125, 0.63, 0.0, 1.125, 0.42, 0.0, 1.125, 0.42, 0.0,
+                            1.125, 0.42, 0.0, 1.125, 0.42, 0.0, 1.375, 0.42, 0.0, 1.375, 0.23, 0.0,
+                            1.125, 0.21, 0.0, 1.125, 0.21, 0.0, 1.125, 0.21, 0.0, 1.125, 0.21, 0.0,
+                            1.125, -0.21, 0.0, 1.125, -0.21, 0.0, 1.125, -0.21, 0.0, 1.125, -0.21, 0.0,
+                            1.1875, -0.21, 0.0, 1.1875, -0.21, 0.0, 1.1875, -0.21, 0.0, 1.1875, -0.21, 0.0,
+                            1.1875, -0.35, 0.0, 1.1875, -0.35, 0.0, 1.1875, -0.35, 0.0, 1.1875, -0.35, 0.0,
+                            0.875, -0.49, 0.0, 0.875, -0.49, 0.0, 0.875, -0.49, 0.0, 0.875, -0.49, 0.0,
+                            0.9375, -0.49, 0.0, 0.9375, -0.49, 0.0, 0.9375, -0.49, 0.0, 0.9375, -0.49, 0.0,
+                            0.4375, -0.7, 0.0, 0.25, -0.77, 0.0, 0.25, -0.77, 0.0, 0.25, -0.77, 0.0,
+                            0.25, -0.77, 0.0, 0.25, -1.61, 0.0, 0.25, -1.61, 0.0, 0.25, -1.61, 0.0,
+                            0.25, -1.61, 0.0, 0.0, -1.61, 0.0, 0.0, -1.61, 0.0, 0.0, -1.61, 0.0,
                             0.0, -1.61, 0.0, ];
 
-    
+
     const INTERVALODELPASO = 10;
     const COLUMNAS = INTERVALODELPASO*((puntosDeControl.length/3)-2);
     const FILAS = 70;
 
-    //Seteo las dimensiones de la grilla        
-    ComponenteEstacionEspacial.call(this,FILAS,COLUMNAS,material);
+    //Seteo las dimensiones de la grilla
+    ComponenteEstacionEspacial.call(this,FILAS,COLUMNAS,material,matrizModelado);
 
     this.cargarCentro = function(){
 
@@ -54,13 +54,13 @@ function CentroEstacionEspacial(material){
             };
 
         };
-        
+
         var matrizRotacion = mat4.create();
 
         //Calculo las coordenadas para el perfil rotado
         for (var i = 0.0; i < this.rows; i++) {
 
-            var angulo = 2.0*i*Math.PI/(this.rows-1); 
+            var angulo = 2.0*i*Math.PI/(this.rows-1);
             var matizModelado = mat4.create();
             mat4.rotateY(matizModelado,matrizRotacion,angulo);
 
@@ -93,23 +93,19 @@ function CentroEstacionEspacial(material){
 
     }
 
-    this.initBuffers = function(){
+    this.inicializarLosBuffer = function(){
 
         this.texture_coord_buffer = [];
         this.position_buffer = [];
         this.normal_buffer = [];
 
         this.cargarCentro();
-        
-        // Buffer de indices de los triangulos
-        this.createIndexBuffer();
 
-        this.bindBuffers(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+        // Buffer de indices de los triangulos
+        this.crearBufferDeIndices();
+
+        this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
     }
-
-    this.initBuffers();
-
+    this.inicializarLosBuffer();
 }
-
-inheritPrototype(CentroEstacionEspacial, DrawObject);
