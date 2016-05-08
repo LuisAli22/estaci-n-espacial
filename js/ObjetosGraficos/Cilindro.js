@@ -10,6 +10,8 @@ Cilindro.prototype.obtenerElValorDeLaCoordenada=function(coordenada){
   var sinPhi = Math.sin(this.phi);
   var cosPhi = Math.cos(this.phi);
 
+  this.altura = ALTURACILINDRO/2 - this.numeroLatitud * ALTURACILINDRO / (this.bandasDeLatitud-2);
+
   return (coordenada==XCOORD)?
         (cosPhi):
         ((coordenada==YCOORD)?
