@@ -1,30 +1,24 @@
 function FabricaEstacionEspacial(){
   this.fabricaCilindrosLaterales=new FabricaCilindrosLaterales();
 }
-FabricaEstacionEspacial.prototype.crear=function(matrizModelado){
+FabricaEstacionEspacial.prototype.crear=function(){
   console.log("Crear estacion espacial");
   var estacion=new ObjetoGraficoCompuesto();
-  var nuevaMatrizModelado=this.transformarMatrizModelado(matrizModelado);
-  var interiorEstacionEspacial = new AnilloEstacionEspacial(VIOLETA,nuevaMatrizModelado);
-  var exteriorEstacionEspacial = new AnilloEstacionEspacial(BEIS,nuevaMatrizModelado);
+  var interiorEstacionEspacial = new AnilloEstacionEspacial(VIOLETA);
+  var exteriorEstacionEspacial = new AnilloEstacionEspacial(BEIS);
   exteriorEstacionEspacial.cargarExteriorEstacionEspacial();
   interiorEstacionEspacial.cargarInteriorEstacionEspacial();
-  var tapaInicial = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferInicial,interiorEstacionEspacial.bufferInicial,BEIS,nuevaMatrizModelado);
-  var tapaFinal = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferFinal,interiorEstacionEspacial.bufferFinal,BEIS,nuevaMatrizModelado);
-  var centro = new CentroEstacionEspacial(BEIS,nuevaMatrizModelado);
-  var cilindrosLaterales = this.fabricaCilindrosLaterales.crear(nuevaMatrizModelado);
+  var tapaInicial = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferInicial,interiorEstacionEspacial.bufferInicial,BEIS);
+  var tapaFinal = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferFinal,interiorEstacionEspacial.bufferFinal,BEIS);
+  var centro = new CentroEstacionEspacial(BEIS);
+  var cilindrosLaterales = this.fabricaCilindrosLaterales.crear();
   estacion.agregar(interiorEstacionEspacial);
   estacion.agregar(exteriorEstacionEspacial);
   estacion.agregar(tapaInicial);
   estacion.agregar(tapaFinal );
   estacion.agregar(centro);
   estacion.agregar(cilindrosLaterales);
+  var estacionEspacialDecorada= new EstacionEspacial(estacion);
   console.log("inicializar textura de la estacion");
-  return estacion;
-}
-
-FabricaEstacionEspacial.prototype.transformarMatrizModelado=function(matrizModelado){
-  var nuevaMatrizModelado=mat4.create();
-  mat4.scale(nuevaMatrizModelado, matrizModelado, [FACTORESCALAESTACION, FACTORESCALAESTACION, FACTORESCALAESTACION]);
-  return nuevaMatrizModelado;
+  return estacionEspacialDecorada;
 }

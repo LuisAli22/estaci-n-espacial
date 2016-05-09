@@ -8,6 +8,10 @@
 <script type="text/javascript" src="js/gl-matrix.js"></script>
 <script type="text/javascript" src="js/webgl-utils.js"></script>
 <script type="text/javascript" src="js/Definiciones/Definiciones.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/CilindrosLateralesEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/EstacionEspacial.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Sol.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Tierra.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/ObjetoGraficoCompuesto.js"></script>
 <script type="text/javascript" src="js/shader/shaderScript.js"></script>
 <script type="text/javascript" src="js/shader/PrepararProgramaEjecutable.js"></script>
@@ -180,9 +184,6 @@
 
     function manejarTexturaCargada() {
       espacioEstelar.generarMipMap();
-      /*tierra.generarMipMap();
-      sol.generarMipMap();
-      estacionEspacial.generarMipMap();*/
     }
 
     var CameraMatrix = mat4.create();
@@ -206,8 +207,7 @@
     //var estacionEspacialRotationAngle = 1.57;
 
     function mvPushMatrix() {
-        var copy = mat4.create();
-        mat4.set(mvMatrix, copy);
+        var copy = mat4.clone(mvMatrix);
         mvMatrixStack.push(copy);
     }
 
@@ -266,8 +266,6 @@
         // Dibujamos el sol
 
         // Configuramos la iluminaci�n para el sol
-        gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
-        gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
 
         espacioEstelar.dibujar();
 
@@ -277,8 +275,7 @@
         // Dibujamos la tierra
 
         // Configuramos la iluminaci�n
-        /*gl.uniform3f(shaderProgram.ambientColorUniform, 0.3, 0.3, 0.3 );
-        gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);*/
+        /**/
 
 
         //tierra.dibujar(model_matrix_tierra);
@@ -290,8 +287,7 @@
         // Dibujamos la Estacion Espacial
 
         // Configuramos la iluminaci�n para la Tierra
-        /*gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
-        gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);*/
+        /**/
 
         //estacionEspacial.dibujar();
 
@@ -305,7 +301,7 @@
         mat4.rotate(newRotationMatrix, newRotationMatrix, 0.025, [0, 1, 0]);
 		mat4.multiply(newRotationMatrix, solRotationMatrix, solRotationMatrix);*/
 
-        solRotationAngletierra += 0.0045;
+        //solRotationAngletierra += 0.0045;
         //estacionEspacialRotationAngle += 0.0045;
         dibujarEscena();
     }

@@ -1,6 +1,6 @@
 CentroEstacionEspacial.prototype=new ComponenteEstacionEspacial;
 CentroEstacionEspacial.prototype.constructor=CentroEstacionEspacial;
-function CentroEstacionEspacial(material,matrizModelado){
+function CentroEstacionEspacial(material){
 
     //Puntos de control para la curva de B-spline para definir el centro
     //de la estacion espacial
@@ -30,7 +30,7 @@ function CentroEstacionEspacial(material,matrizModelado){
     const FILAS = 70;
 
     //Seteo las dimensiones de la grilla
-    ComponenteEstacionEspacial.call(this,FILAS,COLUMNAS,material,matrizModelado);
+    ComponenteEstacionEspacial.call(this,FILAS,COLUMNAS,material);
 
     this.cargarCentro = function(){
 

@@ -1,9 +1,9 @@
 function ObjetoGraficoCompuesto(){
   this.componentes=[];
 }
-ObjetoGraficoCompuesto.prototype.dibujar = function(matrizModelado){
+ObjetoGraficoCompuesto.prototype.dibujar = function(){
   for(indiceComponente in this.componentes){
-    this.componentes[indiceComponente].dibujar(matrizModelado);
+    this.componentes[indiceComponente].dibujar();
   }
 }
 ObjetoGraficoCompuesto.prototype.inicializarTextura=function(){
@@ -21,4 +21,7 @@ ObjetoGraficoCompuesto.prototype.agregar=function(objetoGrafico){
 }
 ObjetoGraficoCompuesto.prototype.obtenerHijo=function(pos){
   return this.componentes[pos];
+}
+ObjetoGraficoCompuesto.prototype.longitud=function(){
+  return this.componentes.length;
 }

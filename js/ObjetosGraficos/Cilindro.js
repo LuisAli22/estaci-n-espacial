@@ -1,8 +1,9 @@
 Cilindro.prototype=new CuerpoRedondo;
 Cilindro.prototype.constructor=Cilindro;
-function Cilindro(bandasDeLatitud, bandasLongitudinales,material,matrizModelado){
+function Cilindro(bandasDeLatitud, bandasLongitudinales,material,identificador){
   this.altura =0;
-  CuerpoRedondo.call(this,bandasDeLatitud, bandasLongitudinales,material,matrizModelado);
+  this.identificador=identificador;
+  CuerpoRedondo.call(this,bandasDeLatitud, bandasLongitudinales,material);
   this.topeBandasDeLatitud=bandasDeLatitud-1;
   this.inicializarLosBuffer();
 }
@@ -39,3 +40,7 @@ Cilindro.prototype.cargarCoordenadasEnLosBuffersDePosicionYTextura=function(){
   CuerpoRedondo.prototype.cargarCoordenadasEnLosBuffersDePosicionYTextura.call(this);
   this.cargarTapa(-ALTURACILINDRO/2);
 }
+Cilindro.prototype.aceptar=function(visitador){
+  visitador.visitarCilindro(this);
+}
+Cilindro.prototype.obtenerIdentificador=function(){return this.identificador;}

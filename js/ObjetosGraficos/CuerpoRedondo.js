@@ -1,6 +1,6 @@
 CuerpoRedondo.prototype=new ObjetoGrafico;
 CuerpoRedondo.prototype.constructor=CuerpoRedondo;
-function CuerpoRedondo(bandasDeLatitud, bandasLongitudinales,material,matrizModelado){
+function CuerpoRedondo(bandasDeLatitud, bandasLongitudinales,material){
   this.bandasDeLatitud = bandasDeLatitud;
   this.bandasLongitudinales = bandasLongitudinales;
   this.material = material;
@@ -12,7 +12,6 @@ function CuerpoRedondo(bandasDeLatitud, bandasLongitudinales,material,matrizMode
   this.normal_buffer=[];
   this.texture_coord_buffer=[];
   this.index_buffer=[];
-  ObjetoGrafico.call(this,matrizModelado);
 }
 CuerpoRedondo.prototype.obtenerElValorDeLaCoordenada=function(coordenada){
   throw Error("Cuerpo Redondo es como una clase abstracta. La funcion obtenerElValorDeLaCoordenada() se debe implementar en un hijo en concreto de CuerpoRedondo");

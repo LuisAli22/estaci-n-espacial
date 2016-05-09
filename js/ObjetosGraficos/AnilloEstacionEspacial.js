@@ -1,6 +1,6 @@
 AnilloEstacionEspacial.prototype=new ComponenteEstacionEspacial;
 AnilloEstacionEspacial.prototype.constructor=AnilloEstacionEspacial;
-function AnilloEstacionEspacial(material,matrizModelado){
+function AnilloEstacionEspacial(material){
 
     const PUNTOSCURVASUPERIOR = 30;
     const PUNTOSCURVAINFERIOR = 30;
@@ -10,7 +10,7 @@ function AnilloEstacionEspacial(material,matrizModelado){
     this.bufferInicialCoordenadas = [];
     this.bufferInicialNormales = [];
 
-    ComponenteEstacionEspacial.call(this,FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL,material,matrizModelado);
+    ComponenteEstacionEspacial.call(this,FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL,material);
     this.cargarPerfilExterior = function(bufferInicialCoordenadas,bufferInicialNormales){
 
         //Curva superior del perfil

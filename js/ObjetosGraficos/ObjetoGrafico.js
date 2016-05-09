@@ -1,11 +1,10 @@
-function ObjetoGrafico(matrizModelado){
+function ObjetoGrafico(){
 
    this.webgl_position_buffer = null;
    this.webgl_normal_buffer = null;
    this.webgl_texture_coord_buffer = null;
    this.webgl_index_buffer = null;
    this.textura = null;
-   this.matrizModelado=matrizModelado;
 }
 ObjetoGrafico.prototype.inicializarTextura = function(archivoTextura){
 
@@ -73,9 +72,9 @@ ObjetoGrafico.prototype.dibujar = function(){
     gl.bindTexture(gl.TEXTURE_2D, this.textura);
     gl.uniform1i(shaderProgram.samplerUniform, 0);
 
-    gl.uniformMatrix4fv(shaderProgram.ModelMatrixUniform, false, this.matrizModelado);
+    gl.uniformMatrix4fv(shaderProgram.ModelMatrixUniform, false, mvMatrix);
     var matrizNormal = mat3.create();
-    mat3.fromMat4(matrizNormal, this.matrizModelado);
+    mat3.fromMat4(matrizNormal, mvMatrix);
     mat3.invert(matrizNormal, matrizNormal);
     mat3.transpose(matrizNormal, matrizNormal);
     gl.uniformMatrix3fv(shaderProgram.nMatrixUniform, false, matrizNormal);
