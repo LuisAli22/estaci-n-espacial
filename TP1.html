@@ -8,6 +8,9 @@
 <script type="text/javascript" src="js/gl-matrix.js"></script>
 <script type="text/javascript" src="js/webgl-utils.js"></script>
 <script type="text/javascript" src="js/Definiciones/Definiciones.js"></script>
+<script type="text/javascript" src="js/Escena/Escena.js"></script>
+<script type="text/javascript" src="js/Camara/Camara.js"></script>
+<script type="text/javascript" src="js/Camara/CamaraOrbital.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/CilindrosLateralesEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/EstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/Sol.js"></script>
@@ -183,22 +186,13 @@
     }
 
     function manejarTexturaCargada() {
-      espacioEstelar.generarMipMap();
+      escena.generarMipMap();
     }
-
-    var CameraMatrix = mat4.create();
     var mvMatrix = mat4.create();
     var mvMatrixStack = [];
     var pMatrix = mat4.create();
 
-    var mouseDown = false;
-    var lastMouseX = null;
-    var lastMouseY = null;
-
-    var sol = null;
-    var tierra = null;
-    var estacionEspacial = null;
-    var espacioEstelar=null;
+  var escena=null;
 
     var solRotationMatrix = mat4.create();
     mat4.identity(solRotationMatrix);
@@ -218,92 +212,10 @@
         mvMatrix = mvMatrixStack.pop();
     }
 
-    function setViewProjectionMatrix() {
-        gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
-        gl.uniformMatrix4fv(shaderProgram.ViewMatrixUniform, false, CameraMatrix);
-    }
-    function dibujarEscena() {
-
-		// Se configura el vierport dentro de �rea �canvas�. en este caso se utiliza toda
-		// el �rea disponible
-        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-
-		// Se habilita el color de borrado para la pantalla (Color Buffer) y otros buffers
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-		// Se configura la matriz de proyecci�n
-        mat4.perspective(pMatrix, 3.14/12.0, gl.viewportWidth / gl.viewportHeight, 0.1, 1000.0);
-
-        /////////////////////////////////////////////////////
-        // Configuraci�n de la luz
-        // Se inicializan las variables asociadas con la Iluminaci�n
-        var lighting;
-        lighting = true;
-        gl.uniform1i(shaderProgram.useLightingUniform, lighting);
-        var lightPosition = vec3.fromValues(-100.0, 0.0, -60.0);
-        //vec3.transformMat4(lightPosition, lightPosition, CameraMatrix);
-        gl.uniform3fv(shaderProgram.lightingDirectionUniform, lightPosition);
-
-        /////////////////////////////////////////////////////
-		// Definimos la ubicaci�n de la camara
-		// Pensamos por el momento marsamente la posici�n de la c�mara, la cual siempre mira al mars.
-		var matriz_camara = mat4.create();
-        mat4.identity(matriz_camara);
-        var eye_point = vec3.create();
-        vec3.set(eye_point, COORDENADAXOBSERVADOR,COORDENADAYOBSERVADOR, COORDENADAZOBSERVADOR);
-        var at_point = vec3.create();
-        vec3.set(at_point, 0, 0, 0);
-        var up_point = vec3.create();
-        vec3.set(up_point, 0, 1, 0);
-
-        mat4.lookAt(CameraMatrix, eye_point, at_point, up_point);
-        mat4.multiply(CameraMatrix, CameraMatrix, matriz_camara);
-
-        setViewProjectionMatrix();
-
-        ///////////////////////////////////////////////////////
-        //
-        // Dibujamos el sol
-
-        // Configuramos la iluminaci�n para el sol
-
-        espacioEstelar.dibujar();
-
-
-        ////////////////////////////////////////////////////////
-        //
-        // Dibujamos la tierra
-
-        // Configuramos la iluminaci�n
-        /**/
-
-
-        //tierra.dibujar(model_matrix_tierra);
-        //
-        ////////////////////////////////////////////////////////
-
-        ///////////////////////////////////////////////////////
-        //
-        // Dibujamos la Estacion Espacial
-
-        // Configuramos la iluminaci�n para la Tierra
-        /**/
-
-        //estacionEspacial.dibujar();
-
-    }
-
 
     function tick() {
         requestAnimFrame(tick);
-		/*var newRotationMatrix = mat4.create();
-        mat4.identity(newRotationMatrix);
-        mat4.rotate(newRotationMatrix, newRotationMatrix, 0.025, [0, 1, 0]);
-		mat4.multiply(newRotationMatrix, solRotationMatrix, solRotationMatrix);*/
-
-        //solRotationAngletierra += 0.0045;
-        //estacionEspacialRotationAngle += 0.0045;
-        dibujarEscena();
+        escena.dibujar();
     }
 
 
@@ -321,9 +233,7 @@
         var canvas = obtenerCanvas();
         inicializarGL(canvas);
         inicializarShaders();
-        var fabricaEspacioEstelar= new FabricaEspacioEstelar();
-        espacioEstelar=fabricaEspacioEstelar.crear();
-        espacioEstelar.inicializarTextura();
+        escena= new Escena(canvas);
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
 
