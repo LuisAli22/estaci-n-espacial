@@ -77,51 +77,127 @@ function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,punto
 
 };
 
-function obternerPuntosDeBSpline(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales){
-    
-    var cantidadDePuntosDeControl = bufferPuntosDeControl.length / 3;
+//Funcion creada a partir de http://www.sg6671.com.ar/files/demos/clase06/demoCurvas2d.html
+function CalcularCurva(){
 
-    for (var i = 2; i < cantidadDePuntosDeControl; i++) {
-        for (var j = 0; j < intervaloDelPaso; j++) {
-            
-            var u = j/(intervaloDelPaso-1);
-            
-            var punto0 = vec3.fromValues(bufferPuntosDeControl[3*(i-2)],bufferPuntosDeControl[3*(i-2)+1],bufferPuntosDeControl[3*(i-2)+2]);
-            var punto1 = vec3.fromValues(bufferPuntosDeControl[3*(i-1)],bufferPuntosDeControl[3*(i-1)+1],bufferPuntosDeControl[3*(i-1)+2]);
-            var punto2 = vec3.fromValues(bufferPuntosDeControl[3*i],bufferPuntosDeControl[3*i+1],bufferPuntosDeControl[3*i+2]);
-            var punto3 = vec3.fromValues(bufferPuntosDeControl[3*(i+1)],bufferPuntosDeControl[3*(i+1)+1],bufferPuntosDeControl[3*(i+1)+2]);
+    var Base0,Base1,Base2,Base3;
+    var Base0der,Base1der,Base2der,Base3der;
+    var inicio,fin;
+    var factor,sumador;
 
-            var x,y,z;
+    //Calcula sobre el plano XY con Z = 0
+    this.obtenerPuntosDeBezierXY = function(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,factorNormal){
 
-            
-            x = Base0Spline(u)*punto0[0]+Base1Spline(u)*punto1[0]+Base2Spline(u)*punto2[0]+Base3Spline(u)*punto3[0];
-            y = Base0Spline(u)*punto0[1]+Base1Spline(u)*punto1[1]+Base2Spline(u)*punto2[1]+Base3Spline(u)*punto3[1];
-            z = Base0Spline(u)*punto0[2]+Base1Spline(u)*punto1[2]+Base2Spline(u)*punto2[2]+Base3Spline(u)*punto3[2];
+        Base0=function(u) { return (1-u)*(1-u)*(1-u);}
 
-            bufferCoordenadas.push(x);
-            bufferCoordenadas.push(y);
-            bufferCoordenadas.push(z);
+        Base1=function(u) { return 3*(1-u)*(1-u)*u; }
 
-            bufferNormales.push(1.0);
-            bufferNormales.push(0.0);
-            bufferNormales.push(0.0);
+        Base2=function(u) { return 3*(1-u)*u*u;}
+
+        Base3=function(u) { return u*u*u; }
+
+
+        Base0der=function(u) { return -3*u*u+6*u-3;}
+
+        Base1der=function(u) { return 9*u*u-12*u+3; }
+
+        Base2der=function(u) { return -9*u*u+6*u;}
+
+        Base3der=function(u) { return 3*u*u; }
+
+        //Cada punto de control tiene coordenadas xyz, y cada curva 4 puntos de control
+        var cantidadDeCurvasDeBezier = ( bufferPuntosDeControl.length / 3 ) / 4;
+        //alert(cantidadDeCurvasDeBezier);
+        for (var i = 0; i < cantidadDeCurvasDeBezier; i++) {
+          
+            inicio = 0 + i;
+            fin = 1 + i;
+            factor = 4;
+            sumador = 2;
+
+            calcular(bufferPuntosDeControl,intervaloDelPaso[i],bufferCoordenadas,bufferNormales,factorNormal);
 
         };
+
     };
-};
 
-function Base0Spline(u) { 
-    return (1-3*u+3*u*u-u*u*u)*1/6;
-}
+    //Calcula sobre el plano XY con Z = 0
+    //Recibe  los puntos de control en bufferPuntosDeControl
+    //un vecto intervaloDelPaso, con cuantos puntos de control debe tomar para cada curva de bezier
+    //Los buffers de coordendas y normales a cargar
+    this.obtenerPuntosDeBSplineXY = function(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,factorNormal){
 
-function Base1Spline(u) { 
-    return (4-6*u*u+3*u*u*u)*1/6;
-}
+        Base0=function(u) { return (1-3*u+3*u*u-u*u*u)*1/6;}
 
-function Base2Spline(u) { 
-    return (1+3*u+3*u*u-3*u*u*u)*1/6
-}
+        Base1=function(u) { return (4-6*u*u+3*u*u*u)*1/6; }
 
-function Base3Spline(u) { 
-    return (u*u*u)*1/6;
+        Base2=function(u) { return (1+3*u+3*u*u-3*u*u*u)*1/6}
+
+        Base3=function(u) { return (u*u*u)*1/6; }
+
+
+        Base0der=function(u) { return (-3 +6*u -3*u*u)/6 }
+
+        Base1der=function(u) { return (-12*u+9*u*u)/6 }
+
+        Base2der=function(u) { return (3+6*u-9*u*u)/6;}
+
+        Base3der=function(u) { return (3*u*u)*1/6; }
+
+        inicio = 2;
+        fin = bufferPuntosDeControl.length / 3;
+        factor = 1;
+        sumador = 0;
+
+        calcular(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,factorNormal);
+
+    }
+
+    function calcular(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,factorNormal){
+
+        for ( i = inicio; i < fin; i++) {
+            for (var j = 0; j < intervaloDelPaso; j++) {
+                
+                var u = j/(intervaloDelPaso-1);
+                
+                var indice = factor * i + sumador;
+
+                var punto0 = vec3.fromValues(bufferPuntosDeControl[3*(indice-2)],bufferPuntosDeControl[3*(indice-2)+1],bufferPuntosDeControl[3*(indice-2)+2]);
+                var punto1 = vec3.fromValues(bufferPuntosDeControl[3*(indice-1)],bufferPuntosDeControl[3*(indice-1)+1],bufferPuntosDeControl[3*(indice-1)+2]);
+                var punto2 = vec3.fromValues(bufferPuntosDeControl[3*indice],bufferPuntosDeControl[3*indice+1],bufferPuntosDeControl[3*indice+2]);
+                var punto3 = vec3.fromValues(bufferPuntosDeControl[3*(indice+1)],bufferPuntosDeControl[3*(indice+1)+1],bufferPuntosDeControl[3*(indice+1)+2]);
+
+                //alert(punto3[0]+" "+punto3[1]+" "+punto3[2]);
+
+                var x,y,z,tx,ty,tz;
+
+                //Calculo las coordenadas mediante las bases de BSpline
+                x = Base0(u)*punto0[0]+Base1(u)*punto1[0]+Base2(u)*punto2[0]+Base3(u)*punto3[0];
+                y = Base0(u)*punto0[1]+Base1(u)*punto1[1]+Base2(u)*punto2[1]+Base3(u)*punto3[1];
+                z = Base0(u)*punto0[2]+Base1(u)*punto1[2]+Base2(u)*punto2[2]+Base3(u)*punto3[2];
+
+                //Calculo el vector tangete
+                tx = Base0der(u)*punto0[0]+Base1der(u)*punto1[0]+Base2der(u)*punto2[0]+Base3der(u)*punto3[0];
+                ty = Base0der(u)*punto0[1]+Base1der(u)*punto1[1]+Base2der(u)*punto2[1]+Base3der(u)*punto3[1];
+                tz = Base0der(u)*punto0[2]+Base1der(u)*punto1[2]+Base2der(u)*punto2[2]+Base3der(u)*punto3[2];
+
+                //Calculo el vector normal
+                var vectorNormal = vec3.fromValues(factorNormal*-ty,tx,tz);
+
+                //Normalizo el vector normal
+                vec3.normalize(vectorNormal,vectorNormal);
+
+                bufferCoordenadas.push(x);
+                bufferCoordenadas.push(y);
+                bufferCoordenadas.push(z);
+
+                bufferNormales.push(vectorNormal[0]);
+                bufferNormales.push(vectorNormal[1]);
+                bufferNormales.push(vectorNormal[2]);
+
+            };
+        };
+
+    }
+
 }
