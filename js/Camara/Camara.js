@@ -8,7 +8,7 @@ function Camara(canvas, radio, anguloTita, anguloFi) {
 	this.ojo = [0, 0, 0];
 	this.objetivo = [0, 0, 0];
 	this.arriba = [0, 1, 0];
-
+	this.matrizMirarHacia=mat4.create();
 	this.posicionInicial = [0,0];
 	this.posicionFinal = [0,0];
 
@@ -16,10 +16,11 @@ function Camara(canvas, radio, anguloTita, anguloFi) {
 
 	this.sensibilidadDelMouse = 100 * Math.PI;
 }
-
-Camara.prototype.obtenerMatriz = function() {
-	var matrizCamara = mat4.create();
-	return mat4.lookAt(matrizCamara, this.ojo, this.objetivo, this.arriba);
+Camara.prototype.obtenerMatriz=function(){
+	return this.matrizMirarHacia;
+}
+Camara.prototype.actualizarPosicion = function() {
+	throw Error("No se puede instanciar Camara. Las camaras posibles son cámara orbital");
 }
 Camara.prototype.esBotonIzquierdo = function(evento){
 	if (evento.which==BOTONIZQUIERDODELMOUSE) console.log("Tocaron el boton izquierdo");
@@ -44,17 +45,22 @@ Camara.prototype.verificarAnguloMaximo=function(angulo,limiteSuperior){
 Camara.prototype.verificarLosLimitesDeGiro=function(){
 	this.anguloTita=this.verificarAnguloMinimo(this.anguloTita,TITAMIN);
 	this.anguloTita=this.verificarAnguloMaximo(this.anguloTita,TITAMAX);
-	this.anguloFi=this.verificarAnguloMinimo(this.anguloFi,FIMIN);
-	this.anguloFi=this.verificarAnguloMaximo(this.anguloFi,FIMAX);
+}
+Camara.prototype.diferenciaEnCoordenada=function(eje){
+	return (this.posicionFinal[eje] - this.posicionInicial[eje]);
+}
+Camara.prototype.incrementoAngular=function(eje){
+	return (this.diferenciaEnCoordenada(eje) / (this.sensibilidadDelMouse));
 }
 Camara.prototype.seMueveElMouse = function(evento) {
 	if (this.estaApretandoElIzquierdo) {
 		console.log("Se mueve el mouse con el boton izquierdo apretado");
 		this.posicionFinal = this.obtengoCoordenadasDePantalla(evento);
-		this.anguloTita += ((this.posicionFinal[COORDENADAX] - this.posicionInicial[COORDENADAX]) / (this.sensibilidadDelMouse));
-		this.anguloFi += ((this.posicionFinal[COORDENADAY] - this.posicionInicial[COORDENADAY]) / (this.sensibilidadDelMouse));
+		this.anguloFi +=this.incrementoAngular(COORDENADAX);
+		this.anguloTita += this.incrementoAngular(COORDENADAY);
 		this.verificarLosLimitesDeGiro();
 		this.posicionInicial= this.posicionFinal;
+		this.actualizar();
 	}
 }
 

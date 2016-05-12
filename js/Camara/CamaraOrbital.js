@@ -5,6 +5,7 @@ CamaraOrbital.prototype.constructor = CamaraOrbital;
 //Fi entre 0 y 2PI
 function CamaraOrbital(canvas, radio, anguloTita,anguloFi){
 	Camara.call(this, canvas, radio,anguloTita,anguloFi);
+	this.actualizar();
 	this.radioMinimo = 1;
 }
 CamaraOrbital.prototype.obtenerCoordenadasEspaciales=function(){
@@ -13,8 +14,8 @@ CamaraOrbital.prototype.obtenerCoordenadasEspaciales=function(){
 	var z = this.radio * Math.sin(this.anguloTita) * Math.sin(this.anguloFi);
   return [x,y,z];
 }
-CamaraOrbital.prototype.obtenerMatriz = function(){
-	var matrizDeLaCamara = mat4.create();
-  var coordenadasEspaciales=this.obtenerCoordenadasEspaciales();
-	return mat4.lookAt(matrizDeLaCamara , coordenadasEspaciales, this.objetivo, this.arriba);
+CamaraOrbital.prototype.actualizar = function(){
+	mat4.identity(this.matrizMirarHacia);
+	this.ojo=this.obtenerCoordenadasEspaciales();
+	mat4.lookAt(this.matrizMirarHacia, this.ojo, this.objetivo, this.arriba);
 };
