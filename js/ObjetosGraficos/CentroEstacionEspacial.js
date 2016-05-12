@@ -37,8 +37,9 @@ function CentroEstacionEspacial(material){
         var bufferInicialCoordenadas = [];
         var bufferInicialNormales = [];
 
-        obternerPuntosDeBSpline(puntosDeControl,10,bufferInicialCoordenadas,bufferInicialNormales);
-
+        var calculardorDePuntosDeCurva = new CalcularCurva();
+        calculardorDePuntosDeCurva.obtenerPuntosDeBSplineXY(puntosDeControl,10,bufferInicialCoordenadas,bufferInicialNormales,1);
+        
         //Cargo las coordenadas de textura
         for (var i = 0.0; i < this.rows; i++){
             for (var j = 0.0; j < this.cols; j++){
@@ -72,13 +73,20 @@ function CentroEstacionEspacial(material){
                 coordenada[1] = bufferInicialCoordenadas[3*j+1];
                 coordenada[2] = bufferInicialCoordenadas[3*j+2];
 
+                //Aplico la transformacion de revolucion a las coordenadas
                 vec3.transformMat4(coordenada,coordenada,matizModelado);
+                
                 this.position_buffer.push(coordenada[0]);
                 this.position_buffer.push(coordenada[1]);
                 this.position_buffer.push(coordenada[2]);
 
-                var normales = vec3.fromValues(1.0,0.0,0.0);
+                var normales = vec3.create();
 
+                normales[0] = bufferInicialNormales[3*j];
+                normales[1] = bufferInicialNormales[3*j+1];
+                normales[2] = bufferInicialNormales[3*j+2];
+
+                //Aplico la transformacion de revolucion a las normales
                 vec3.transformMat4(normales,normales,matizModelado);
                 vec3.normalize(normales,normales);
 

@@ -48,3 +48,5 @@ const COORDENADAX=0;
 const COORDENADAY=1;
 const TITAMIN=0;
 const TITAMAX=Math.PI-0.01;
+const ARRIBA=1;
+const ABAJO=2;
