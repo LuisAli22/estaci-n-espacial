@@ -9,7 +9,7 @@ EjesAntenaEstacionEspacial.prototype.dibujar = function(){
     var matrizRotacion = mat4.create();
 
     mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0);
-    mat4.scale(matrizEscalado,matrizEscalado,[0.025,5.0,0.025]);
+    mat4.scale(matrizEscalado,matrizEscalado,[0.025,4.5,0.025]);
     mat4.translate(matrizTraslacion,matrizTraslacion,[0.0,0.5,0.0]);
     
 

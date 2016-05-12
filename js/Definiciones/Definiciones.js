@@ -50,3 +50,5 @@ const TITAMIN=0;
 const TITAMAX=Math.PI;
 const FIMIN=0;
 const FIMAX=2*Math.PI;
+const ARRIBA=1;
+const ABAJO=2;
