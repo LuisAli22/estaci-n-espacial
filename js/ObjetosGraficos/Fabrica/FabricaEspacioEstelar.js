@@ -1,6 +1,6 @@
-function FabricaEspacioEstelar(){
+function FabricaEspacioEstelar(camara){
   this.fabricaEstacionEspacial=new FabricaEstacionEspacial();
-  this.fabricaSol= new FabricaSol();
+  this.fabricaSol= new FabricaSol(camara);
   this.fabricaTierra= new FabricaTierra();
 }
 FabricaEspacioEstelar.prototype.crear=function(){

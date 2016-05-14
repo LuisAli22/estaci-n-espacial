@@ -135,7 +135,7 @@
 		// Calculos de la iluminaci�n
 		vec3 light_dir =  uLightPosition - vec3( pos_camera_view );
 		normalize(light_dir);
-        if (!uUseLighting)
+    if (!uUseLighting)
 		{
             vLightWeighting = vec3(1.0, 1.0, 1.0);
         }
@@ -198,11 +198,6 @@
 
   var escena=null;
 
-    var solRotationMatrix = mat4.create();
-    mat4.identity(solRotationMatrix);
-
-    var solRotationAngletierra = 0.0;
-    //var estacionEspacialRotationAngle = 1.57;
 
     function mvPushMatrix() {
         var copy = mat4.clone(mvMatrix);
