@@ -1,8 +1,7 @@
-function CilindrosAntenaEstacionEspacial(cilindroAntena){
-  this.cilindro=cilindroAntena;
-  this.traslaciones = [];
-}
-CilindrosAntenaEstacionEspacial.prototype.dibujar = function(){
+function CilindrosAntenaEstacionEspacial(material){
+  this.cilindro=new Cilindro(64,64,material,0);
+
+  this.dibujarCilindro = function(traslacion){
 
     var matrizEscalado = mat4.create();
     var matrizTraslacion = mat4.create();
@@ -11,32 +10,36 @@ CilindrosAntenaEstacionEspacial.prototype.dibujar = function(){
 
     mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0);
     mat4.scale(matrizEscalado,matrizEscalado,[0.3,0.1,0.3]);
-    
+ 
+    mvPushMatrix();
+      mat4.identity(matrizTraslacionFinal);
+      mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[0,traslacion,0.0]);
 
-    for (var i = 0; i < 4 ; i++) {
-      mvPushMatrix();
-        var traslacion;
-        if(this.traslaciones[i]<0){
-          traslacion = this.traslaciones[i] - 1.11;
-        }else{
-          traslacion = this.traslaciones[i] + 1.25;
-        }
-        mat4.identity(matrizTraslacionFinal);
-        mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[0,traslacion,0.0]);
-
-        mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);
-        mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
-        mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
-        mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
+      mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);
+      mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
+      mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
+      mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
         
-        this.cilindro.dibujar();
-      mvPopMatrix();       
-    };
+      this.cilindro.dibujar();
+    mvPopMatrix();
+
+  };
 
 }
-CilindrosAntenaEstacionEspacial.prototype.cargarFactorTraslacion=function(traslacion){
-  this.traslaciones.push(traslacion);
+
+CilindrosAntenaEstacionEspacial.prototype.dibujar = function(){
+
+    this.dibujarCilindro(3.25);
+    this.dibujarCilindro(4.75);
+    this.dibujarCilindro(6.25);
+    this.dibujarCilindro(7.75);
+    this.dibujarCilindro(-3.11);
+    this.dibujarCilindro(-4.61);
+    this.dibujarCilindro(-6.11);
+    this.dibujarCilindro(-7.61);
+
 }
+
 CilindrosAntenaEstacionEspacial.prototype.inicializarTextura=function(){
   this.cilindro.inicializarTextura(RUTAIMAGENMARTE);
 }

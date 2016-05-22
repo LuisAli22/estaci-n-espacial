@@ -1,7 +1,5 @@
 function FabricaEstacionEspacial(){
   this.fabricaCilindrosLaterales=new FabricaCilindrosLaterales();
-  this.fabricaEjes=new FabricaEjes();
-  this.fabricaCilindrosEjes= new FabricaCilindrosAntenaEstacionEspacial();
 }
 FabricaEstacionEspacial.prototype.crear=function(){
   console.log("Crear estacion espacial");
@@ -14,9 +12,8 @@ FabricaEstacionEspacial.prototype.crear=function(){
   var tapaFinal = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferFinal,interiorEstacionEspacial.bufferFinal,BEIS);
   var centro = new CentroEstacionEspacial(BEIS);
   var cilindrosLaterales = this.fabricaCilindrosLaterales.crear();
-  var ejes = this.fabricaEjes.crear();
-  var cilindroEjesSuperiores = this.fabricaCilindrosEjes.crear(ARRIBA);
-  var cilindroEjesInferiores = this.fabricaCilindrosEjes.crear(ABAJO);
+  var ejes = new EjesAntenaEstacionEspacial(DORADO);
+  var cilindroEjesSuperiores = new CilindrosAntenaEstacionEspacial(DORADO);
   estacion.agregar(interiorEstacionEspacial);
   estacion.agregar(exteriorEstacionEspacial);
   estacion.agregar(tapaInicial);
@@ -25,8 +22,10 @@ FabricaEstacionEspacial.prototype.crear=function(){
   estacion.agregar(cilindrosLaterales);
   estacion.agregar(ejes);
   estacion.agregar(cilindroEjesSuperiores);
-  estacion.agregar(cilindroEjesInferiores);
+  var panel = new PanelEstacionEspacial(DORADO);
+  estacion.agregar(panel);
   var estacionEspacialDecorada= new EstacionEspacial(estacion);
   console.log("inicializar textura de la estacion");
   return estacionEspacialDecorada;
+
 }
