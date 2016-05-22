@@ -1,5 +1,4 @@
 function FabricaEstacionEspacial(){
-  this.fabricaCilindrosLaterales=new FabricaCilindrosLaterales();
 }
 FabricaEstacionEspacial.prototype.crear=function(){
   console.log("Crear estacion espacial");
@@ -11,7 +10,7 @@ FabricaEstacionEspacial.prototype.crear=function(){
   var tapaInicial = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferInicial,interiorEstacionEspacial.bufferInicial,BEIS);
   var tapaFinal = new TapaEstacionEspacial(exteriorEstacionEspacial.bufferFinal,interiorEstacionEspacial.bufferFinal,BEIS);
   var centro = new CentroEstacionEspacial(BEIS);
-  var cilindrosLaterales = this.fabricaCilindrosLaterales.crear();
+  var cilindrosLaterales = new CilindrosLateralesEstacionEspacial();
   var ejes = new EjesAntenaEstacionEspacial(DORADO);
   var cilindroEjesSuperiores = new CilindrosAntenaEstacionEspacial(DORADO);
   estacion.agregar(interiorEstacionEspacial);

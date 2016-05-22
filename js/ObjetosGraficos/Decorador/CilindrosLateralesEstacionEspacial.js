@@ -1,5 +1,5 @@
-function CilindrosLateralesEstacionEspacial(cilindroLateral){
-  this.cilindro=cilindroLateral;
+function CilindrosLateralesEstacionEspacial(){
+
 }
 CilindrosLateralesEstacionEspacial.prototype.dibujar = function(){
   for (var indiceCilindro=0;indiceCilindro< CANTIDADDECILINDROS;indiceCilindro++){
@@ -16,13 +16,13 @@ CilindrosLateralesEstacionEspacial.prototype.dibujar = function(){
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
-      this.cilindro.dibujar();
+      cilindro.dibujar();
     mvPopMatrix();
   }
 }
 CilindrosLateralesEstacionEspacial.prototype.inicializarTextura=function(){
-  this.cilindro.inicializarTextura(RUTAIMAGENMARTE);
+  cilindro.inicializarTextura(RUTAIMAGENMARTE);
 }
 CilindrosLateralesEstacionEspacial.prototype.generarMipMap=function (){
-  this.cilindro.generarMipMap();
+  cilindro.generarMipMap();
 }

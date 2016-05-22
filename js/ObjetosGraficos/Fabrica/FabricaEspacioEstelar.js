@@ -5,6 +5,7 @@ function FabricaEspacioEstelar(camara){
 }
 FabricaEspacioEstelar.prototype.crear=function(){
   console.log("Crear espacio estelar");
+  cilindro = new Cilindro(64,64,DORADO,0);
   var espacioEstelar=new ObjetoGraficoCompuesto();
   var estacionEspacial = this.fabricaEstacionEspacial.crear();
   var sol=this.fabricaSol.crear();

@@ -1,7 +1,6 @@
 function Panel(material){
 
   this.cubo = new Cubo(6.0);
-  this.cilindro = new Cilindro(64,64,DORADO,0);
 
   this.dibujarPanel = function(x,y){
 
@@ -40,7 +39,7 @@ function Panel(material){
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
       
-      this.cilindro.dibujar();
+      cilindro.dibujar();
       
     mvPopMatrix();
 
@@ -62,7 +61,7 @@ Panel.prototype.dibujar = function(){
     mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
     mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
     
-    this.cilindro.dibujar();
+    cilindro.dibujar();
 
   mvPopMatrix();
 
