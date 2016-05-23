@@ -11,7 +11,6 @@ function CilindrosAntenaEstacionEspacial(material){
     mat4.scale(matrizEscalado,matrizEscalado,[0.3,0.1,0.3]);
  
     mvPushMatrix();
-      mat4.identity(matrizTraslacionFinal);
       mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[0,traslacion,0.0]);
 
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);

@@ -13,6 +13,8 @@ FabricaEstacionEspacial.prototype.crear=function(){
   var cilindrosLaterales = new CilindrosLateralesEstacionEspacial();
   var ejes = new EjesAntenaEstacionEspacial(DORADO);
   var cilindroEjesSuperiores = new CilindrosAntenaEstacionEspacial(DORADO);
+  var panel = new PanelEstacionEspacial(DORADO);
+  var escotillas = new Escotillas();
   estacion.agregar(interiorEstacionEspacial);
   estacion.agregar(exteriorEstacionEspacial);
   estacion.agregar(tapaInicial);
@@ -21,8 +23,8 @@ FabricaEstacionEspacial.prototype.crear=function(){
   estacion.agregar(cilindrosLaterales);
   estacion.agregar(ejes);
   estacion.agregar(cilindroEjesSuperiores);
-  var panel = new PanelEstacionEspacial(DORADO);
   estacion.agregar(panel);
+  estacion.agregar(escotillas);
   var estacionEspacialDecorada= new EstacionEspacial(estacion);
   console.log("inicializar textura de la estacion");
   return estacionEspacialDecorada;
