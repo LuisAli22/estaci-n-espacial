@@ -123,7 +123,7 @@ function CalcularCurva(){
 
     //Calcula sobre el plano XY con Z = 0
     //Recibe  los puntos de control en bufferPuntosDeControl
-    //un vecto intervaloDelPaso, con cuantos puntos de control debe tomar para cada curva de bezier
+    //un valor intervaloDelPaso para los puntos de la curva de BSpline
     //Los buffers de coordendas y normales a cargar
     this.obtenerPuntosDeBSplineXY = function(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,factorNormal){
 
@@ -145,7 +145,7 @@ function CalcularCurva(){
         Base3der=function(u) { return (3*u*u)*1/6; }
 
         inicio = 2;
-        fin = bufferPuntosDeControl.length / 3;
+        fin = bufferPuntosDeControl.length / 3 - 1;
         factor = 1;
         sumador = 0;
 
@@ -156,6 +156,7 @@ function CalcularCurva(){
     function calcular(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,factorNormal){
 
         for ( i = inicio; i < fin; i++) {
+
             for (var j = 0; j < intervaloDelPaso; j++) {
                 
                 var u = j/(intervaloDelPaso-1);
@@ -167,7 +168,6 @@ function CalcularCurva(){
                 var punto2 = vec3.fromValues(bufferPuntosDeControl[3*indice],bufferPuntosDeControl[3*indice+1],bufferPuntosDeControl[3*indice+2]);
                 var punto3 = vec3.fromValues(bufferPuntosDeControl[3*(indice+1)],bufferPuntosDeControl[3*(indice+1)+1],bufferPuntosDeControl[3*(indice+1)+2]);
 
-                //alert(punto3[0]+" "+punto3[1]+" "+punto3[2]);
 
                 var x,y,z,tx,ty,tz;
 
@@ -182,7 +182,7 @@ function CalcularCurva(){
                 tz = Base0der(u)*punto0[2]+Base1der(u)*punto1[2]+Base2der(u)*punto2[2]+Base3der(u)*punto3[2];
 
                 //Calculo el vector normal
-                var vectorNormal = vec3.fromValues(factorNormal*-ty,tx,tz);
+                var vectorNormal = vec3.fromValues(factorNormal*-ty,factorNormal*tx,factorNormal*tz);
 
                 //Normalizo el vector normal
                 vec3.normalize(vectorNormal,vectorNormal);

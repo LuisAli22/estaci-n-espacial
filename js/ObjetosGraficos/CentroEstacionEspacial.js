@@ -22,7 +22,7 @@ function CentroEstacionEspacial(material){
                             0.4375, -0.7, 0.0, 0.25, -0.77, 0.0, 0.25, -0.77, 0.0, 0.25, -0.77, 0.0,
                             0.25, -0.77, 0.0, 0.25, -1.61, 0.0, 0.25, -1.61, 0.0, 0.25, -1.61, 0.0,
                             0.25, -1.61, 0.0, 0.0, -1.61, 0.0, 0.0, -1.61, 0.0, 0.0, -1.61, 0.0,
-                            0.0, -1.61, 0.0, ];
+                            0.0, -1.61, 0.0 ];
 
 
     const INTERVALODELPASO = 10;
@@ -65,7 +65,7 @@ function CentroEstacionEspacial(material){
             var matizModelado = mat4.create();
             mat4.rotateY(matizModelado,matrizRotacion,angulo);
 
-           for (var j = 0; j < this.cols; j++) {
+            for (var j = 0; j < this.cols; j++) {
 
                 var coordenada = vec3.create();
 
