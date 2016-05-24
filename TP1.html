@@ -13,7 +13,6 @@
 <script type="text/javascript" src="js/Camara/CamaraOrbital.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/CilindrosLateralesEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/EjesAntenaEstacionEspacial.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/CilindrosAntenaEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/EstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/Sol.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/Tierra.js"></script>
@@ -39,6 +38,7 @@
 <script type="text/javascript" src="js/ObjetosGraficos/Cubo.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/MangueraAstronauta.js"></script>
 <script type="text/javascript" src="js/Transformar.js"></script>
+<script type="text/javascript" src="js/ControladorPaneles.js"></script>
 
 <script id="shader-fs" type="x-shader/x-fragment">
     precision mediump float;
@@ -158,7 +158,7 @@
 
 <script type="text/javascript">
 
-    var cilindro;
+    
     var gl;
     var shaderProgram;
     function crearContextoDeDibujoEnCanvas(canvas){
@@ -202,7 +202,10 @@
     var mvMatrix = mat4.create();
     var mvMatrixStack = [];
     var pMatrix = mat4.create();
-
+    var cilindro;
+    var abrirPaneles = false;
+    var cerrarPaneles = false;
+    var listo = true;
   var escena=null;
 
 
