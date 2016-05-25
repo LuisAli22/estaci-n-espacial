@@ -4,11 +4,15 @@ function Escena(canvas){
 	canvas.onmousemove = this.seMueveElMouse.bind(this);
   canvas.tabIndex = 1000;
   canvas.onkeydown = this.presionoUnaTecla.bind(this);
+  canvas.onwheel= this.seMueveLaRuedaDelMouse.bind(this);
   this.camara= new CamaraOrbital(canvas, 200,0.5 * Math.PI, 0.5 * Math.PI);
   cilindro = new Cilindro(64,64,DORADO,0);
   var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.camara);
   this.espacioEstelar=fabricaEspacioEstelar.crear();
   this.espacioEstelar.inicializarTextura();
+}
+Escena.prototype.seMueveLaRuedaDelMouse=function(evento){
+  this.camara.seMueveLaRuedaDelMouse(evento);
 }
 Escena.prototype.apretaronUnBotonDelMouse=function(evento){
   this.camara.apretaronUnBotonDelMouse(evento);
@@ -25,9 +29,9 @@ Escena.prototype.presionoUnaTecla=function(evento){
               break;
     case TECLADIRECCIONABAJO : cerrarPaneles = listo;
               break;
-    
+
   }
-  
+
 }
 Escena.prototype.generarMipMap=function(){
   this.espacioEstelar.generarMipMap();

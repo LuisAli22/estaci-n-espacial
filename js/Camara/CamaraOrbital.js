@@ -6,7 +6,6 @@ CamaraOrbital.prototype.constructor = CamaraOrbital;
 function CamaraOrbital(canvas, radio, anguloTita,anguloFi){
 	Camara.call(this, canvas, radio,anguloTita,anguloFi);
 	this.actualizar();
-	this.radioMinimo = 1;
 }
 CamaraOrbital.prototype.obtenerCoordenadasEspaciales=function(){
   var x = this.radio * Math.sin(this.anguloTita) * Math.cos(this.anguloFi);

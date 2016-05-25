@@ -68,3 +68,12 @@ Camara.prototype.soltaronUnBotonDelMouse = function(evento){
 	console.log("Soltaron un boton del mouse");
 	if (this.esBotonIzquierdo(evento)) this.estaApretandoElIzquierdo= false;
 }
+Camara.prototype.seMueveLaRuedaDelMouse=function(evento){
+	console.log("Se mueve la rueda del mouse");
+		this.posicionFinal=this.obtengoCoordenadasDePantalla(evento);
+		this.radio += this.diferenciaEnCoordenada(COORDENADAY);
+		this.radio=this.obtenerValorMinimo(this.radio,RADIOMINIMO);
+		this.radio=this.obtenerValorMaximo(this.radio,RADIOMAXIMO);
+		this.posicionInicial= this.posicionFinal;
+		this.actualizar();
+}
