@@ -12,7 +12,6 @@ FabricaEstacionEspacial.prototype.crear=function(){
   var centro = new CentroEstacionEspacial(BEIS);
   var cilindrosLaterales = new CilindrosLateralesEstacionEspacial();
   var ejes = new EjesAntenaEstacionEspacial(DORADO);
-  //var cilindroEjesSuperiores = new CilindrosAntenaEstacionEspacial(DORADO);
   var panel = new PanelEstacionEspacial(DORADO);
   var escotillas = new Escotillas();
   var manguera = new MangueraAstronauta(DORADO);
@@ -23,7 +22,6 @@ FabricaEstacionEspacial.prototype.crear=function(){
   estacion.agregar(centro);
   estacion.agregar(cilindrosLaterales);
   estacion.agregar(ejes);
-  //estacion.agregar(cilindroEjesSuperiores);
   estacion.agregar(panel);
   estacion.agregar(escotillas);
   estacion.agregar(manguera);

@@ -5,6 +5,7 @@ function Escena(canvas){
   canvas.tabIndex = 1000;
   canvas.onkeydown = this.presionoUnaTecla.bind(this);
   this.camara= new CamaraOrbital(canvas, 200,0.5 * Math.PI, 0.5 * Math.PI);
+  cilindro = new Cilindro(64,64,DORADO,0);
   var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.camara);
   this.espacioEstelar=fabricaEspacioEstelar.crear();
   this.espacioEstelar.inicializarTextura();

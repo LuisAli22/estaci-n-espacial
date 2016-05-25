@@ -19,6 +19,9 @@
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/Panel.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/PanelEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/Escotillas.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/TurbinasNave.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/EjesNave.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Nave.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/ObjetoGraficoCompuesto.js"></script>
 <script type="text/javascript" src="js/shader/shaderScript.js"></script>
 <script type="text/javascript" src="js/shader/PrepararProgramaEjecutable.js"></script>
@@ -28,6 +31,7 @@
 <script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaSol.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaEspacioEstelar.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaNave.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Esfera.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/ComponenteEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/AnilloEstacionEspacial.js"></script>
@@ -37,6 +41,7 @@
 <script type="text/javascript" src="js/ObjetosGraficos/Cilindro.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Cubo.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/MangueraAstronauta.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Turbina.js"></script>
 <script type="text/javascript" src="js/Transformar.js"></script>
 <script type="text/javascript" src="js/ControladorPaneles.js"></script>
 
@@ -53,7 +58,9 @@
     // 2 : violeta
     // 3 : celeste
     // 4 : amarillo
-    // 5 : Beis
+    // 5 : beis
+    // 5 : gris
+    // 7 : marron
     vec4 tablaMateriales(float material,vec3 vLightWeighting){
 
         vec4 color;
@@ -84,6 +91,10 @@
             color.x = 192.0/255.0;
             color.y = 192.0/255.0;
             color.z = 192.0/255.0;
+        } else if (material == 7.0){
+            color.x = 78.0/255.0;
+            color.y = 59.0/255.0;
+            color.z = 49.0/255.0;
         }
 
         color.x = color.x * vLightWeighting.x;
