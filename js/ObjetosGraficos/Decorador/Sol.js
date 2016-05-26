@@ -1,5 +1,5 @@
 function Sol(esfera,camara){
-  this.anguloDeRotacionDelSolespectoALaTierra = 0.0;
+  this.anguloDeRotacionDelSolespectoALaTierra =0.0;
   this.esfera=esfera;
   this.camara=camara;
   this.vectorDireccionDeLaLuz=[ 0, 0 , 0];
@@ -11,9 +11,12 @@ function Sol(esfera,camara){
 Sol.prototype.configurarIluminacion=function(){
   var matrizCamara = this.camara.obtenerMatriz();
   gl.uniformMatrix4fv(shaderProgram.ViewMatrixUniform, false, matrizCamara);
-  this.vectorDireccionDeLaLuz=[ 1, 1 , 1];
+  this.vectorDireccionDeLaLuz=[ 0, 0 , 0];
 	vec3.transformMat4(this.vectorDireccionDeLaLuz, this.vectorDireccionDeLaLuz, matrizCamara);
-  vec3.transformMat4(this.vectorDireccionDeLaLuz, this.vectorDireccionDeLaLuz, mvMatrix);
+  mvPushMatrix();
+    mat4.rotate(mvMatrix,mvMatrix,-Math.PI/2.0,[0,1,0]);
+    vec3.transformMat4(this.vectorDireccionDeLaLuz, this.vectorDireccionDeLaLuz, mvMatrix);
+    mvPopMatrix();
   gl.uniform1i(shaderProgram.useLightingUniform, this.iluminar);
   gl.uniform3fv(shaderProgram.lightingDirectionUniform, this.vectorDireccionDeLaLuz);
 }
@@ -24,7 +27,7 @@ Sol.prototype.calcularMatrizDeTraslacion=function(){
 Sol.prototype.calcularMatrizDeRotacion=function(){
   this.anguloDeRotacionDelSolespectoALaTierra+= 0.0045;
   mat4.identity(this.matrizDeRotacionDelSolRespectoALaTierra);
-  mat4.rotate(this.matrizDeRotacionDelSolRespectoALaTierra, this.matrizDeRotacionDelSolRespectoALaTierra, this.anguloDeRotacionDelSolespectoALaTierra, [1, 1, 0]);
+  mat4.rotate(this.matrizDeRotacionDelSolRespectoALaTierra, this.matrizDeRotacionDelSolRespectoALaTierra, this.anguloDeRotacionDelSolespectoALaTierra, [0, 1, 0]);
 }
 Sol.prototype.calcularMatrizDeEscalado=function(){
   mat4.identity(this.matrizDeEscaladoDelSol);
