@@ -27,7 +27,7 @@ Sol.prototype.calcularMatrizDeTraslacion=function(){
 Sol.prototype.calcularMatrizDeRotacion=function(){
   this.anguloDeRotacionDelSolespectoALaTierra+= 0.0045;
   mat4.identity(this.matrizDeRotacionDelSolRespectoALaTierra);
-  mat4.rotate(this.matrizDeRotacionDelSolRespectoALaTierra, this.matrizDeRotacionDelSolRespectoALaTierra, this.anguloDeRotacionDelSolespectoALaTierra, [0, 1, 0]);
+  mat4.rotate(this.matrizDeRotacionDelSolRespectoALaTierra, this.matrizDeRotacionDelSolRespectoALaTierra, this.anguloDeRotacionDelSolespectoALaTierra, [0, 0, 1]);
 }
 Sol.prototype.calcularMatrizDeEscalado=function(){
   mat4.identity(this.matrizDeEscaladoDelSol);
