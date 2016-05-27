@@ -1,8 +1,8 @@
-function FabricaEspacioEstelar(camara,controladorEjesYTubinas,controladorNave){
+function FabricaEspacioEstelar(camara,controladorEjesYTubinas,controladorNave,controladorPatasNave){
   this.fabricaEstacionEspacial=new FabricaEstacionEspacial();
   this.fabricaSol= new FabricaSol(camara);
   this.fabricaTierra= new FabricaTierra();
-  this.fabricaNave = new FabricaNave(controladorEjesYTubinas,controladorNave);
+  this.fabricaNave = new FabricaNave(controladorEjesYTubinas,controladorNave,controladorPatasNave);
 }
 FabricaEspacioEstelar.prototype.crear=function(){
   console.log("Crear espacio estelar");

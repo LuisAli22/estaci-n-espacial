@@ -13,6 +13,8 @@ function ControladorDeTeclado(escena) {
                   102: new MoverNaveIzquierda(escena),
                   97: new DesacelerarNave(escena),
                   98: new AcelerarNave(escena),
+                  37: new CerrarTrenNave(escena),
+                  39: new AbrirTrenNave(escena),
                   107: new Acercarse(escena),
                   109: new Alejarse(escena),
                   65: new MoverseHaciaLaIzquierda(escena),

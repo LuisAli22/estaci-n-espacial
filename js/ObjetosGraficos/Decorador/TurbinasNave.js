@@ -7,14 +7,17 @@ function TurbinasNave(controladorEjesYTubinas){
 
     var matrizTraslacion = mat4.create();
     var matrizRotacion = mat4.create();
+    var matrizEscalado = mat4.create();
 
     mat4.translate(matrizTraslacion,matrizTraslacion,[x,y,0.0]);
     mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0+this.controladorEjesYTubinas.getAnguloTurbinas());
+    mat4.scale(matrizEscalado,matrizEscalado,[1.1,1.1,1.1]);
 
     mvPushMatrix();
 
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
+      mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
     
       this.turbina.dibujar();
 

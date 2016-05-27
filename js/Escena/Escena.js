@@ -8,7 +8,8 @@ function Escena(canvas){
   cilindro = new Cilindro(64,64,DORADO,0);
   this.controladorEjesYTubinas = new ControladorEjesYTurbinas();
   this.controladorNave = new ControladorNave();
-  var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.camara,this.controladorEjesYTubinas,this.controladorNave);
+  this.controladorPatasNave = new ControladorPatasNave();
+  var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.camara,this.controladorEjesYTubinas,this.controladorNave,this.controladorPatasNave);
   this.espacioEstelar=fabricaEspacioEstelar.crear();
   this.espacioEstelar.inicializarTextura();
   this.matrizDeProyeccion = mat4.create();
@@ -92,6 +93,12 @@ Escena.prototype.desacelerarNave=function(){
 }
 Escena.prototype.soltarTeclaNave=function(estado){
   this.controladorNave.soltarTecla(estado);
+}
+Escena.prototype.abrirTrenNave=function(){
+  this.controladorPatasNave.abrirTren();
+}
+Escena.prototype.cerrarTrenNave=function(){
+  this.controladorPatasNave.cerrarTren();
 }
 Escena.prototype.generarMipMap=function(){
   this.espacioEstelar.generarMipMap();
