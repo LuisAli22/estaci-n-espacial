@@ -3,6 +3,8 @@ function ControladorDeTeclado(escena) {
                   40: new CerrarPaneles(escena),
                   79: new GiroTurbinasAntihorario(escena),
                   80: new GiroTurbinasHorario(escena),
+                  75: new GiroEjesAntihorario(escena),
+                  76: new GiroEjesHorario(escena),
                   107: new Acercarse(escena),
                   109: new Alejarse(escena),
                   65: new MoverseHaciaLaIzquierda(escena),

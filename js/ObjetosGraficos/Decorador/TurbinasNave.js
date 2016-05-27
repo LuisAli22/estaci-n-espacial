@@ -25,10 +25,17 @@ function TurbinasNave(controladorEjesYTubinas){
 }
 TurbinasNave.prototype.dibujar = function(){
 
-    this.dibujarTurbina(4.0,3.5);
-    this.dibujarTurbina(4.0,-3.5);
-    this.dibujarTurbina(-4.0,3.5);
-    this.dibujarTurbina(-4.0,-3.5);
+    var matrizRotacion = mat4.create();
+
+    mat4.rotateX(matrizRotacion,matrizRotacion,this.controladorEjesYTubinas.getAngulo());
+
+    mvPushMatrix();
+      mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
+      this.dibujarTurbina(4.0,3.5);
+      this.dibujarTurbina(4.0,-3.5);
+      this.dibujarTurbina(-4.0,3.5);
+      this.dibujarTurbina(-4.0,-3.5);
+    mvPopMatrix();
 
 }
 

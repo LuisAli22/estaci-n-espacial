@@ -10,19 +10,12 @@ function ControladorEjesYTurbinas(){
 		this.angulo = Math.max(this.angulo,-Math.PI/2.0);
 	}
 
-	this.actualizar=function(){
-
-		this.anguloTurbinas=(estadoTeclas[this.TECLA_GIRO_HORARIO_TURBINAS])? this.anguloTurbinas-0.005:this.anguloTurbinas;
-		this.anguloTurbinas=(estadoTeclas[this.TECLA_GIRO_ANTIHORARIO_TURBINAS])? this.anguloTurbinas+0.005:this.anguloTurbinas;
-
-	}
-
-	this.giroHorario=function(){
+	this.giroEjesHorario=function(){
 		this.angulo=this.angulo-0.005;
 		this.calcularMaximoMinimos();
 	}
 
-	this.giroAntiHorario=function(){
+	this.giroEjesAntiHorario=function(){
 		this.angulo=this.angulo+0.005;
 		this.calcularMaximoMinimos();
 	}

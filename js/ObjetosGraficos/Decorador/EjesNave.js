@@ -48,13 +48,20 @@ function EjesNave(controladorEjesYTubinas){
 }
 EjesNave.prototype.dibujar = function(){
 
-    this.dibujarEje(-2.0,0.0,0.0);
-    this.dibujarEje(2.0,0.0,0.0);
-    this.dibujarEje(2.0+0.9874368671,1.5+0.8838834,-Math.PI/4.0);
-    this.dibujarEje(-2.0-0.9874368671,1.5+0.8838834,Math.PI/4.0);
-    this.dibujarEje(-2.0-0.9874368671,-1.5-0.8838834,-Math.PI/4.0);
-    this.dibujarEje(2.0+0.9874368671,-1.5-0.8838834,Math.PI/4.0);
-    this.dibujarCilindro();
+    var matrizRotacion = mat4.create();
+
+    mat4.rotateX(matrizRotacion,matrizRotacion,this.controladorEjesYTubinas.getAngulo());
+
+    mvPushMatrix();
+      mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
+      this.dibujarEje(-2.0,0.0,0.0);
+      this.dibujarEje(2.0,0.0,0.0);
+      this.dibujarEje(2.0+0.9874368671,1.5+0.8838834,-Math.PI/4.0);
+      this.dibujarEje(-2.0-0.9874368671,1.5+0.8838834,Math.PI/4.0);
+      this.dibujarEje(-2.0-0.9874368671,-1.5-0.8838834,-Math.PI/4.0);
+      this.dibujarEje(2.0+0.9874368671,-1.5-0.8838834,Math.PI/4.0);
+      this.dibujarCilindro();
+    mvPopMatrix();  
 
 }
 

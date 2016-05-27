@@ -56,6 +56,12 @@ Escena.prototype.giroTurbinasAntihorario=function(){
 Escena.prototype.giroTurbinasHorario=function(){
   this.controladorEjesYTubinas.giroHorarioTurbinas();
 }
+Escena.prototype.giroEjesAntihorario=function(){
+  this.controladorEjesYTubinas.giroEjesAntiHorario();
+}
+Escena.prototype.giroEjesHorario=function(){
+  this.controladorEjesYTubinas.giroEjesHorario();
+}
 Escena.prototype.generarMipMap=function(){
   this.espacioEstelar.generarMipMap();
 }
