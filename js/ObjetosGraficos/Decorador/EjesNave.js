@@ -1,7 +1,8 @@
-function EjesNave(){
+function EjesNave(controladorEjesYTubinas){
 
   this.cubo = new Cubo(7.0);
   this.cilindro = new Cilindro(64,64,7.0,0);
+  this.controladorEjesYTubinas = controladorEjesYTubinas;
 
   this.dibujarEje = function(x,y,angulo){
 

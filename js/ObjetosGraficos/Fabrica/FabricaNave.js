@@ -1,10 +1,11 @@
-function FabricaNave(){
+function FabricaNave(controladorEjesYTubinas){
+  this.controladorEjesYTubinas = controladorEjesYTubinas;
 }
 FabricaNave.prototype.crear=function(){
   console.log("Crear estacion espacial");
   var nave=new ObjetoGraficoCompuesto();
-  var ejesNave = new EjesNave();
-  var turbinas = new TurbinasNave();
+  var ejesNave = new EjesNave(this.controladorEjesYTubinas);
+  var turbinas = new TurbinasNave(this.controladorEjesYTubinas);
   var cuerpo = new CuerpoNaveFinal();
   nave.agregar(turbinas);
   nave.agregar(ejesNave);

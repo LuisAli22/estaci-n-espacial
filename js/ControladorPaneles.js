@@ -1,9 +1,5 @@
 function ControladorPaneles(){
 	this.angulo = 0;
-	this.alturaPanel1 = 0;
-  	this.alturaPanel2 = 0;
-  	this.alturaPanel3 = 0;
-  	this.alturaPanel4 = 0;
   	this.altura = [0.0,0.0,0.0,0.0];
   	this.alturaMaxima = [1.3,2.5,3.7,4.9];
 	this.rotarAbrir = false;

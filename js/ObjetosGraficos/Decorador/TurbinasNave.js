@@ -1,6 +1,7 @@
-function TurbinasNave(material){
+function TurbinasNave(controladorEjesYTubinas){
 
   this.turbina = new Turbina();
+  this.controladorEjesYTubinas = controladorEjesYTubinas;
 
   this.dibujarTurbina = function(x,y){
 
@@ -8,7 +9,7 @@ function TurbinasNave(material){
     var matrizRotacion = mat4.create();
 
     mat4.translate(matrizTraslacion,matrizTraslacion,[x,y,0.0]);
-    mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0);
+    mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0+this.controladorEjesYTubinas.getAnguloTurbinas());
 
     mvPushMatrix();
 

@@ -6,7 +6,8 @@ function Escena(canvas){
   canvas.onwheel= this.seMueveLaRuedaDelMouse.bind(this);
   this.camara= new CamaraOrbital(canvas, 85,0.5 * Math.PI, 0.5 * Math.PI);
   cilindro = new Cilindro(64,64,DORADO,0);
-  var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.camara);
+  this.controladorEjesYTubinas = new ControladorEjesYTurbinas();
+  var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.camara,this.controladorEjesYTubinas);
   this.espacioEstelar=fabricaEspacioEstelar.crear();
   this.espacioEstelar.inicializarTextura();
   this.matrizDeProyeccion = mat4.create();
@@ -48,6 +49,12 @@ Escena.prototype.moverseHaciaLaIzquierda=function(){
 }
 Escena.prototype.moverseHaciaLaDerecha=function(){
 
+}
+Escena.prototype.giroTurbinasAntihorario=function(){
+  this.controladorEjesYTubinas.giroAntihorarioTurbinas();
+}
+Escena.prototype.giroTurbinasHorario=function(){
+  this.controladorEjesYTubinas.giroHorarioTurbinas();
 }
 Escena.prototype.generarMipMap=function(){
   this.espacioEstelar.generarMipMap();
