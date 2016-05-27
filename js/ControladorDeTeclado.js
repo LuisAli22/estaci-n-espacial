@@ -27,7 +27,7 @@ ControladorDeTeclado.prototype.sePresionaUnaTecla = function(evento) {
   console.log("Codigo de tecla: ",evento.keyCode);
   var key=evento.keyCode.toString();
   this.comandos[key].indicarQueEstaActualmentePresionada(true);
-  this.comandos[key].ejecutar();
+  this.comandos[key].ejecutar(evento);
 };
 
 ControladorDeTeclado.prototype.seSueltaUnaTecla = function(evento) {
