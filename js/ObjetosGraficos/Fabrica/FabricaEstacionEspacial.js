@@ -25,6 +25,8 @@ FabricaEstacionEspacial.prototype.crear=function(){
   estacion.agregar(panel);
   estacion.agregar(escotillas);
   estacion.agregar(manguera);
+  var astronauta = new Astronauta();
+  estacion.agregar(astronauta);
   var estacionEspacialDecorada= new EstacionEspacial(estacion);
   console.log("inicializar textura de la estacion");
   return estacionEspacialDecorada;

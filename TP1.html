@@ -71,6 +71,7 @@
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/Nave.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/CuerpoNaveFinal.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/PatasNave.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Astronauta.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/ObjetoGraficoCompuesto.js"></script>
 <script type="text/javascript" src="js/shader/shaderScript.js"></script>
 <script type="text/javascript" src="js/shader/PrepararProgramaEjecutable.js"></script>
@@ -92,6 +93,7 @@
 <script type="text/javascript" src="js/ObjetosGraficos/MangueraAstronauta.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Turbina.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/CuerpoNave.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Plano.js"></script>
 <script type="text/javascript" src="js/Transformar.js"></script>
 <script type="text/javascript" src="js/ControladorPaneles.js"></script>
 <script type="text/javascript" src="js/ControladorEjesYTurbinas.js"></script>
@@ -170,8 +172,16 @@
 
     void main(void) {
 
-        vec4 aux = tablaMateriales(vTextureCoord.z,vLightWeighting);
-        gl_FragColor = aux;
+        if(vTextureCoord[3]==0.0){
+            vec4 aux = tablaMateriales(vTextureCoord.z,vLightWeighting);
+            gl_FragColor = aux;    
+        }else{
+            
+            vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+            gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+
+        }
+        
 
         //vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
         //gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);

@@ -5,6 +5,7 @@ const XSHADERXFRAGMENT="x-shader/x-fragment";
 const XSHADERXVERTEX="x-shader/x-vertex";
 const RUTAIMAGENLUNA="img/moon.gif";
 const RUTAIMAGENMARTE="img/mars_1k_color.jpg";
+const RUTAIMAGENASTRONAUTA="img/astronauta.jpg";
 const TIPODESCRIPTINCORRECTO="El script debe ser de tipo x-shader/x-fragment o x-shader/x-vertex";
 const IDSHADERFRAGMENTOS="shader-fs";
 const IDSHADERVERTICES="shader-vs";
