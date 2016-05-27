@@ -42,10 +42,6 @@ Camara.prototype.obtenerValorQueNoSeaInferiorAlMinimo=function(valorActual,limit
 Camara.prototype.obtenerValorQueNoSeaSuperiorAlMaximo=function(valorActual,limiteSuperior){
 	return Math.min(valorActual,limiteSuperior);
 }
-Camara.prototype.verificarLosLimitesDeGiro=function(){
-	this.anguloTita=this.obtenerValorQueNoSeaInferiorAlMinimo(this.anguloTita,TITAMIN);
-	this.anguloTita=this.obtenerValorQueNoSeaSuperiorAlMaximo(this.anguloTita,TITAMAX);
-}
 Camara.prototype.diferenciaEnCoordenada=function(eje){
 	return (this.posicionFinal[eje] - this.posicionInicial[eje]);
 }
@@ -58,7 +54,10 @@ Camara.prototype.seMueveElMouse = function(evento) {
 		this.posicionFinal = this.obtengoCoordenadasDePantalla(evento);
 		this.anguloFi +=this.incrementarMovimiento(COORDENADAX);
 		this.anguloTita += this.incrementarMovimiento(COORDENADAY);
-		this.verificarLosLimitesDeGiro();
+		this.anguloTita=this.obtenerValorQueNoSeaInferiorAlMinimo(this.anguloTita,TITAMIN);
+		this.anguloTita=this.obtenerValorQueNoSeaSuperiorAlMaximo(this.anguloTita,TITAMAX);
+		this.anguloFi=this.obtenerValorQueNoSeaInferiorAlMinimo(this.anguloFi,FIMIN);
+		this.anguloFi=this.obtenerValorQueNoSeaSuperiorAlMaximo(this.anguloFi,FIMAX);
 		this.posicionInicial= this.posicionFinal;
 		this.actualizar();
 	}
