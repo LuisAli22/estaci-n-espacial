@@ -11,3 +11,6 @@ Comando.prototype.estaActualmentePresionada=function(){
 Comando.prototype.ejecutar=function(){
   throw new Error(ERRORPOREJECUTARCOMANDO);
 }
+Comando.prototype.soltar=function(){
+  
+}

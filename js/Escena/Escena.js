@@ -7,12 +7,14 @@ function Escena(canvas){
   this.camara= new CamaraOrbital(canvas, 85,0.5 * Math.PI, 0.5 * Math.PI);
   cilindro = new Cilindro(64,64,DORADO,0);
   this.controladorEjesYTubinas = new ControladorEjesYTurbinas();
-  var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.camara,this.controladorEjesYTubinas);
+  this.controladorNave = new ControladorNave();
+  var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.camara,this.controladorEjesYTubinas,this.controladorNave);
   this.espacioEstelar=fabricaEspacioEstelar.crear();
   this.espacioEstelar.inicializarTextura();
   this.matrizDeProyeccion = mat4.create();
   this.campoVerticalDeVista=Math.PI/12.0;
   this.relacionDeAspecto=gl.viewportWidth / gl.viewportHeight;
+  
 }
 Escena.prototype.seMueveLaRuedaDelMouse=function(evento){
   this.camara.seMueveLaRuedaDelMouse(evento);
@@ -61,6 +63,33 @@ Escena.prototype.giroEjesAntihorario=function(){
 }
 Escena.prototype.giroEjesHorario=function(){
   this.controladorEjesYTubinas.giroEjesHorario();
+}
+Escena.prototype.giroAntihorarioNave=function(){
+  this.controladorNave.giroAntiHorario();
+}
+Escena.prototype.giroHorarioNave=function(){
+  this.controladorNave.giroHorario();
+}
+Escena.prototype.moverNaveArriba=function(){
+  this.controladorNave.moverArriba();
+}
+Escena.prototype.moverNaveAbajo=function(){
+  this.controladorNave.moverAbajo();
+}
+Escena.prototype.moverNaveDerecha=function(){
+  this.controladorNave.moverDerecha();
+}
+Escena.prototype.moverNaveIzquierda=function(){
+  this.controladorNave.moverIzquierda();
+}
+Escena.prototype.acelerarNave=function(){
+  this.controladorNave.acelerar();
+}
+Escena.prototype.desacelerarNave=function(){
+  this.controladorNave.desacelerar();
+}
+Escena.prototype.soltarTeclaNave=function(estado){
+  this.controladorNave.soltarTecla(estado);
 }
 Escena.prototype.generarMipMap=function(){
   this.espacioEstelar.generarMipMap();

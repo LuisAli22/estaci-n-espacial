@@ -6,3 +6,6 @@ function MoverseHaciaAdelante(escena){
 MoverseHaciaAdelante.prototype.ejecutar=function(){
   this.escena.moverseHaciaAdelante();
 }
+MoverseHaciaAdelante.prototype.soltar=function(){
+  this.escena.soltarTeclaNave();
+}

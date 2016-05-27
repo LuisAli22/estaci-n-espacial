@@ -1,11 +1,13 @@
-function Nave(objetoCompuesto){
+function Nave(objetoCompuesto,controladorNave){
   this.objetoCompuesto=objetoCompuesto;
+  this.controladorNave=controladorNave;
 }
 Nave.prototype.dibujar = function(){
   gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
   gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
+  this.controladorNave.actualizar();
   mvPushMatrix();
-    mat4.translate(mvMatrix, mvMatrix, [0, 0, DISTANCIAZNAVE ]);
+    mat4.multiply(mvMatrix, mvMatrix,this.controladorNave.getMatriz());
     mat4.scale(mvMatrix, mvMatrix, [FACTORESCALANAVE,FACTORESCALANAVE, FACTORESCALANAVE]);
     mat4.rotateY(mvMatrix, mvMatrix, Math.PI);
     this.objetoCompuesto.dibujar();
