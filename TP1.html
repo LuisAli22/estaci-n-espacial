@@ -11,6 +11,16 @@
 <script type="text/javascript" src="js/Escena/Escena.js"></script>
 <script type="text/javascript" src="js/Camara/Camara.js"></script>
 <script type="text/javascript" src="js/Camara/CamaraOrbital.js"></script>
+<script type="text/javascript" src="js/Comandos/Comando.js"></script>
+<script type="text/javascript" src="js/Comandos/AbrirPaneles.js"></script>
+<script type="text/javascript" src="js/Comandos/Acercarse.js"></script>
+<script type="text/javascript" src="js/Comandos/Alejarse.js"></script>
+<script type="text/javascript" src="js/Comandos/CerrarPaneles.js"></script>
+<script type="text/javascript" src="js/Comandos/MoverseHaciaAdelante.js"></script>
+<script type="text/javascript" src="js/Comandos/MoverseHaciaAtras.js"></script>
+<script type="text/javascript" src="js/Comandos/MoverseHaciaLaDerecha.js"></script>
+<script type="text/javascript" src="js/Comandos/MoverseHaciaLaIzquierda.js"></script>
+<script type="text/javascript" src="js/ControladorDeTeclado.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/CilindrosLateralesEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/EjesAntenaEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/EstacionEspacial.js"></script>
@@ -229,7 +239,7 @@
     var cerrarPaneles = false;
     var listo = true;
   var escena=null;
-
+  var controladorDeTeclado=null;
 
     function mvPushMatrix() {
         var copy = mat4.clone(mvMatrix);
@@ -246,6 +256,7 @@
 
     function tick() {
         requestAnimFrame(tick);
+        controladorDeTeclado.manejarTeclas();
         escena.dibujar();
     }
 
@@ -265,6 +276,7 @@
         inicializarGL(canvas);
         inicializarShaders();
         escena= new Escena(canvas);
+        controladorDeTeclado= new ControladorDeTeclado(escena);
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
 

@@ -3,7 +3,6 @@ function Escena(canvas){
 	canvas.onmouseup = this.soltaronUnBotonDelMouse.bind(this);
 	canvas.onmousemove = this.seMueveElMouse.bind(this);
   canvas.tabIndex = 1000;
-  canvas.onkeydown = this.presionoUnaTecla.bind(this);
   canvas.onwheel= this.seMueveLaRuedaDelMouse.bind(this);
   this.camara= new CamaraOrbital(canvas, 85,0.5 * Math.PI, 0.5 * Math.PI);
   cilindro = new Cilindro(64,64,DORADO,0);
@@ -26,14 +25,28 @@ Escena.prototype.soltaronUnBotonDelMouse=function(evento){
 Escena.prototype.seMueveElMouse=function(evento){
   this.camara.seMueveElMouse(evento);
 }
-Escena.prototype.presionoUnaTecla=function(evento){
-  switch(evento.which){
-    case TECLADIRECCIONARRIBA : abrirPaneles = listo;
-              break;
-    case TECLADIRECCIONABAJO : cerrarPaneles = listo;
-              break;
+Escena.prototype.abrirPaneles=function(){
+  abrirPaneles = listo;
+}
+Escena.prototype.cerrarPaneles=function(){
+  cerrarPaneles = listo;
+}
+Escena.prototype.acercarse=function(){
+  console.log("Hace zoom in con la tecla +");
+}
+Escena.prototype.alejarse=function(){
+  console.log("Hace zoom out con la tecla -");
+}
+Escena.prototype.moverseHaciaAdelante=function(){
 
-  }
+}
+Escena.prototype.moverseHaciaAtras=function(){
+
+}
+Escena.prototype.moverseHaciaLaIzquierda=function(){
+
+}
+Escena.prototype.moverseHaciaLaDerecha=function(){
 
 }
 Escena.prototype.generarMipMap=function(){
