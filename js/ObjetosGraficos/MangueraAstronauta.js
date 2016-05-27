@@ -166,7 +166,7 @@ MangueraAstronauta.prototype.dibujar = function(){
 
     mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0);
     mat4.rotateZ(matrizRotacion,matrizRotacion,Math.PI/2.0);
-    mat4.translate(matrizTraslacion,matrizTraslacion,[-0.25,0.0,3.75]);
+    mat4.translate(matrizTraslacion,matrizTraslacion,[-0.25,0.0,5.75]);
  
     mvPushMatrix();
 
