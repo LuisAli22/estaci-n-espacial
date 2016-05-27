@@ -3,6 +3,8 @@ function EjesNave(controladorEjesYTubinas){
   this.cubo = new Cubo(7.0);
   this.cilindro = new Cilindro(64,64,7.0,0);
   this.controladorEjesYTubinas = controladorEjesYTubinas;
+  this.desplazamientoX = 0.63388347565;
+  this.desplazamientoY = -1.5303300859;
 
   this.dibujarEje = function(x,y,angulo){
 
@@ -12,7 +14,7 @@ function EjesNave(controladorEjesYTubinas){
 
     mat4.translate(matrizTraslacion,matrizTraslacion,[x,y,-0.25]);
     mat4.rotateZ(matrizRotacion,matrizRotacion,angulo);
-    mat4.scale(matrizEscalado,matrizEscalado,[0.5,3.0,0.5]);
+    mat4.scale(matrizEscalado,matrizEscalado,[0.5,2.0,0.5]);
 
     mvPushMatrix();
 
@@ -56,10 +58,10 @@ EjesNave.prototype.dibujar = function(){
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
       this.dibujarEje(-2.0,0.0,0.0);
       this.dibujarEje(2.0,0.0,0.0);
-      this.dibujarEje(2.0+0.9874368671,1.5+0.8838834,-Math.PI/4.0);
-      this.dibujarEje(-2.0-0.9874368671,1.5+0.8838834,Math.PI/4.0);
-      this.dibujarEje(-2.0-0.9874368671,-1.5-0.8838834,-Math.PI/4.0);
-      this.dibujarEje(2.0+0.9874368671,-1.5-0.8838834,Math.PI/4.0);
+      this.dibujarEje(2.0+this.desplazamientoX,this.desplazamientoY,Math.PI/4.0);
+      this.dibujarEje(-2.0-this.desplazamientoX,this.desplazamientoY,-Math.PI/4.0);
+      this.dibujarEje(-2.0-this.desplazamientoX,-this.desplazamientoY,Math.PI/4.0);
+      this.dibujarEje(2.0+this.desplazamientoX,-this.desplazamientoY,-Math.PI/4.0);
       this.dibujarCilindro();
     mvPopMatrix();  
 
