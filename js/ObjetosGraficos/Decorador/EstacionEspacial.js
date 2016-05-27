@@ -15,3 +15,6 @@ EstacionEspacial.prototype.inicializarTextura=function(){
 EstacionEspacial.prototype.generarMipMap=function (){
   this.objetoCompuesto.generarMipMap();
 }
+EstacionEspacial.prototype.obtenerHijo=function(clave){
+  return this.objetoCompuesto.obtenerHijo(clave);
+}

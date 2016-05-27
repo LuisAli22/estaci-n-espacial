@@ -19,3 +19,6 @@ Nave.prototype.inicializarTextura=function(){
 Nave.prototype.generarMipMap=function (){
   this.objetoCompuesto.generarMipMap();
 }
+Nave.prototype.obtenerHijo=function(clave){
+  return this.objetoCompuesto.obtenerHijo(clave);
+}

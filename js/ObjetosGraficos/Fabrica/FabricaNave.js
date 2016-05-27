@@ -10,10 +10,10 @@ FabricaNave.prototype.crear=function(){
   var turbinas = new TurbinasNave(this.controladorEjesYTubinas);
   var cuerpo = new CuerpoNaveFinal();
   var patas = new PatasNave(this.controladorPatasNave);
-  nave.agregar(turbinas);
-  nave.agregar(ejesNave);
-  nave.agregar(cuerpo);
-  nave.agregar(patas);
+  nave.agregar(TURBINAS,turbinas);
+  nave.agregar(EJESNAVE,ejesNave);
+  nave.agregar(CUERPO,cuerpo);
+  nave.agregar(PATAS,patas);
   var naveDecorada= new Nave(nave,this.controladorNave);
   return naveDecorada;
 }

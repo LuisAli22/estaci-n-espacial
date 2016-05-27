@@ -17,4 +17,5 @@ CamaraOrbital.prototype.actualizar = function(){
 	mat4.identity(this.matrizMirarHacia);
 	this.ojo=this.obtenerCoordenadasEspaciales();
 	mat4.lookAt(this.matrizMirarHacia, this.ojo, this.objetivo, this.arriba);
+	Camara.prototype.actualizar.call(this);
 };

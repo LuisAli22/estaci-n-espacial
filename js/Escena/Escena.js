@@ -4,30 +4,35 @@ function Escena(canvas){
 	canvas.onmousemove = this.seMueveElMouse.bind(this);
   canvas.tabIndex = 1000;
   canvas.onwheel= this.seMueveLaRuedaDelMouse.bind(this);
-  this.camara= new CamaraOrbital(canvas, 85,0.5 * Math.PI, 0.5 * Math.PI);
-  cilindro = new Cilindro(64,64,DORADO,0);
   this.controladorEjesYTubinas = new ControladorEjesYTurbinas();
   this.controladorNave = new ControladorNave();
   this.controladorPatasNave = new ControladorPatasNave();
-  var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.camara,this.controladorEjesYTubinas,this.controladorNave,this.controladorPatasNave);
+  var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.controladorEjesYTubinas,this.controladorNave,this.controladorPatasNave);
   this.espacioEstelar=fabricaEspacioEstelar.crear();
+  this.camaras= {Orbital: new CamaraOrbital(canvas, 85,0.5 * Math.PI, 0.5 * Math.PI),
+                PrimerPersonaBahia: new PrimerPersonaBahiaDeCarga(canvas,this.obtenerPosicionDelOjoDeLaPersonaEnBahiaDeCarga())};
+  this.camaraActual=this.camaras["Orbital"];
+  var sol=this.espacioEstelar.obtenerHijo(CLAVESOL);
+  sol.asignarCamara(this.camaraActual);
+  cilindro = new Cilindro(64,64,DORADO,0);
+
   this.espacioEstelar.inicializarTextura();
   this.matrizDeProyeccion = mat4.create();
   this.campoVerticalDeVista=Math.PI/12.0;
   this.relacionDeAspecto=gl.viewportWidth / gl.viewportHeight;
-  
+
 }
 Escena.prototype.seMueveLaRuedaDelMouse=function(evento){
-  this.camara.seMueveLaRuedaDelMouse(evento);
+  this.camaraActual.seMueveLaRuedaDelMouse(evento);
 }
 Escena.prototype.apretaronUnBotonDelMouse=function(evento){
-  this.camara.apretaronUnBotonDelMouse(evento);
+  this.camaraActual.apretaronUnBotonDelMouse(evento);
 }
 Escena.prototype.soltaronUnBotonDelMouse=function(evento){
-  this.camara.soltaronUnBotonDelMouse(evento);
+  this.camaraActual.soltaronUnBotonDelMouse(evento);
 }
 Escena.prototype.seMueveElMouse=function(evento){
-  this.camara.seMueveElMouse(evento);
+  this.camaraActual.seMueveElMouse(evento);
 }
 Escena.prototype.abrirPaneles=function(evento){
   abrirPaneles = listo;
@@ -37,11 +42,11 @@ Escena.prototype.cerrarPaneles=function(evento){
 }
 Escena.prototype.acercarse=function(evento){
   console.log("Hace zoom in con la tecla +");
-  this.camara.acercarse(evento);
+  this.camaraActual.acercarse(evento);
 }
 Escena.prototype.alejarse=function(evento){
   console.log("Hace zoom out con la tecla -");
-  this.camara.alejarse(evento);
+  this.camaraActual.alejarse(evento);
 }
 Escena.prototype.moverseHaciaAdelante=function(evento){
 
@@ -107,7 +112,11 @@ Escena.prototype.configurarMatrizDeProyeccion=function(){
   mat4.perspective(this.matrizDeProyeccion, this.campoVerticalDeVista, this.relacionDeAspecto,BORDECERCANOFRUSTUM, BORDELEJANOFRUSTUM);
   gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, this.matrizDeProyeccion);
 }
-
+Escena.prototype.obtenerPosicionDelOjoDeLaPersonaEnBahiaDeCarga=function(){
+  var estacionEspacial=this.espacioEstelar.obtenerHijo(CLAVEESTACION);
+  var tapaInicial= estacionEspacial.obtenerHijo(CLAVETAPAINICIALESTACION);
+  return tapaInicial.obtenerPosicionDelOjoDeLaPersonaEnBahiaDeCarga();
+}
 Escena.prototype.dibujar=function(){
   console.log("Escena.dibujar()");
   // Se configura el vierport dentro de �rea �canvas�. en este caso se utiliza toda

@@ -1,6 +1,6 @@
-function FabricaEspacioEstelar(camara,controladorEjesYTubinas,controladorNave,controladorPatasNave){
+function FabricaEspacioEstelar(/*camara,*/controladorEjesYTubinas,controladorNave,controladorPatasNave){
   this.fabricaEstacionEspacial=new FabricaEstacionEspacial();
-  this.fabricaSol= new FabricaSol(camara);
+  this.fabricaSol= new FabricaSol(/*camara*/);
   this.fabricaTierra= new FabricaTierra();
   this.fabricaNave = new FabricaNave(controladorEjesYTubinas,controladorNave,controladorPatasNave);
 }
@@ -11,9 +11,9 @@ FabricaEspacioEstelar.prototype.crear=function(){
   var sol=this.fabricaSol.crear();
   var tierra=this.fabricaTierra.crear();
   var nave = this.fabricaNave.crear();
-  espacioEstelar.agregar(estacionEspacial);
-  espacioEstelar.agregar(sol);
-  espacioEstelar.agregar(tierra);
-  espacioEstelar.agregar(nave);
+  espacioEstelar.agregar(CLAVEESTACION,estacionEspacial);
+  espacioEstelar.agregar(CLAVESOL,sol);
+  espacioEstelar.agregar(CLAVETIERRA,tierra);
+  espacioEstelar.agregar(CLAVENAVE,nave);
   return espacioEstelar;
 }

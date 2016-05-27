@@ -1,7 +1,7 @@
-function Sol(esfera,camara){
+function Sol(esfera){
   this.anguloDeRotacionDelSolespectoALaTierra =0.0;
   this.esfera=esfera;
-  this.camara=camara;
+  this.camara=null;
   this.vectorDireccionDeLaLuz=[ 0, 0 , 0];
   this.iluminar=true;
   this.matrizDeTraslacionDelSolDesdeElOrigenDeLaTierra=mat4.create();
@@ -10,7 +10,6 @@ function Sol(esfera,camara){
 }
 Sol.prototype.configurarIluminacion=function(){
   var matrizCamara = this.camara.obtenerMatriz();
-  gl.uniformMatrix4fv(shaderProgram.ViewMatrixUniform, false, matrizCamara);
   this.vectorDireccionDeLaLuz=[ 0, 0 , 0];
 	vec3.transformMat4(this.vectorDireccionDeLaLuz, this.vectorDireccionDeLaLuz, matrizCamara);
   mvPushMatrix();
@@ -56,4 +55,7 @@ Sol.prototype.inicializarTextura=function(){
 }
 Sol.prototype.generarMipMap=function (){
   this.esfera.generarMipMap
+}
+Sol.prototype.asignarCamara=function(camara){
+  this.camara=camara;
 }

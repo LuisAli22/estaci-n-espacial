@@ -1,5 +1,5 @@
 function ObjetoGraficoCompuesto(){
-  this.componentes=[];
+  this.componentes={};
 }
 ObjetoGraficoCompuesto.prototype.dibujar = function(){
   for(indiceComponente in this.componentes){
@@ -16,12 +16,12 @@ ObjetoGraficoCompuesto.prototype.generarMipMap=function (){
     this.componentes[indiceComponente].generarMipMap();
   }
 }
-ObjetoGraficoCompuesto.prototype.agregar=function(objetoGrafico){
-  this.componentes.push(objetoGrafico);
+ObjetoGraficoCompuesto.prototype.agregar=function(clave,objetoGrafico){
+  this.componentes[clave]=objetoGrafico;
 }
-ObjetoGraficoCompuesto.prototype.obtenerHijo=function(pos){
-  return this.componentes[pos];
+ObjetoGraficoCompuesto.prototype.obtenerHijo=function(clave){
+  return this.componentes[clave];
 }
-ObjetoGraficoCompuesto.prototype.longitud=function(){
+/*ObjetoGraficoCompuesto.prototype.longitud=function(){
   return this.componentes.length;
-}
+}*/

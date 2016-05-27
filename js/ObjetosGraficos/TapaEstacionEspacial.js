@@ -23,11 +23,11 @@ ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL,material);
         this.position_buffer = this.position_buffer.concat(this.bufferInterior);
 
         //Calculo el vector normal a las tapas
-        var pos1 = vec3.fromValues(this.bufferExterior[0],this.bufferExterior[1],this.bufferExterior[2]);
-        var pos2 = vec3.fromValues(this.bufferInterior[0],this.bufferInterior[1],this.bufferInterior[2]);
+       	this.pos1 = vec3.fromValues(this.bufferExterior[0],this.bufferExterior[1],this.bufferExterior[2]);
+        this.pos2 = vec3.fromValues(this.bufferInterior[0],this.bufferInterior[1],this.bufferInterior[2]);
 
         var vectorNormal = vec3.create();
-        vec3.cross(vectorNormal,pos1,pos2);
+        vec3.cross(vectorNormal,this.pos1,this.pos2);
         vec3.normalize(vectorNormal,vectorNormal);
 
         //Cargo las coordenadas de textura
@@ -58,4 +58,7 @@ ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL,material);
 
     }
 		this.initBuffers();
+}
+TapaEstacionEspacial.prototype.obtenerPosicionDelOjoDeLaPersonaEnBahiaDeCarga=function(){
+	return this.pos2;
 }

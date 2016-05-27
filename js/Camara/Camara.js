@@ -21,8 +21,8 @@ function Camara(canvas, radio, anguloTita, anguloFi) {
 Camara.prototype.obtenerMatriz=function(){
 	return this.matrizMirarHacia;
 }
-Camara.prototype.actualizarPosicion = function() {
-	throw Error("No se puede instanciar Camara. Las camaras posibles son cámara orbital");
+Camara.prototype.actualizar = function() {
+	gl.uniformMatrix4fv(shaderProgram.ViewMatrixUniform, false,this.matrizMirarHacia);
 }
 Camara.prototype.esBotonIzquierdo = function(evento){
 	if (evento.which==BOTONIZQUIERDODELMOUSE) console.log("Tocaron el boton izquierdo");
