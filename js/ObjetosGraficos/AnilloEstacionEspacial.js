@@ -10,19 +10,19 @@ function AnilloEstacionEspacial(material){
     this.bufferInicialCoordenadas = [];
     this.bufferInicialNormales = [];
 
-    var puntosDeControlExterior = [-1.0, 0.25, 0.0, -0.75, 1.5, 0.0, 0.75, 1.5, 0.0, 1.0, 0.25, 0.0,
-                                    1.0, 0.25, 0.0, 0.9166, 0.25, 0.0, 0.833, 0.25, 0.0, 0.75, 0.25, 0.0,
-                                    0.75, 0.25, 0.0, 1.0, 0.125, 0.0, 1.0, -0.125, 0.0, 0.75, -0.25, 0.0,
-                                    0.75, -0.25, 0.0, 0.833, -0.25, 0.0, 0.9166, -0.25, 0.0, 1.0, -0.25, 0.0,
-                                    1.0, -0.25, 0.0, 0.75, -1.5, 0.0, -0.75, -1.5, 0.0, -1.0, -0.25, 0.0,
-                                    -1.0, -0.25, 0.0, -0.9166, -0.25, 0.0, -0.833, -0.25, 0.0, -0.75, -0.25, 0.0,
-                                    -0.75, -0.25, 0.0, -1.0, -0.125, 0.0, -1.0, 0.125, 0.0, -0.75, 0.25, 0.0,
-                                    -0.75, 0.25, 0.0, -0.833, 0.25, 0.0, -0.9166, 0.25, 0.0, -1.0, 0.25, 0.0];
+    var puntosDeControlExterior = [-1.5, 0.25, 0.0, -0.75, 1.5, 0.0, 0.75, 1.5, 0.0, 1.5, 0.25, 0.0,
+                                    1.5, 0.25, 0.0, 1.4166, 0.25, 0.0, 1.333, 0.25, 0.0, 1.25, 0.25, 0.0,
+                                    1.25, 0.25, 0.0, 1.5, 0.125, 0.0, 1.5, -0.125, 0.0, 1.25, -0.25, 0.0,
+                                    1.25, -0.25, 0.0, 1.333, -0.25, 0.0, 1.4166, -0.25, 0.0, 1.5, -0.25, 0.0,
+                                    1.5, -0.25, 0.0, 0.75, -1.5, 0.0, -0.75, -1.5, 0.0, -1.5, -0.25, 0.0,
+                                    -1.5, -0.25, 0.0, -1.4166, -0.25, 0.0, -1.333, -0.25, 0.0, -1.25, -0.25, 0.0,
+                                    -1.25, -0.25, 0.0, -1.5, -0.125, 0.0, -1.5, 0.125, 0.0, -1.25, 0.25, 0.0,
+                                    -1.25, 0.25, 0.0, -1.333, 0.25, 0.0, -1.4166, 0.25, 0.0, -1.5, 0.25, 0.0];
 
-    var puntosDeControlInterior = [-0.5, 0.5, 0.0, -0.25, 1.0, 0.0, 0.25, 1.0, 0.0, 0.5, 0.5, 0.0, 
-                                   0.5, 0.5, 0.0, 0.5, 0.166, 0.0, 0.5, -0.166, 0.0, 0.5, -0.5, 0.0, 
-                                   0.5, -0.5, 0.0, 0.166, -0.5, 0.0, -0.166, -0.5, 0.0, -0.5, -0.5, 0.0,
-                                   -0.5, -0.5, 0.0, -0.5, -0.166, 0.0, -0.5, 0.166, 0.0, -0.5, 0.5, 0.0];
+    var puntosDeControlInterior = [-1.0, 0.5, 0.0, -0.25, 1.0, 0.0, 0.25, 1.0, 0.0, 1.0, 0.5, 0.0, 
+                                   1.0, 0.5, 0.0, 1.0, 0.166, 0.0, 1.0, -0.166, 0.0, 1.0, -0.5, 0.0, 
+                                   1.0, -0.5, 0.0, 0.333, -0.5, 0.0, -0.333, -0.5, 0.0, -1.0, -0.5, 0.0,
+                                   -1.0, -0.5, 0.0, -1.0, -0.166, 0.0, -1.0, 0.166, 0.0, -1.0, 0.5, 0.0];
 
 
     ComponenteEstacionEspacial.call(this,FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL,material);
@@ -70,16 +70,16 @@ function AnilloEstacionEspacial(material){
 
         };
 
-        var puntoDeControlXInicial = vec4.fromValues(0.0,12.0,-12.0,0.0);
-        var puntoDeControlZInicial = vec4.fromValues(-12.0,18.0,0.0,-3.0);
+        var puntoDeControlXInicial = vec4.fromValues(0.0,18.0,-18.0,0.0);
+        var puntoDeControlZInicial = vec4.fromValues(-18.0,27.0,0.0,-4.5);
 
         this.inicio = 0.25;
         this.fin = 1.0;
 
         this.transformar(puntoDeControlXInicial,puntoDeControlZInicial,bufferInicialCoordenadas,bufferInicialNormales);
 
-        var puntoDeControlXFinal = vec4.fromValues(0.0,-12.0,12.0,0.0);
-        var puntoDeControlZFinal = vec4.fromValues(12.0,-18.0,0.0,3.0);
+        var puntoDeControlXFinal = vec4.fromValues(0.0,-18.0,18.0,0.0);
+        var puntoDeControlZFinal = vec4.fromValues(18.0,-27.0,0.0,4.5);
 
         this.inicio = 0.0;
         this.fin = 0.75;

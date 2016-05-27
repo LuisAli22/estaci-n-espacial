@@ -3,21 +3,21 @@ function Escotillas(){
 	this.dibujarEscotilla = function(angulo){
 
 	  var matrizEscalado = mat4.create();
-      var matrizTraslacionFinal = mat4.create();
-      var matrizRotacion = mat4.create();
+    var matrizTraslacionFinal = mat4.create();
+    var matrizRotacion = mat4.create();
 
-      mat4.rotateY(matrizRotacion,matrizRotacion,angulo);
- 	  mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[0.0,0.0,4.0]);
-      mat4.scale(matrizEscalado,matrizEscalado,[0.7,0.7,0.5]);
+    mat4.rotateY(matrizRotacion,matrizRotacion,angulo);
+ 	  mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[0.0,0.0,6.0]);
+    mat4.scale(matrizEscalado,matrizEscalado,[0.7,0.7,0.5]);
 
-      mvPushMatrix();
+    mvPushMatrix();
 		
-		mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
-        mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);
-        mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
+		  mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
+      mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);
+      mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
         
         
-        this.cilindro.dibujar();
+      this.cilindro.dibujar();
 	  mvPopMatrix();
 
 	}

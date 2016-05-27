@@ -34,10 +34,10 @@ TurbinasNave.prototype.dibujar = function(){
 
     mvPushMatrix();
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
-      this.dibujarTurbina(4.0,3.5);
-      this.dibujarTurbina(4.0,-3.5);
-      this.dibujarTurbina(-4.0,3.5);
-      this.dibujarTurbina(-4.0,-3.5);
+      this.dibujarTurbina(3.65,2.7);
+      this.dibujarTurbina(3.65,-2.7);
+      this.dibujarTurbina(-3.65,2.7);
+      this.dibujarTurbina(-3.65,-2.7);
     mvPopMatrix();
 
 }

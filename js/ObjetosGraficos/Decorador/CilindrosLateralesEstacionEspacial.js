@@ -9,7 +9,7 @@ CilindrosLateralesEstacionEspacial.prototype.dibujar = function(){
       mat4.rotateY(matrizRotacion,matrizRotacion,anguloRotacion);
 
       var matrizEscalado = mat4.create();
-      mat4.scale(matrizEscalado,matrizEscalado,[0.2,0.2,2.5]);
+      mat4.scale(matrizEscalado,matrizEscalado,[0.2,0.2,3.5]);
       var matrizTraslacion = mat4.create();
       mat4.translate(matrizTraslacion,matrizTraslacion,[0.0,0.0,0.5]);
 
