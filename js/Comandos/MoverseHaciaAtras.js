@@ -3,6 +3,6 @@ MoverseHaciaAtras.prototype.constructor=MoverseHaciaAtras;
 function MoverseHaciaAtras(escena){
   Comando.call(this,escena);
 }
-MoverseHaciaAtras.prototype.ejecutar=function(){
-  this.escena.moverseHaciaAtras();
+MoverseHaciaAtras.prototype.ejecutar=function(evento){
+  this.escena.moverseHaciaAtras(evento);
 }

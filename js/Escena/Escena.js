@@ -26,28 +26,30 @@ Escena.prototype.soltaronUnBotonDelMouse=function(evento){
 Escena.prototype.seMueveElMouse=function(evento){
   this.camara.seMueveElMouse(evento);
 }
-Escena.prototype.abrirPaneles=function(){
+Escena.prototype.abrirPaneles=function(evento){
   abrirPaneles = listo;
 }
-Escena.prototype.cerrarPaneles=function(){
+Escena.prototype.cerrarPaneles=function(evento){
   cerrarPaneles = listo;
 }
-Escena.prototype.acercarse=function(){
+Escena.prototype.acercarse=function(evento){
   console.log("Hace zoom in con la tecla +");
+  this.camara.acercarse(evento);
 }
-Escena.prototype.alejarse=function(){
+Escena.prototype.alejarse=function(evento){
   console.log("Hace zoom out con la tecla -");
+  this.camara.alejarse(evento);
 }
-Escena.prototype.moverseHaciaAdelante=function(){
+Escena.prototype.moverseHaciaAdelante=function(evento){
 
 }
-Escena.prototype.moverseHaciaAtras=function(){
+Escena.prototype.moverseHaciaAtras=function(evento){
 
 }
-Escena.prototype.moverseHaciaLaIzquierda=function(){
+Escena.prototype.moverseHaciaLaIzquierda=function(evento){
 
 }
-Escena.prototype.moverseHaciaLaDerecha=function(){
+Escena.prototype.moverseHaciaLaDerecha=function(evento){
 
 }
 Escena.prototype.giroTurbinasAntihorario=function(){

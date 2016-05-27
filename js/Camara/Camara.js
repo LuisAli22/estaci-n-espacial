@@ -15,6 +15,8 @@ function Camara(canvas, radio, anguloTita, anguloFi) {
 	this.estaApretandoElIzquierdo = false;
 
 	this.sensibilidadDelMouse = 100 * Math.PI;
+	this.esConLaRuedaDelMouse=false;
+	this.esConLaTeclaMas=false;
 }
 Camara.prototype.obtenerMatriz=function(){
 	return this.matrizMirarHacia;
@@ -67,19 +69,41 @@ Camara.prototype.soltaronUnBotonDelMouse = function(evento){
 	console.log("Soltaron un boton del mouse");
 	if (this.esBotonIzquierdo(evento)) this.estaApretandoElIzquierdo= false;
 }
+Camara.prototype.incrementarRadio=function(evento){
+	this.radio += (this.esConLaRuedaDelMouse)?
+		      (evento.deltaY):
+		      (this.esConLaTeclaMas)?(-1):(1);
+}
+Camara.prototype.actualizarRadio=function(evento){
+	this.posicionFinal=this.obtengoCoordenadasDePantalla(evento);
+	console.log("posicion inicial: ",this.posicionInicial);
+	console.log("posicion final: ",this.posicionFinal);
+	console.log("Inicialmente el Radio es: ",this.radio);
+	this.incrementarRadio(evento);
+	console.log("Radio: ",this.radio);
+	console.log("Radio minimo: ",RADIOMINIMO);
+	console.log("Radio maximo: ",RADIOMAXIMO);
+	this.radio=this.obtenerValorQueNoSeaInferiorAlMinimo(this.radio,RADIOMINIMO);
+	this.radio=this.obtenerValorQueNoSeaSuperiorAlMaximo(this.radio,RADIOMAXIMO);
+	console.log("El radio termina siendo ",this.radio);
+	this.posicionInicial= this.posicionFinal;
+	this.actualizar();
+}
 Camara.prototype.seMueveLaRuedaDelMouse=function(evento){
 	console.log("Se mueve la rueda del mouse");
-		this.posicionFinal=this.obtengoCoordenadasDePantalla(evento);
-		console.log("posicion inicial: ",this.posicionInicial);
-		console.log("posicion final: ",this.posicionFinal);
-		console.log("Inicialmente el Radio es: ",this.radio);
-		this.radio += evento.deltaY;
-		console.log("Radio: ",this.radio);
-		console.log("Radio minimo: ",RADIOMINIMO);
-		console.log("Radio maximo: ",RADIOMAXIMO);
-		this.radio=this.obtenerValorQueNoSeaInferiorAlMinimo(this.radio,RADIOMINIMO);
-		this.radio=this.obtenerValorQueNoSeaSuperiorAlMaximo(this.radio,RADIOMAXIMO);
-		console.log("El radio termina siendo ",this.radio);
-		this.posicionInicial= this.posicionFinal;
-		this.actualizar();
+	this.esConLaRuedaDelMouse=true;
+	this.esConLaTeclaMas=false;
+	this.actualizarRadio(evento);
+}
+Camara.prototype.acercarse=function(evento){
+	console.log("Tocaron la tecla +");
+	this.esConLaRuedaDelMouse=false;
+	this.esConLaTeclaMas=true;
+	this.actualizarRadio(evento);
+}
+Camara.prototype.alejarse=function(evento){
+	console.log("Tocaron la tecla -");
+	this.esConLaRuedaDelMouse=false;
+	this.esConLaTeclaMas=false;
+	this.actualizarRadio(evento);
 }
