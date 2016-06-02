@@ -11,7 +11,7 @@ function Panel(material){
    
     mvPushMatrix();
 
-      mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[x,y,-0.025]);
+      mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[x,y,0.0]);
 
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
