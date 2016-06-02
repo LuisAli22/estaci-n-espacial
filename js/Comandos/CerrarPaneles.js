@@ -1,8 +1,8 @@
 CerrarPaneles.prototype= new Comando;
 CerrarPaneles.prototype.constructor=CerrarPaneles;
-function CerrarPaneles(escena){
-    Comando.call(this,escena);
+function CerrarPaneles(paneles){
+  this.paneles=paneles;
 }
 CerrarPaneles.prototype.ejecutar=function(evento){
-  this.escena.cerrarPaneles();
+  this.paneles.cerrar();
 }

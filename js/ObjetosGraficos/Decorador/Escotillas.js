@@ -10,15 +10,15 @@ function Escotillas(){
  	  mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[0.0,0.0,6.0]);
     mat4.scale(matrizEscalado,matrizEscalado,[0.7,0.7,0.5]);
 
-    mvPushMatrix();
-		
+    pilaMatrizDeModelado.meter();
+
 		  mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
-        
-        
+
+
       this.cilindro.dibujar();
-	  mvPopMatrix();
+	  pilaMatrizDeModelado.sacar();
 
 	}
 
@@ -39,4 +39,3 @@ Escotillas.prototype.inicializarTextura=function(){
 Escotillas.prototype.generarMipMap=function (){
   this.cilindro.generarMipMap();
 }
-

@@ -50,20 +50,6 @@ Camara.prototype.diferenciaEnCoordenada=function(eje){
 Camara.prototype.incrementarMovimiento=function(eje){
 	return (this.diferenciaEnCoordenada(eje) / (this.sensibilidadDelMouse));
 }
-Camara.prototype.seMueveElMouse = function(evento) {
-	if (this.estaApretandoElIzquierdo) {
-		console.log("Se mueve el mouse con el boton izquierdo apretado");
-		this.posicionFinal = this.obtengoCoordenadasDePantalla(evento);
-		this.anguloFi +=this.incrementarMovimiento(COORDENADAX);
-		this.anguloTita += this.incrementarMovimiento(COORDENADAY);
-		this.anguloTita=this.obtenerValorQueNoSeaInferiorAlMinimo(this.anguloTita,TITAMIN);
-		this.anguloTita=this.obtenerValorQueNoSeaSuperiorAlMaximo(this.anguloTita,TITAMAX);
-		this.anguloFi=this.obtenerValorQueNoSeaInferiorAlMinimo(this.anguloFi,FIMIN);
-		this.anguloFi=this.obtenerValorQueNoSeaSuperiorAlMaximo(this.anguloFi,FIMAX);
-		this.posicionInicial= this.posicionFinal;
-		this.actualizar();
-	}
-}
 
 Camara.prototype.soltaronUnBotonDelMouse = function(evento){
 	console.log("Soltaron un boton del mouse");

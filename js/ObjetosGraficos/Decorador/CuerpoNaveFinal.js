@@ -11,14 +11,14 @@ function CuerpoNaveFinal(){
     mat4.rotateZ(matrizRotacion,matrizRotacion,Math.PI/2.0);
     mat4.scale(matrizEscalado,matrizEscalado,[1.5,1.0,1.5]);
 
-    mvPushMatrix();
+    pilaMatrizDeModelado.meter();
 
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
-    
+
       this.cuerpo.dibujar();
 
-    mvPopMatrix();
+    pilaMatrizDeModelado.sacar();
 
   }
 

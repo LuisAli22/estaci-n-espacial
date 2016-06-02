@@ -1,8 +1,10 @@
-function EjesNave(controladorEjesYTubinas){
-
+EjesNave.prototype=new ParteGiratoriaDeAla;
+EjesNave.prototype.constructor=EjesNave;
+function EjesNave(){
+  this.objetoGraficoCompuesto=new ObjetoGraficoCompuesto();
+  this.limiteAngular=Math.PI/2.0;
   this.cubo = new Cubo(7.0);
   this.cilindro = new Cilindro(64,64,7.0,0);
-  this.controladorEjesYTubinas = controladorEjesYTubinas;
   this.desplazamientoX = 0.63388347565;
   this.desplazamientoY = -1.5303300859;
 
@@ -16,46 +18,42 @@ function EjesNave(controladorEjesYTubinas){
     mat4.rotateZ(matrizRotacion,matrizRotacion,angulo);
     mat4.scale(matrizEscalado,matrizEscalado,[0.5,2.0,0.5]);
 
-    mvPushMatrix();
+    pilaMatrizDeModelado.meter();
 
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
-    
+
       this.cubo.dibujar();
 
-    mvPopMatrix();
+    pilaMatrizDeModelado.sacar();
 
   }
 
   this.dibujarCilindro = function(){
-  
+
     var matrizRotacion = mat4.create();
     var matrizEscalado = mat4.create();
 
     mat4.rotateY(matrizRotacion,matrizRotacion,Math.PI/2);
     mat4.scale(matrizEscalado,matrizEscalado,[0.375,0.375,4.0]);
 
-    mvPushMatrix();
+    pilaMatrizDeModelado.meter();
 
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
-    
+
       this.cilindro.dibujar();
 
-    mvPopMatrix();
+    pilaMatrizDeModelado.sacar();
 
   }
 
 }
 EjesNave.prototype.dibujar = function(){
 
-    var matrizRotacion = mat4.create();
-
-    mat4.rotateX(matrizRotacion,matrizRotacion,this.controladorEjesYTubinas.getAngulo());
-
-    mvPushMatrix();
-      mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
+    pilaMatrizDeModelado.meter();
+      mat4.rotateX(mvMatrix,mvMatrix,this.angulo);
       this.dibujarEje(-2.0,0.0,0.0);
       this.dibujarEje(2.0,0.0,0.0);
       this.dibujarEje(2.0+this.desplazamientoX,this.desplazamientoY,Math.PI/4.0);
@@ -63,15 +61,23 @@ EjesNave.prototype.dibujar = function(){
       this.dibujarEje(-2.0-this.desplazamientoX,-this.desplazamientoY,Math.PI/4.0);
       this.dibujarEje(2.0+this.desplazamientoX,-this.desplazamientoY,-Math.PI/4.0);
       this.dibujarCilindro();
-    mvPopMatrix();  
-
+      this.objetoGraficoCompuesto.dibujar();
+    pilaMatrizDeModelado.sacar();
 }
 
 EjesNave.prototype.inicializarTextura=function(){
   this.cubo.inicializarTextura(RUTAIMAGENMARTE);
   this.cilindro.inicializarTextura(RUTAIMAGENMARTE);
+  this.objetoGraficoCompuesto.inicializarTextura();
 }
 EjesNave.prototype.generarMipMap=function (){
   this.cubo.generarMipMap();
   this.cilindro.generarMipMap();
+  this.objetoGraficoCompuesto.generarMipMap();
+}
+EjesNave.prototype.agregar=function(clave,objetoGrafico){
+  this.objetoGraficoCompuesto.agregar(clave,objetoGrafico);
+}
+EjesNave.prototype.obtenerHijo=function(clave){
+  return this.objetoGraficoCompuesto.obtenerHijo(clave);
 }

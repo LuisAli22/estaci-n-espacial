@@ -1,11 +1,11 @@
 MoverNaveAbajo.prototype= new Comando;
 MoverNaveAbajo.prototype.constructor=MoverNaveAbajo;
-function MoverNaveAbajo(escena){
-    Comando.call(this,escena);
+function MoverNaveAbajo(nave){
+    this.nave=nave;
 }
 MoverNaveAbajo.prototype.ejecutar=function(){
-  this.escena.moverNaveAbajo();
+  this.nave.moverAbajo();
 }
 MoverNaveAbajo.prototype.soltar=function(){
-  this.escena.soltarTeclaNave(5);
+  this.nave.soltarTecla(5);
 }

@@ -1,8 +1,8 @@
 GiroTurbinasHorario.prototype= new Comando;
 GiroTurbinasHorario.prototype.constructor=GiroTurbinasHorario;
-function GiroTurbinasHorario(escena){
-    Comando.call(this,escena);
+function GiroTurbinasHorario(turbinas){
+    this.turbinas=turbinas
 }
 GiroTurbinasHorario.prototype.ejecutar=function(){
-  this.escena.giroTurbinasHorario();
+  this.turbinas.giroHorario();
 }

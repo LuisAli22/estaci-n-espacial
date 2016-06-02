@@ -1,8 +1,8 @@
 GiroEjesAntihorario.prototype= new Comando;
 GiroEjesAntihorario.prototype.constructor=GiroEjesAntihorario;
-function GiroEjesAntihorario(escena){
-    Comando.call(this,escena);
+function GiroEjesAntihorario(ejes){
+  this.ejes = ejes;
 }
 GiroEjesAntihorario.prototype.ejecutar=function(){
-  this.escena.giroEjesAntihorario();
+  this.ejes.giroAntiHorario();
 }

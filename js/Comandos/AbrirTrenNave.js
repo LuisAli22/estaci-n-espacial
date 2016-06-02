@@ -1,8 +1,8 @@
 AbrirTrenNave.prototype= new Comando;
 AbrirTrenNave.prototype.constructor=AbrirTrenNave;
-function AbrirTrenNave(escena){
-    Comando.call(this,escena);
+function AbrirTrenNave(patasNave){
+    this.patasNave=patasNave;
 }
 AbrirTrenNave.prototype.ejecutar=function(){
-  this.escena.abrirTrenNave();
+  this.patasNave.abrirTren();
 }

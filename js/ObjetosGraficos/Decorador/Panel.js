@@ -8,17 +8,17 @@ function Panel(material){
     var matrizTraslacionFinal = mat4.create();
 
     mat4.scale(matrizEscalado,matrizEscalado,[2.5,0.5,0.05]);
-   
-    mvPushMatrix();
+
+    pilaMatrizDeModelado.meter();
 
       mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[x,y,-0.025]);
 
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
-        
+
       this.cubo.dibujar();
 
-    mvPopMatrix();
+    pilaMatrizDeModelado.sacar();
 
   }
 
@@ -31,17 +31,17 @@ function Panel(material){
     mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0);
     mat4.scale(matrizEscalado,matrizEscalado,[0.05,0.5,0.05]);
 
-    mvPushMatrix();
+    pilaMatrizDeModelado.meter();
 
       mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[x,0.0,0.0]);
 
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
-      
+
       cilindro.dibujar();
-      
-    mvPopMatrix();
+
+    pilaMatrizDeModelado.sacar();
 
   }
 
@@ -56,14 +56,14 @@ Panel.prototype.dibujar = function(){
   mat4.scale(matrizEscalado,matrizEscalado,[4.0,0.05,0.05]);
 
   //eje
-  mvPushMatrix();
+  pilaMatrizDeModelado.meter();
 
     mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
     mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
-    
+
     cilindro.dibujar();
 
-  mvPopMatrix();
+  pilaMatrizDeModelado.sacar();
 
   this.dibujarCilindroLateral(-2.0);
   this.dibujarCilindroLateral(2.0);

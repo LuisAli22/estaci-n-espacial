@@ -12,10 +12,10 @@ Sol.prototype.configurarIluminacion=function(){
   var matrizCamara = this.camara.obtenerMatriz();
   this.vectorDireccionDeLaLuz=[ 0, 0 , 0];
 	vec3.transformMat4(this.vectorDireccionDeLaLuz, this.vectorDireccionDeLaLuz, matrizCamara);
-  mvPushMatrix();
+  pilaMatrizDeModelado.meter();
     mat4.rotate(mvMatrix,mvMatrix,-Math.PI/2.0,[0,1,0]);
     vec3.transformMat4(this.vectorDireccionDeLaLuz, this.vectorDireccionDeLaLuz, mvMatrix);
-    mvPopMatrix();
+  pilaMatrizDeModelado.sacar();
   gl.uniform1i(shaderProgram.useLightingUniform, this.iluminar);
   gl.uniform3fv(shaderProgram.lightingDirectionUniform, this.vectorDireccionDeLaLuz);
 }
@@ -41,14 +41,14 @@ Sol.prototype.aplicarTransformacionesALaMatrizDeModelado=function(){
 Sol.prototype.dibujar = function(){
   gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
   gl.uniform3f(shaderProgram.directionalColorUniform, 0.5, 0.5, 0.5);
-  mvPushMatrix();
+  pilaMatrizDeModelado.meter();
     this.calcularMatrizDeTraslacion();
     this.calcularMatrizDeRotacion();
     this.calcularMatrizDeEscalado();
     this.aplicarTransformacionesALaMatrizDeModelado();
     this.configurarIluminacion();
     this.esfera.dibujar();
-  mvPopMatrix();
+  pilaMatrizDeModelado.sacar();
 }
 Sol.prototype.inicializarTextura=function(){
   this.esfera.inicializarTextura();

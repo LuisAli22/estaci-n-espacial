@@ -1,8 +1,8 @@
 CerrarTrenNave.prototype= new Comando;
 CerrarTrenNave.prototype.constructor=CerrarTrenNave;
-function CerrarTrenNave(escena){
-    Comando.call(this,escena);
+function CerrarTrenNave(patasNaves){
+    this.patasNaves=patasNaves;
 }
 CerrarTrenNave.prototype.ejecutar=function(){
-  this.escena.cerrarTrenNave();
+  this.patasNaves.cerrarTren();
 }

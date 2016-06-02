@@ -1,12 +1,11 @@
 MoverNaveDerecha.prototype= new Comando;
 MoverNaveDerecha.prototype.constructor=MoverNaveDerecha;
-function MoverNaveDerecha(escena){
-    Comando.call(this,escena);
+function MoverNaveDerecha(nave){
+    this.nave=nave;
 }
 MoverNaveDerecha.prototype.ejecutar=function(){
-  this.escena.moverNaveDerecha();
+  this.nave.moverDerecha();
 }
 MoverNaveDerecha.prototype.soltar=function(){
-  this.escena.soltarTeclaNave(6);
+  this.nave.soltarTeclaNave(6);
 }
-

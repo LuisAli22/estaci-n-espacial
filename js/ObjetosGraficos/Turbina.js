@@ -21,7 +21,7 @@ function Turbina(){
 
         var calculardorDePuntosDeCurva = new CalcularCurva();
         calculardorDePuntosDeCurva.obtenerPuntosDeBSplineXY(puntosDeControl,INTERVALODELPASO,bufferInicialCoordenadas,bufferInicialNormales,1);
-        
+
         //Cargo las coordenadas de textura
         for (var i = 0.0; i < this.rows; i++){
             for (var j = 0.0; j < this.cols; j++){
@@ -39,7 +39,7 @@ function Turbina(){
                 }else{
                 	this.texture_coord_buffer.push(7.0);
                 }
-                
+
                 this.texture_coord_buffer.push(0);
             };
 
@@ -64,7 +64,7 @@ function Turbina(){
 
                 //Aplico la transformacion de revolucion a las coordenadas
                 vec3.transformMat4(coordenada,coordenada,matizModelado);
-                
+
                 this.position_buffer.push(coordenada[0]);
                 this.position_buffer.push(coordenada[1]);
                 this.position_buffer.push(coordenada[2]);

@@ -1,11 +1,11 @@
 GiroHorarioNave.prototype= new Comando;
 GiroHorarioNave.prototype.constructor=GiroHorarioNave;
-function GiroHorarioNave(escena){
-    Comando.call(this,escena);
+function GiroHorarioNave(nave){
+    this.nave=nave;
 }
 GiroHorarioNave.prototype.ejecutar=function(){
-  this.escena.giroHorarioNave();
+  this.nave.giroHorarioNave();
 }
 GiroHorarioNave.prototype.soltar=function(){
-  this.escena.soltarTeclaNave(2);
+  this.nave.soltarTeclaNave(2);
 }

@@ -10,10 +10,10 @@ EjesAntenaEstacionEspacial.prototype.dibujar = function(){
     mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0);
     mat4.scale(matrizEscalado,matrizEscalado,[0.025,7.0,0.025]);
     mat4.translate(matrizTraslacion,matrizTraslacion,[0.0,0.5,0.0]);
-    
+
 
     for (var i = 0; i < 2 ; i++) {
-      mvPushMatrix();
+      pilaMatrizDeModelado.meter();
         mat4.identity(matrizTraslacionFinal);
         mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[0.125-i*0.25,1.75,0.0]);
 
@@ -21,9 +21,9 @@ EjesAntenaEstacionEspacial.prototype.dibujar = function(){
         mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
         mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
         mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
-        
+
         cilindro.dibujar();
-      mvPopMatrix();       
+      pilaMatrizDeModelado.sacar();       
     };
 
     mat4.identity(matrizTraslacion);
@@ -31,17 +31,17 @@ EjesAntenaEstacionEspacial.prototype.dibujar = function(){
     mat4.translate(matrizTraslacion,matrizTraslacion,[0.0,-0.5,0.0]);
 
     for (var i = 0; i < 2 ; i++) {
-      mvPushMatrix();
+      pilaMatrizDeModelado.meter();
         mat4.identity(matrizTraslacionFinal);
         mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[0.125-i*0.25,-1.61,0.0]);
-        
+
         mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);
         mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
         mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
         mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
-        
+
         cilindro.dibujar();
-      mvPopMatrix();   
+      pilaMatrizDeModelado.sacar();
     };
 
 }

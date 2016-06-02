@@ -1,7 +1,7 @@
 MoverseHaciaAtras.prototype= new Comando;
 MoverseHaciaAtras.prototype.constructor=MoverseHaciaAtras;
 function MoverseHaciaAtras(escena){
-  Comando.call(this,escena);
+  this.escena=escena;
 }
 MoverseHaciaAtras.prototype.ejecutar=function(evento){
   this.escena.moverseHaciaAtras(evento);
@@ -9,4 +9,3 @@ MoverseHaciaAtras.prototype.ejecutar=function(evento){
 MoverseHaciaAtras.prototype.soltar=function(){
   this.escena.soltarTeclaNave();
 }
-

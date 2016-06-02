@@ -13,6 +13,20 @@ CamaraOrbital.prototype.obtenerCoordenadasEspaciales=function(){
 	var z = this.radio * Math.sin(this.anguloTita) * Math.sin(this.anguloFi);
   return [x,y,z];
 }
+CamaraOrbital.prototype.seMueveElMouse = function(evento) {
+	if (this.estaApretandoElIzquierdo) {
+		console.log("Se mueve el mouse con el boton izquierdo apretado");
+		this.posicionFinal = this.obtengoCoordenadasDePantalla(evento);
+		this.anguloFi +=this.incrementarMovimiento(COORDENADAX);
+		this.anguloTita += this.incrementarMovimiento(COORDENADAY);
+		this.anguloTita=this.obtenerValorQueNoSeaInferiorAlMinimo(this.anguloTita,TITAMIN);
+		this.anguloTita=this.obtenerValorQueNoSeaSuperiorAlMaximo(this.anguloTita,TITAMAX);
+		this.anguloFi=this.obtenerValorQueNoSeaInferiorAlMinimo(this.anguloFi,FIMIN);
+		this.anguloFi=this.obtenerValorQueNoSeaSuperiorAlMaximo(this.anguloFi,FIMAX);
+		this.posicionInicial= this.posicionFinal;
+		this.actualizar();
+	}
+}
 CamaraOrbital.prototype.actualizar = function(){
 	mat4.identity(this.matrizMirarHacia);
 	this.ojo=this.obtenerCoordenadasEspaciales();

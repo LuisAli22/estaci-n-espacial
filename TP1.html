@@ -2,104 +2,84 @@
 <html>
 
 <head>
+<link rel="stylesheet" href="estilo.css">
 <title>Trabajo Pr&#225;ctico</title>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
 <script type="text/javascript" src="js/gl-matrix.js"></script>
 <script type="text/javascript" src="js/webgl-utils.js"></script>
+<script type="text/javascript" src="js/Transformar.js"></script>
+<script type="text/javascript" src="js/PilaMatrizDeVistaModelado.js"></script>
 <script type="text/javascript" src="js/Definiciones/Definiciones.js"></script>
-<script type="text/javascript" src="js/Escena/Escena.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/ObjetoGrafico.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/ObjetoGraficoCompuesto.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/ComponenteEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/AnilloEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/CentroEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/CuerpoRedondo.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Esfera.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Cilindro.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Cubo.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/CuerpoNave.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/MangueraAstronauta.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Plano.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/TapaEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Turbina.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Astronauta.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/CilindrosLateralesEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/CuerpoNaveFinal.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/EjesAntenaEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/ParteGiratoriaDeAla.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/EjesNave.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Escotillas.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/EstacionEspacial.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Nave.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Panel.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/PanelEstacionEspacial.js"></script>
+
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/PatasNave.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Sol.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Tierra.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/TurbinasNave.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaEjesDeAlas.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaEspacioEstelar.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaEstacionEspacial.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaNave.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaSol.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaTierra.js"></script>
 <script type="text/javascript" src="js/Camara/Camara.js"></script>
 <script type="text/javascript" src="js/Camara/CamaraOrbital.js"></script>
 <script type="text/javascript" src="js/Camara/PrimerPersonaBahiaDeCarga.js"></script>
 <script type="text/javascript" src="js/Comandos/Comando.js"></script>
-
 <script type="text/javascript" src="js/Comandos/AbrirPaneles.js"></script>
-
 <script type="text/javascript" src="js/Comandos/Acercarse.js"></script>
-
 <script type="text/javascript" src="js/Comandos/Alejarse.js"></script>
-
 <script type="text/javascript" src="js/Comandos/CerrarPaneles.js"></script>
-
 <script type="text/javascript" src="js/Comandos/MoverseHaciaAdelante.js"></script>
-
 <script type="text/javascript" src="js/Comandos/MoverseHaciaAtras.js"></script>
-
 <script type="text/javascript" src="js/Comandos/MoverseHaciaLaDerecha.js"></script>
-
 <script type="text/javascript" src="js/Comandos/MoverseHaciaLaIzquierda.js"></script>
-
 <script type="text/javascript" src="js/Comandos/GiroTurbinasAntihorario.js"></script>
-
 <script type="text/javascript" src="js/Comandos/GiroTurbinasHorario.js"></script>
-
 <script type="text/javascript" src="js/Comandos/GiroEjesAntihorario.js"></script>
-
 <script type="text/javascript" src="js/Comandos/GiroEjesHorario.js"></script>
-
 <script type="text/javascript" src="js/Comandos/GiroAntihorarioNave.js"></script>
-
 <script type="text/javascript" src="js/Comandos/GiroHorarioNave.js"></script>
-
 <script type="text/javascript" src="js/Comandos/MoverNaveAbajo.js"></script>
-
 <script type="text/javascript" src="js/Comandos/MoverNaveArriba.js"></script>
-
 <script type="text/javascript" src="js/Comandos/MoverNaveIzquierda.js"></script>
-
 <script type="text/javascript" src="js/Comandos/MoverNaveDerecha.js"></script>
-
 <script type="text/javascript" src="js/Comandos/AcelerarNave.js"></script>
-
 <script type="text/javascript" src="js/Comandos/DesacelerarNave.js"></script>
-
 <script type="text/javascript" src="js/Comandos/AbrirTrenNave.js"></script>
-
 <script type="text/javascript" src="js/Comandos/CerrarTrenNave.js"></script>
-
-<script type="text/javascript" src="js/ControladorDeTeclado.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/CilindrosLateralesEstacionEspacial.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/EjesAntenaEstacionEspacial.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/EstacionEspacial.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Sol.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Tierra.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Panel.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/PanelEstacionEspacial.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Escotillas.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/TurbinasNave.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/EjesNave.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Nave.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/CuerpoNaveFinal.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/PatasNave.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Decorador/Astronauta.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/ObjetoGraficoCompuesto.js"></script>
+<script type="text/javascript" src="js/Comandos/AsignarCamaraOrbital.js"></script>
+<script type="text/javascript" src="js/Comandos/AsignarCamaraPrimeraPersona.js"></script>
+<script type="text/javascript" src="js/ControladorDeTeclado/ControladorDeTeclado.js"></script>
+<script type="text/javascript" src="js/Escena/Escena.js"></script>
 <script type="text/javascript" src="js/shader/shaderScript.js"></script>
 <script type="text/javascript" src="js/shader/PrepararProgramaEjecutable.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/ObjetoGrafico.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/CuerpoRedondo.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaTierra.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaSol.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaEstacionEspacial.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaEspacioEstelar.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Fabrica/FabricaNave.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Esfera.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/ComponenteEstacionEspacial.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/AnilloEstacionEspacial.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/TapaEstacionEspacial.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/CentroEstacionEspacial.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/CilindrosLaterales.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Cilindro.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Cubo.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/MangueraAstronauta.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Turbina.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/CuerpoNave.js"></script>
-<script type="text/javascript" src="js/ObjetosGraficos/Plano.js"></script>
-<script type="text/javascript" src="js/Transformar.js"></script>
-<script type="text/javascript" src="js/ControladorPaneles.js"></script>
-<script type="text/javascript" src="js/ControladorEjesYTurbinas.js"></script>
-<script type="text/javascript" src="js/ControladorNave.js"></script>
-<script type="text/javascript" src="js/ControladorPatasNave.js"></script>
+
 
 <script id="shader-fs" type="x-shader/x-fragment">
     precision mediump float;
@@ -281,30 +261,17 @@
       escena.generarMipMap();
     }
     var mvMatrix = mat4.create();
-    var mvMatrixStack = [];
+    var pilaMatrizDeModelado = new PilaMatrizDeVistaModelado();
     var cilindro;
-    var abrirPaneles = false;
-    var cerrarPaneles = false;
-    var listo = true;
+
   var escena=null;
   var controladorDeTeclado=null;
 
-    function mvPushMatrix() {
-        var copy = mat4.clone(mvMatrix);
-        mvMatrixStack.push(copy);
-    }
 
-    function mvPopMatrix() {
-        if (mvMatrixStack.length == 0) {
-            throw "Invalid popMatrix!";
-        }
-        mvMatrix = mvMatrixStack.pop();
-    }
 
 
     function tick() {
         requestAnimFrame(tick);
-  //      controladorDeTeclado.manejarTeclas();
         escena.dibujar();
     }
 
@@ -348,7 +315,44 @@
     </center>
     <center>
         <p>Tp  Sistemas gr&aacuteficos - Ali, Luis / Vidal, Mariano - 1er. cuatrimestre de 2016</p>
-      </center>
+    </center>
+    <p>Controles:
+		<dt >
+      <dt>Cambio de C&aacutemara (teclas del teclado com&uacuten, no del teclado num&eacuterico)</dt>
+      <dl>
+			      <dt>Orbital:</dt>
+            <dd>1</dd>
+            <dl>
+              <dt>Acciones de la c&aacutemara orbital:</dt>
+              <dl>
+                <dt>Rotaci&oacuten de c&aacutemara: <dd>arrastrar el mouse con el bot&oacuten izquierdo presionado</dd></dt>
+                <dt>Zoom: <dd>Mover la rueda del mouse o alternativamente con las teclas + y - (del teclado num&eacuterico)</dd></dt>
+              </dl>
+            </dl>
+            <dt>Persona que camina por la bah&iacutea de carga: <dd>2</dd> </dt>
+            <dl>
+              <dt>Acciones de la c&aacutemara de la persona que camina por la bah&iacutea de carga:</dt>
+              <dl>
+                <dt>Desplazamiento izquierda/atr&aacutes/derecha/adelante: <dd>a/s/d/w respectivamente</dd></dt>
+              </dl>
+            </dl>
+            <dt>Persecuci&oacuten de nave:<dd>3</dd> </dt>
+            <dt>Cabina de nave: <dd>4</dd> </dt>
+      </dl>
+      <dt>Nave:
+        <dl>
+    			<dt>Rotaci&oacuten de la nave hacia izquierda/abajo/derecha/arriba: <dd>4/5/6/8 respectivamente (teclado num&eacuterico)</dd></dt>
+    			<dt>Acelerar/Desacelerar: <dd>2/1 respectivamente (teclado num&eacuterico)</dd></dt>
+    			<dt>Rotaci&oacuten de los brazos respecto de la nave horario/antihorario: <dd>l/k respectivamente</dd></dt>
+          <dt>Rotaci&oacuten de las turbinas respecto de los brazos horario/antihorario:<dd> p/o respectivamente</dd></dt>
+    		</dl>
+      </dt>
+      <dt> Estaci&oacuten espacial:
+        <dl>
+          <dt>Abrir/Cerrar paneles: <dd>&#8593/&#8595 (teclado com&uacuten)<dd></dt>
+        </dl>
+		</dl>
+		</p>
     <br/>
     Las texturas son cortes&iacutea de <a href="http://maps.jpl.nasa.gov/">Jet Propulsion Laboratory</a>.
     <br/>

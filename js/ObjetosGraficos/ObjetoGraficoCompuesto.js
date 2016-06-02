@@ -22,6 +22,3 @@ ObjetoGraficoCompuesto.prototype.agregar=function(clave,objetoGrafico){
 ObjetoGraficoCompuesto.prototype.obtenerHijo=function(clave){
   return this.componentes[clave];
 }
-/*ObjetoGraficoCompuesto.prototype.longitud=function(){
-  return this.componentes.length;
-}*/

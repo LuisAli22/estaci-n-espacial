@@ -4,15 +4,12 @@ function Escena(canvas){
 	canvas.onmousemove = this.seMueveElMouse.bind(this);
   canvas.tabIndex = 1000;
   canvas.onwheel= this.seMueveLaRuedaDelMouse.bind(this);
-  this.controladorEjesYTubinas = new ControladorEjesYTurbinas();
-  this.controladorNave = new ControladorNave();
-  this.controladorPatasNave = new ControladorPatasNave();
-  var fabricaEspacioEstelar= new FabricaEspacioEstelar(this.controladorEjesYTubinas,this.controladorNave,this.controladorPatasNave);
+  var fabricaEspacioEstelar= new FabricaEspacioEstelar();
   this.espacioEstelar=fabricaEspacioEstelar.crear();
   this.camaras= {Orbital: new CamaraOrbital(canvas, 85,0.5 * Math.PI, 0.5 * Math.PI),
                 PrimerPersonaBahia: new PrimerPersonaBahiaDeCarga(canvas,this.obtenerPosicionDelOjoDeLaPersonaEnBahiaDeCarga())};
   this.camaraActual=this.camaras["Orbital"];
-  var sol=this.espacioEstelar.obtenerHijo(CLAVESOL);
+  var sol=this.obtenerUnObjetoDeLaEscena(CLAVESOL);
   sol.asignarCamara(this.camaraActual);
   cilindro = new Cilindro(64,64,DORADO,0);
 
@@ -21,6 +18,12 @@ function Escena(canvas){
   this.campoVerticalDeVista=Math.PI/12.0;
   this.relacionDeAspecto=gl.viewportWidth / gl.viewportHeight;
 
+}
+Escena.prototype.obtenerUnObjetoDeLaEscena=function(claveDelObjeto){
+  return this.espacioEstelar.obtenerHijo(claveDelObjeto)
+}
+Escena.prototype.asignarCamara=function(claveCamara){
+  this.camaraActual=this.camaras[claveCamara];
 }
 Escena.prototype.seMueveLaRuedaDelMouse=function(evento){
   this.camaraActual.seMueveLaRuedaDelMouse(evento);
@@ -33,12 +36,6 @@ Escena.prototype.soltaronUnBotonDelMouse=function(evento){
 }
 Escena.prototype.seMueveElMouse=function(evento){
   this.camaraActual.seMueveElMouse(evento);
-}
-Escena.prototype.abrirPaneles=function(evento){
-  abrirPaneles = listo;
-}
-Escena.prototype.cerrarPaneles=function(evento){
-  cerrarPaneles = listo;
 }
 Escena.prototype.acercarse=function(evento){
   console.log("Hace zoom in con la tecla +");
@@ -59,51 +56,6 @@ Escena.prototype.moverseHaciaLaIzquierda=function(evento){
 }
 Escena.prototype.moverseHaciaLaDerecha=function(evento){
 
-}
-Escena.prototype.giroTurbinasAntihorario=function(){
-  this.controladorEjesYTubinas.giroAntihorarioTurbinas();
-}
-Escena.prototype.giroTurbinasHorario=function(){
-  this.controladorEjesYTubinas.giroHorarioTurbinas();
-}
-Escena.prototype.giroEjesAntihorario=function(){
-  this.controladorEjesYTubinas.giroEjesAntiHorario();
-}
-Escena.prototype.giroEjesHorario=function(){
-  this.controladorEjesYTubinas.giroEjesHorario();
-}
-Escena.prototype.giroAntihorarioNave=function(){
-  this.controladorNave.giroAntiHorario();
-}
-Escena.prototype.giroHorarioNave=function(){
-  this.controladorNave.giroHorario();
-}
-Escena.prototype.moverNaveArriba=function(){
-  this.controladorNave.moverArriba();
-}
-Escena.prototype.moverNaveAbajo=function(){
-  this.controladorNave.moverAbajo();
-}
-Escena.prototype.moverNaveDerecha=function(){
-  this.controladorNave.moverDerecha();
-}
-Escena.prototype.moverNaveIzquierda=function(){
-  this.controladorNave.moverIzquierda();
-}
-Escena.prototype.acelerarNave=function(){
-  this.controladorNave.acelerar();
-}
-Escena.prototype.desacelerarNave=function(){
-  this.controladorNave.desacelerar();
-}
-Escena.prototype.soltarTeclaNave=function(estado){
-  this.controladorNave.soltarTecla(estado);
-}
-Escena.prototype.abrirTrenNave=function(){
-  this.controladorPatasNave.abrirTren();
-}
-Escena.prototype.cerrarTrenNave=function(){
-  this.controladorPatasNave.cerrarTren();
 }
 Escena.prototype.generarMipMap=function(){
   this.espacioEstelar.generarMipMap();

@@ -3,7 +3,7 @@ function CilindrosLateralesEstacionEspacial(){
 }
 CilindrosLateralesEstacionEspacial.prototype.dibujar = function(){
   for (var indiceCilindro=0;indiceCilindro< CANTIDADDECILINDROS;indiceCilindro++){
-    mvPushMatrix();
+    pilaMatrizDeModelado.meter();
       var matrizRotacion = mat4.create();
       var anguloRotacion = ((ANGULOINCIALCILINDRO + VARIACIONDELANGULO * indiceCilindro)*2.0*Math.PI)/180;
       mat4.rotateY(matrizRotacion,matrizRotacion,anguloRotacion);
@@ -17,7 +17,7 @@ CilindrosLateralesEstacionEspacial.prototype.dibujar = function(){
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
       cilindro.dibujar();
-    mvPopMatrix();
+    pilaMatrizDeModelado.sacar();
   }
 }
 CilindrosLateralesEstacionEspacial.prototype.inicializarTextura=function(){

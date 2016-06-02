@@ -1,8 +1,8 @@
 GiroTurbinasAntihorario.prototype= new Comando;
 GiroTurbinasAntihorario.prototype.constructor=GiroTurbinasAntihorario;
-function GiroTurbinasAntihorario(escena){
-    Comando.call(this,escena);
+function GiroTurbinasAntihorario(turbinas){
+  this.turbinas=turbinas
 }
 GiroTurbinasAntihorario.prototype.ejecutar=function(){
-  this.escena.giroTurbinasAntihorario();
+  this.turbinas.giroAntiHorario();
 }

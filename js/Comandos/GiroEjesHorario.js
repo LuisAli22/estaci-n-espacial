@@ -1,8 +1,8 @@
 GiroEjesHorario.prototype= new Comando;
 GiroEjesHorario.prototype.constructor=GiroEjesHorario;
-function GiroEjesHorario(escena){
-    Comando.call(this,escena);
+function GiroEjesHorario(ejes){
+  this.ejes=ejes;
 }
 GiroEjesHorario.prototype.ejecutar=function(){
-  this.escena.giroEjesHorario();
+  this.ejes.giroHorario();
 }

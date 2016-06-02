@@ -1,7 +1,8 @@
-function TurbinasNave(controladorEjesYTubinas){
-
+TurbinasNave.prototype= new ParteGiratoriaDeAla;
+TurbinasNave.prototype.constructor=TurbinasNave;
+function TurbinasNave(){
+  this.limiteAngular=Math.PI/4.0;
   this.turbina = new Turbina();
-  this.controladorEjesYTubinas = controladorEjesYTubinas;
 
   this.dibujarTurbina = function(x,y){
 
@@ -10,35 +11,26 @@ function TurbinasNave(controladorEjesYTubinas){
     var matrizEscalado = mat4.create();
 
     mat4.translate(matrizTraslacion,matrizTraslacion,[x,y,0.0]);
-    mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0+this.controladorEjesYTubinas.getAnguloTurbinas());
+    mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0+this.angulo);
     mat4.scale(matrizEscalado,matrizEscalado,[1.1,1.1,1.1]);
 
-    mvPushMatrix();
-
+    pilaMatrizDeModelado.meter();
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
-    
       this.turbina.dibujar();
-
-    mvPopMatrix();
+    pilaMatrizDeModelado.sacar();
 
   }
 
 }
 TurbinasNave.prototype.dibujar = function(){
-
-    var matrizRotacion = mat4.create();
-
-    mat4.rotateX(matrizRotacion,matrizRotacion,this.controladorEjesYTubinas.getAngulo());
-
-    mvPushMatrix();
-      mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
+    pilaMatrizDeModelado.meter();
       this.dibujarTurbina(3.65,2.7);
       this.dibujarTurbina(3.65,-2.7);
       this.dibujarTurbina(-3.65,2.7);
       this.dibujarTurbina(-3.65,-2.7);
-    mvPopMatrix();
+    pilaMatrizDeModelado.sacar();
 
 }
 

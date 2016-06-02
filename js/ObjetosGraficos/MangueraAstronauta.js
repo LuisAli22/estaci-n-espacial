@@ -52,7 +52,7 @@ function MangueraAstronauta(material){
     this.transformar = function(){
 
         for (var i = 0; i < this.rows ; i++) {
-            
+
             var trax = this.trayectoria[3*i];
             var tray = this.trayectoria[3*i+1];
             var traz = this.trayectoria[3*i+2];
@@ -116,7 +116,7 @@ function MangueraAstronauta(material){
                 this.normal_buffer.push(vectorNormales[0]);
                 this.normal_buffer.push(vectorNormales[1]);
                 this.normal_buffer.push(vectorNormales[2]);
-                
+
             };
 
         };
@@ -154,7 +154,7 @@ function MangueraAstronauta(material){
         this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
     }
-    
+
     this.inicializarLosBuffer();
 
 }
@@ -167,15 +167,14 @@ MangueraAstronauta.prototype.dibujar = function(){
     mat4.rotateX(matrizRotacion,matrizRotacion,Math.PI/2.0);
     mat4.rotateZ(matrizRotacion,matrizRotacion,Math.PI/2.0);
     mat4.translate(matrizTraslacion,matrizTraslacion,[-0.25,0.0,5.75]);
- 
-    mvPushMatrix();
+
+    pilaMatrizDeModelado.meter();
 
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
 
       ComponenteEstacionEspacial.prototype.dibujar.call(this);
 
-    mvPopMatrix();
+      pilaMatrizDeModelado.sacar();
 
 }
-

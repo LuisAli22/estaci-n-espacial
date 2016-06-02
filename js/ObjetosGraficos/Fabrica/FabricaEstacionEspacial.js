@@ -1,8 +1,7 @@
-function FabricaEstacionEspacial(){
-}
+function FabricaEstacionEspacial(){}
 FabricaEstacionEspacial.prototype.crear=function(){
   console.log("Crear estacion espacial");
-  var estacion=new ObjetoGraficoCompuesto();
+  var estacionEspacial= new EstacionEspacial();
   var interiorEstacionEspacial = new AnilloEstacionEspacial(VIOLETA);
   var exteriorEstacionEspacial = new AnilloEstacionEspacial(BEIS);
   exteriorEstacionEspacial.cargarExteriorEstacionEspacial();
@@ -15,20 +14,19 @@ FabricaEstacionEspacial.prototype.crear=function(){
   var panel = new PanelEstacionEspacial(DORADO);
   var escotillas = new Escotillas();
   var manguera = new MangueraAstronauta(DORADO);
-  estacion.agregar(CLAVEINTERIORESTACION,interiorEstacionEspacial);
-  estacion.agregar(CLAVEEXTERIORESTACION,exteriorEstacionEspacial);
-  estacion.agregar(CLAVETAPAINICIALESTACION,tapaInicial);
-  estacion.agregar(CLAVETAPAFINALESTACION,tapaFinal );
-  estacion.agregar(CLAVECENTROESTACION,centro);
-  estacion.agregar(CLAVECILINDROSLATERALESESTACION,cilindrosLaterales);
-  estacion.agregar(CLAVEEJESESTACION,ejes);
-  estacion.agregar(CLAVEPANELESTACION,panel);
-  estacion.agregar(CLAVEESCOTILLASESTACION,escotillas);
-  estacion.agregar(CLAVEMANGUERA,manguera);
+  estacionEspacial.agregar(CLAVEINTERIORESTACION,interiorEstacionEspacial);
+  estacionEspacial.agregar(CLAVEEXTERIORESTACION,exteriorEstacionEspacial);
+  estacionEspacial.agregar(CLAVETAPAINICIALESTACION,tapaInicial);
+  estacionEspacial.agregar(CLAVETAPAFINALESTACION,tapaFinal );
+  estacionEspacial.agregar(CLAVECENTROESTACION,centro);
+  estacionEspacial.agregar(CLAVECILINDROSLATERALESESTACION,cilindrosLaterales);
+  estacionEspacial.agregar(CLAVEEJESESTACION,ejes);
+  estacionEspacial.agregar(CLAVEPANELESTACION,panel);
+  estacionEspacial.agregar(CLAVEESCOTILLASESTACION,escotillas);
+  estacionEspacial.agregar(CLAVEMANGUERA,manguera);
   var astronauta = new Astronauta();
-  estacion.agregar(CLAVEASTRONAUTA,astronauta);
-  var estacionEspacialDecorada= new EstacionEspacial(estacion);
+  estacionEspacial.agregar(CLAVEASTRONAUTA,astronauta);
   console.log("inicializar textura de la estacion");
-  return estacionEspacialDecorada;
+  return estacionEspacial;
 
 }

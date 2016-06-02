@@ -1,11 +1,11 @@
 GiroAntihorarioNave.prototype= new Comando;
 GiroAntihorarioNave.prototype.constructor=GiroAntihorarioNave;
-function GiroAntihorarioNave(escena){
-    Comando.call(this,escena);
+function GiroAntihorarioNave(nave){
+  this.nave=nave;
 }
 GiroAntihorarioNave.prototype.ejecutar=function(){
-  this.escena.giroAntihorarioNave();
+  this.nave.giroAntihorario();
 }
 GiroAntihorarioNave.prototype.soltar=function(){
-  this.escena.soltarTeclaNave(3);
+  this.nave.soltarTecla(3);
 }

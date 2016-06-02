@@ -1,8 +1,8 @@
 AbrirPaneles.prototype= new Comando;
 AbrirPaneles.prototype.constructor=AbrirPaneles;
-function AbrirPaneles(escena){
-    Comando.call(this,escena);
+function AbrirPaneles(paneles){
+  this.paneles=paneles;
 }
-AbrirPaneles.prototype.ejecutar=function(evento){
-  this.escena.abrirPaneles();
+AbrirPaneles.prototype.ejecutar=function(){
+  this.paneles.abrir();
 }

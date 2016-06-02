@@ -1,11 +1,11 @@
 DesacelerarNave.prototype= new Comando;
 DesacelerarNave.prototype.constructor=DesacelerarNave;
-function DesacelerarNave(escena){
-    Comando.call(this,escena);
+function DesacelerarNave(nave){
+  this.nave=nave;
 }
 DesacelerarNave.prototype.ejecutar=function(){
-  this.escena.desacelerarNave();
+  this.nave.desacelerar();
 }
 DesacelerarNave.prototype.soltar=function(){
-  this.escena.soltarTeclaNave(1);
+  this.nave.soltarTecla(1);
 }

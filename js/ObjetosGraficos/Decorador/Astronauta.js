@@ -11,14 +11,14 @@ Astronauta.prototype.dibujar = function(){
     mat4.rotateZ(matrizRotacion,matrizRotacion,Math.PI/2.0);
     mat4.translate(matrizTraslacion,matrizTraslacion,[-12.0, -1.75, 41.75]);
 
-    mvPushMatrix();
+    pilaMatrizDeModelado.meter();
 
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
-    
+
       this.plano.dibujar();
 
-    mvPopMatrix();
+    pilaMatrizDeModelado.sacar();
 
 }
 
