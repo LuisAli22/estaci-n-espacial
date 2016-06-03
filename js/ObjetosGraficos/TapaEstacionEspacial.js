@@ -2,14 +2,15 @@ TapaEstacionEspacial.prototype=new ComponenteEstacionEspacial;
 TapaEstacionEspacial.prototype.constructor=TapaEstacionEspacial;
 
 //bufferExterior y bufferInterior deben tener la misma cantidad de puntos
-function TapaEstacionEspacial(_bufferExterior,_bufferInterior,material){
+function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
 
-	this.bufferExterior = _bufferExterior;
-	this.bufferInterior = _bufferInterior;
+	this.bufferExterior = bufferExterior;
+	this.bufferInterior = bufferInterior;
 
 	const FILAS = 2;
 
-ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL,material);
+    ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL,material);
+    
     this.initBuffers = function(){
 
         this.texture_coord_buffer = [];

@@ -75,6 +75,8 @@ function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,punto
         
     };
 
+    return vectorDesplazamiento;
+
 };
 
 //Funcion creada a partir de http://www.sg6671.com.ar/files/demos/clase06/demoCurvas2d.html

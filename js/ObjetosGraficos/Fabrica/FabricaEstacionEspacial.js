@@ -14,6 +14,7 @@ FabricaEstacionEspacial.prototype.crear=function(){
   var panel = new PanelEstacionEspacial(DORADO);
   var escotillas = new Escotillas();
   var manguera = new MangueraAstronauta(DORADO);
+  var astronauta = new Astronauta();
   estacionEspacial.agregar(CLAVEINTERIORESTACION,interiorEstacionEspacial);
   estacionEspacial.agregar(CLAVEEXTERIORESTACION,exteriorEstacionEspacial);
   estacionEspacial.agregar(CLAVETAPAINICIALESTACION,tapaInicial);
@@ -24,7 +25,6 @@ FabricaEstacionEspacial.prototype.crear=function(){
   estacionEspacial.agregar(CLAVEPANELESTACION,panel);
   estacionEspacial.agregar(CLAVEESCOTILLASESTACION,escotillas);
   estacionEspacial.agregar(CLAVEMANGUERA,manguera);
-  var astronauta = new Astronauta();
   estacionEspacial.agregar(CLAVEASTRONAUTA,astronauta);
   console.log("inicializar textura de la estacion");
   return estacionEspacial;

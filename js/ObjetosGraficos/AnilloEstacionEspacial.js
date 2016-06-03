@@ -24,6 +24,7 @@ function AnilloEstacionEspacial(material){
                                    1.0, -0.5, 0.0, 0.333, -0.5, 0.0, -0.333, -0.5, 0.0, -1.0, -0.5, 0.0,
                                    -1.0, -0.5, 0.0, -1.0, -0.166, 0.0, -1.0, 0.166, 0.0, -1.0, 0.5, 0.0];
 
+    this.trayectoria = [];
 
     ComponenteEstacionEspacial.call(this,FILASESTACIONESPACIAL,COLUMNASESTACIONESPACIAL,material);
 
@@ -85,8 +86,6 @@ function AnilloEstacionEspacial(material){
         this.fin = 0.75;
 
         this.transformar(puntoDeControlXFinal,puntoDeControlZFinal,bufferInicialCoordenadas,bufferInicialNormales);
-
-
         // Buffer de indices de los triangulos
         this.crearBufferDeIndices();
         this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
@@ -106,7 +105,9 @@ function AnilloEstacionEspacial(material){
             bufferCoordenadasATransformar = bufferCoordenadasATransformar.concat(bufferInicialCoordenadas);
             bufferNormalesATransformar = bufferNormalesATransformar.concat(bufferInicialNormales);
 
-            transformarXZ(bufferCoordenadasATransformar,bufferNormalesATransformar,t,puntosDeControlXTransformar,puntosDeControlZTransformar);
+            var desplazamiento = transformarXZ(bufferCoordenadasATransformar,bufferNormalesATransformar,t,puntosDeControlXTransformar,puntosDeControlZTransformar);
+            
+            this.trayectoria.push(desplazamiento);
 
             this.position_buffer = this.position_buffer.concat(bufferCoordenadasATransformar);
             this.normal_buffer = this.normal_buffer.concat(bufferNormalesATransformar);
@@ -129,11 +130,14 @@ function AnilloEstacionEspacial(material){
 
     this.cargarExteriorEstacionEspacial = function(){
 
+        //interior = false;
         this.cargarPerfilExterior(this.bufferInicialCoordenadas,this.bufferInicialNormales);
         this.inicializarLosBuffer(this.bufferInicialCoordenadas,this.bufferInicialNormales);
     }
     this.cargarInteriorEstacionEspacial = function(){
 
+        //interior = true;
+        //trayectoria = [];
         this.cargarPerfilInterior(this.bufferInicialCoordenadas,this.bufferInicialNormales);
         this.inicializarLosBuffer(this.bufferInicialCoordenadas,this.bufferInicialNormales);
     }
