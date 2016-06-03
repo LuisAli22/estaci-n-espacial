@@ -5,18 +5,11 @@ function Nave(){
 	this.estadoTeclas=[false,false,false,false,false,false,false,false];
 	this.rotacion=mat4.create();
 
-	/*
-		+X frente de la nave
-		+Y techo de la nave
-		+Z
-
-	*/
-
 	this.potenciaMotor=0.01;
 
 	this.velocidad=0;
-	this.angCabezeo=0; // Z
-	this.angRolido=0; // respecto del X de la Nave
+	this.angCabezeo=0;
+	this.angRolido=0;
 	this.angVirada=0;
 	this.momento=vec3.fromValues(0,0,0);
   this.direccion=vec3.fromValues(0,0,0);

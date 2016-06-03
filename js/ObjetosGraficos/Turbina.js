@@ -20,7 +20,7 @@ function Turbina(){
         var bufferInicialNormales = [];
 
         var calculardorDePuntosDeCurva = new CalcularCurva();
-        calculardorDePuntosDeCurva.obtenerPuntosDeBSplineXY(puntosDeControl,INTERVALODELPASO,bufferInicialCoordenadas,bufferInicialNormales,1);
+        calculardorDePuntosDeCurva.obtenerPuntosDeBSplineXY(puntosDeControl,INTERVALODELPASO,bufferInicialCoordenadas,bufferInicialNormales,-1);
 
         //Cargo las coordenadas de textura
         for (var i = 0.0; i < this.rows; i++){
