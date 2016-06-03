@@ -14,7 +14,7 @@ function EjesNave(){
     var matrizRotacion = mat4.create();
     var matrizEscalado = mat4.create();
 
-    mat4.translate(matrizTraslacion,matrizTraslacion,[x,y,-0.25]);
+    mat4.translate(matrizTraslacion,matrizTraslacion,[x,y,0.0]);
     mat4.rotateZ(matrizRotacion,matrizRotacion,angulo);
     mat4.scale(matrizEscalado,matrizEscalado,[0.5,2.0,0.5]);
 

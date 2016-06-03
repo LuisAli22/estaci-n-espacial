@@ -93,12 +93,12 @@ PatasNave.prototype.dibujar = function(){
 
     pilaMatrizDeModelado.meter();
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
-      this.dibujarEje(0.75,-0.25,0.0);
-      this.dibujarEje(0.75,-0.25,-0.4);
-      this.dibujarEje(-0.75,-0.25,0.0);
-      this.dibujarEje(-0.75,-0.25,-0.4);
-      this.dibujarEje(0.0,-0.25,-1.0);
-      this.dibujarEje(0.0,-0.25,-1.4);
+      this.dibujarEje(0.75,-0.25,0.05);
+      this.dibujarEje(0.75,-0.25,-0.35);
+      this.dibujarEje(-0.75,-0.25,0.05);
+      this.dibujarEje(-0.75,-0.25,-0.35);
+      this.dibujarEje(0.0,-0.25,-0.95);
+      this.dibujarEje(0.0,-0.25,-1.35);
       this.dibujarBase(0.0,-0.81,-1.635);
       this.dibujarBase(-0.75,-0.81,-0.635);
       this.dibujarBase(0.75,-0.81,-0.635);
