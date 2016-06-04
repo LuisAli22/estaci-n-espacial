@@ -11,7 +11,7 @@ function Cubo(material){
   this.bufferInicialCoordenadasTapa = [];
   this.bufferInicialNormalesTapa = [];
 
-  this.puntosDeControl = [-0.5, -0.5, -0.5, -0.333, -0.5, -0.5, 0.333, -0.5, -0.5, 0.5, -0.5, -0.5, 
+  this.puntosDeControl = [-0.5, -0.5, -0.5, -0.333, -0.5, -0.5, 0.333, -0.5, -0.5, 0.5, -0.5, -0.5,
                            0.5, -0.5, -0.5, 0.5, -0.333, -0.5, 0.5, 0.333, -0.5, 0.5, 0.5, -0.5,
                            0.5, 0.5, -0.5, 0.333, 0.5, -0.5, -0.333, 0.5, -0.5, -0.5, 0.5, -0.5,
                            -0.5, 0.5, -0.5, -0.5, 0.333, -0.5, -0.5, -0.333, -0.5, -0.5, -0.5, -0.5 ];
@@ -170,7 +170,7 @@ TapaCubo.prototype.cargarTapa = function(altura,normal){
   for (var i = 0; i < 2; i++) {
 
     signo = (i==0) ? 1 : -1;
-    
+
     for (var j = 0; j < this.cols; j++) {
 
       var t = -0.5 + j/(this.cols-1);
@@ -187,5 +187,3 @@ TapaCubo.prototype.cargarTapa = function(altura,normal){
   };
 
 }
-
-

@@ -1,6 +1,5 @@
 
 <html>
-
 <head>
 <link rel="stylesheet" href="estilo.css">
 <title>Trabajo Pr&#225;ctico</title>
@@ -8,6 +7,7 @@
 
 <script type="text/javascript" src="js/gl-matrix.js"></script>
 <script type="text/javascript" src="js/webgl-utils.js"></script>
+<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
 <script type="text/javascript" src="js/Transformar.js"></script>
 <script type="text/javascript" src="js/PilaMatrizDeVistaModelado.js"></script>
 <script type="text/javascript" src="js/Definiciones/Definiciones.js"></script>
@@ -216,10 +216,7 @@
     }
 </script>
 
-
 <script type="text/javascript">
-
-
     var gl;
     var shaderProgram;
     function crearContextoDeDibujoEnCanvas(canvas){
@@ -267,9 +264,6 @@
   var escena=null;
   var controladorDeTeclado=null;
 
-
-
-
     function tick() {
         requestAnimFrame(tick);
         escena.dibujar();
@@ -302,62 +296,70 @@
     }
 
 </script>
-
-
 </head>
-
-
 <body onload="webGLStart();">
-    <center>
-            <canvas id="TpSistemasGraficosCanvas" style="border: none;" width="1280" height="720">
-            Your browser does not support the HTML5 canvas element.
-            </scanvas>
-    </center>
-    <center>
-        <p>Tp  Sistemas gr&aacuteficos - Ali, Luis / Vidal, Mariano - 1er. cuatrimestre de 2016</p>
-    </center>
-    <p>Controles:
-		<dt >
-      <dt>Cambio de C&aacutemara (teclas del teclado com&uacuten, no del teclado num&eacuterico)</dt>
-      <dl>
-			      <dt>Orbital:</dt>
-            <dd>1</dd>
-            <dl>
-              <dt>Acciones de la c&aacutemara orbital:</dt>
-              <dl>
-                <dt>Rotaci&oacuten de c&aacutemara: <dd>arrastrar el mouse con el bot&oacuten izquierdo presionado</dd></dt>
-                <dt>Zoom: <dd>Mover la rueda del mouse o alternativamente con las teclas + y - (del teclado num&eacuterico)</dd></dt>
-              </dl>
-            </dl>
-            <dt>Persona que camina por la bah&iacutea de carga: <dd>2</dd> </dt>
-            <dl>
-              <dt>Acciones de la c&aacutemara de la persona que camina por la bah&iacutea de carga:</dt>
-              <dl>
-                <dt>Desplazamiento izquierda/atr&aacutes/derecha/adelante: <dd>a/s/d/w respectivamente</dd></dt>
-              </dl>
-            </dl>
-            <dt>Persecuci&oacuten de nave:<dd>3</dd> </dt>
-            <dt>Cabina de nave: <dd>4</dd> </dt>
-      </dl>
-      <dt>Nave:
-        <dl>
-    			<dt>Rotaci&oacuten de la nave hacia izquierda/abajo/derecha/arriba: <dd>4/5/6/8 respectivamente (teclado num&eacuterico)</dd></dt>
-    			<dt>Acelerar/Desacelerar: <dd>2/1 respectivamente (teclado num&eacuterico)</dd></dt>
-    			<dt>Rotaci&oacuten de los brazos respecto de la nave horario/antihorario: <dd>l/k respectivamente</dd></dt>
-          <dt>Rotaci&oacuten de las turbinas respecto de los brazos horario/antihorario:<dd> p/o respectivamente</dd></dt>
-    		</dl>
-      </dt>
-      <dt> Estaci&oacuten espacial:
-        <dl>
-          <dt>Abrir/Cerrar paneles: <dd>&#8593/&#8595 (teclado com&uacuten)<dd></dt>
-        </dl>
-		</dl>
-		</p>
-    <br/>
-    Las texturas son cortes&iacutea de <a href="http://maps.jpl.nasa.gov/">Jet Propulsion Laboratory</a>.
-    <br/>
-    <br/>
+  <center>
+    <canvas id="TpSistemasGraficosCanvas" style="border: none;" width="1280" height="720">
+    Your browser does not support the HTML5 canvas element.
+    </canvas>
+  </center>
+  <br>
+  <div id="header">
+      <h1>Tp  Sistemas gr&aacuteficos - Ali, Luis / Vidal, Mariano - 1er. cuatrimestre de 2016</h1>
+  </div>
+  <div id="ref">
+    <a href="#" data-section="#camaras">C&aacutemaras</a><br>
+    <a href="#" data-section="#Nave">Nave</a><br>
+    <a href="#" data-section="#Estacion">Estaci&oacuten espacial</a>
+  </div>
+<section id="camaras">
+  <h2>C&aacutemaras</h2>
+  <dl>
+    <dt class="thick">Cambiar a c&aacutemara orbital</dt>
+    <dd class="italic">Tecla <b>1</b> <b style="color:blue;font-size:70%;">(*)</b><dd>
+    <dt class="thick">Cambiar a c&aacutemara de la persona que camina por la bah&iacutea de carga</dt>
+    <dd class="italic">Tecla <b>2</b> <b style="color:blue;font-size:70%;">(*)</b></dd>
+    <dt class="thick">Cambiar a c&aacutemara de persecuci&oacuten de nave</dt>
+    <dd class="italic">Tecla <b>3</b> <b style="color:blue;font-size:70%;">(*)</b><dd>
+    <dt class="thick">Cambiar a c&aacutemara de la cabina de la nave</dt>
+    <dd class="italic">Tecla <b>4</b> <b style="color:blue;font-size:70%;">(*)</b></dd>
+    <p><b>(*)</b>  (teclas del teclado com&uacuten, no del teclado num&eacuterico)</p>
+  </dl>
+</section>
+<section id="Nave">
+  <h2>Nave</h2>
+  <dl>
+    <dt class="thick">Rotaci&oacuten de la nave</dt>
+    <dd class="italic">Izquierda/Abajo/Derecha/Arriba, <b>4/5/6/8</b> respectivamente <b style="color:blue;font-size:70%;">(*)</b> </dd>
+    <dt class="thick">Rotaci&oacuten de los brazos</dt>
+    <dd class="italic">Horario/Antihorario, <b>l/k</b> respectivamente</dd>
+    <dt class="thick">Rotaci&oacuten de las turbinas</dt>
+    <dd class="italic">Horario/Antihorario, <b>p/o</b> respectivamente</dd>
+    <dt class="thick">Aceleraci&oacuten</dt>
+    <dd class="italic">Aumentar/Disminuir, <b>2/1</b> respectivamente <b style="color:blue;font-size:70%;">(*)</b></dd>
+      <p><b>(*)</b> (teclado num&eacuterico)</p>
+  </dl>
+</section>
+<section id="Estacion">
+  <h2>Estaci&oacuten espacial</h2>
+  <dl>
+    <dt class="thick">Abrir/Cerrar paneles</dt>
+    <dd class="italic">Flechas <b>&#8593/&#8595</b> <b style="color:blue;font-size:70%;">(*)</b></dd>
+    <p><b>(*)</b> (teclado com&uacuten)</p>
+  </dl>
+</section>
+<div id="footer">
+  Las texturas son cortes&iacutea de <a href="http://maps.jpl.nasa.gov/">Jet Propulsion Laboratory</a>.
+</div>
+<script>
+$("a").on("click", function() {
+    var id = $(this).data("section");
 
- </body>
+    $("section:visible").fadeOut(function() {
+        $(id).fadeIn();
+    });
+});
+</script>
+</body>
 
 </html>
