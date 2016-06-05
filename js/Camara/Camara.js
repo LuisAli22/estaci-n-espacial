@@ -93,3 +93,34 @@ Camara.prototype.alejarse=function(evento){
 	this.esConLaTeclaMas=false;
 	this.actualizarRadio(evento);
 }
+Camara.prototype.habilitarDesplazamientoDePagina=function(){
+	$('html, body').css({
+    'overflow': 'auto',
+    'height': 'auto'
+});
+}
+Camara.prototype.deshabilitarDesplazamientoDePagina=function(){
+	$('html, body').css({
+    'overflow': 'hidden',
+    'height': '100%'
+});
+}
+Camara.prototype.estaDentroDeLAnchoDelCanvas=function(evento){
+	var offsetRight=this.canvas.offsetLeft+this.canvas.offsetWidth;
+	return (this.canvas.offsetLeft<=evento.clientX)&&(evento.clientX<=offsetRight);
+}
+Camara.prototype.estaDentroDeLaAltura=function(evento){
+	var yOffset=Math.max(document.documentElement.scrollTop,document.body.scrollTop);
+	var offsetBottom=this.canvas.offsetTop+this.canvas.offsetHeight;
+	return (this.canvas.offsetTop<=evento.clientY+yOffset)&&(evento.clientY+yOffset<=offsetBottom);
+}
+Camara.prototype.estaAdentroDelCanvas=function(evento){
+	return this.estaDentroDeLAnchoDelCanvas(evento)&&(this.estaDentroDeLaAltura(evento));
+}
+Camara.prototype.seMueveElMouse = function(evento) {
+	if (this.estaAdentroDelCanvas(evento)){
+		this.deshabilitarDesplazamientoDePagina();
+	}else{
+		this.habilitarDesplazamientoDePagina();
+	}
+}

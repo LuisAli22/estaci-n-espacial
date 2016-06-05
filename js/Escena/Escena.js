@@ -1,7 +1,8 @@
 function Escena(canvas){
   canvas.onmousedown = this.apretaronUnBotonDelMouse .bind(this);
 	canvas.onmouseup = this.soltaronUnBotonDelMouse.bind(this);
-	canvas.onmousemove = this.seMueveElMouse.bind(this);
+	//canvas.onmousemove = this.seMueveElMouse.bind(this);
+  document.onmousemove=this.seMueveElMouse.bind(this);
   canvas.tabIndex = 1000;
   canvas.onwheel= this.seMueveLaRuedaDelMouse.bind(this);
   var fabricaEspacioEstelar= new FabricaEspacioEstelar();
@@ -37,6 +38,7 @@ Escena.prototype.soltaronUnBotonDelMouse=function(evento){
 Escena.prototype.seMueveElMouse=function(evento){
   this.camaraActual.seMueveElMouse(evento);
 }
+
 Escena.prototype.acercarse=function(evento){
   console.log("Hace zoom in con la tecla +");
   this.camaraActual.acercarse(evento);

@@ -14,6 +14,7 @@ CamaraOrbital.prototype.obtenerCoordenadasEspaciales=function(){
   return [x,y,z];
 }
 CamaraOrbital.prototype.seMueveElMouse = function(evento) {
+	Camara.prototype.seMueveElMouse.call(this,evento);
 	if (this.estaApretandoElIzquierdo) {
 		console.log("Se mueve el mouse con el boton izquierdo apretado");
 		this.posicionFinal = this.obtengoCoordenadasDePantalla(evento);
