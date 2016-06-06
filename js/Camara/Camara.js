@@ -102,17 +102,20 @@ Camara.prototype.habilitarDesplazamientoDePagina=function(){
 Camara.prototype.deshabilitarDesplazamientoDePagina=function(){
 	$('html, body').css({
     'overflow': 'hidden',
-    'height': '100%'
+    'height': 'auto',
+		'margin': '10px'
 });
 }
+Camara.prototype.estaDentroDeLosMargenes=function(desplazamiento,limiteInferior,dimensionCanvas,posicionPuntero){
+	var limiteSuperior=limiteInferior+dimensionCanvas;
+	var posicionReal=posicionPuntero+desplazamiento;
+	return (limiteInferior<=posicionReal)&&(posicionReal<=limiteSuperior);
+}
 Camara.prototype.estaDentroDeLAnchoDelCanvas=function(evento){
-	var offsetRight=this.canvas.offsetLeft+this.canvas.offsetWidth;
-	return (this.canvas.offsetLeft<=evento.clientX)&&(evento.clientX<=offsetRight);
+	return this.estaDentroDeLosMargenes($(window).scrollLeft(),this.canvas.offsetLeft,this.canvas.offsetWidth,evento.clientX);
 }
 Camara.prototype.estaDentroDeLaAltura=function(evento){
-	var yOffset=Math.max(document.documentElement.scrollTop,document.body.scrollTop);
-	var offsetBottom=this.canvas.offsetTop+this.canvas.offsetHeight;
-	return (this.canvas.offsetTop<=evento.clientY+yOffset)&&(evento.clientY+yOffset<=offsetBottom);
+	return this.estaDentroDeLosMargenes($(window).scrollTop(),this.canvas.offsetTop,this.canvas.offsetHeight,evento.clientY);
 }
 Camara.prototype.estaAdentroDelCanvas=function(evento){
 	return this.estaDentroDeLAnchoDelCanvas(evento)&&(this.estaDentroDeLaAltura(evento));
