@@ -38,6 +38,3 @@ ComponenteEstacionEspacial.prototype.crearBufferDeIndices=function(){
 			this.agregarUnValorAIndexBuffer(i);
     }
 }
-ComponenteEstacionEspacial.prototype.aceptar=function(visitante){
-	visitante.visitarComponenteEstacionEspacial(this);
-}

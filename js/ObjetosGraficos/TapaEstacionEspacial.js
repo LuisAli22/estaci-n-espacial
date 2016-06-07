@@ -10,7 +10,7 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
 	const FILAS = 2;
 
     ComponenteEstacionEspacial.call(this,FILAS,COLUMNASESTACIONESPACIAL,material);
-    
+
     this.initBuffers = function(){
 
         this.texture_coord_buffer = [];
@@ -59,7 +59,4 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
 
     }
 		this.initBuffers();
-}
-TapaEstacionEspacial.prototype.obtenerPosicionDelOjoDeLaPersonaEnBahiaDeCarga=function(){
-	return this.pos2;
 }

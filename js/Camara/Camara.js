@@ -102,8 +102,7 @@ Camara.prototype.habilitarDesplazamientoDePagina=function(){
 Camara.prototype.deshabilitarDesplazamientoDePagina=function(){
 	$('html, body').css({
     'overflow': 'hidden',
-    'height': 'auto',
-		'margin': '10px'
+    'height': 'auto'
 });
 }
 Camara.prototype.estaDentroDeLosMargenes=function(desplazamiento,limiteInferior,dimensionCanvas,posicionPuntero){

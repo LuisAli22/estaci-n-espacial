@@ -37,7 +37,7 @@ function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,punto
     matrizRotacion[8] = vectorTangente[0];
     matrizRotacion[9] = vectorTangente[1];
     matrizRotacion[10] = vectorTangente[2];
-    
+
     var vectorDesplazamiento = vec3.create();
 
     //Caculo el desplazamiento en la curva
@@ -72,7 +72,7 @@ function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,punto
         bufferNormales[3*i] = vectorNormales[0];
         bufferNormales[3*i+1] = vectorNormales[1];
         bufferNormales[3*i+2] = vectorNormales[2];
-        
+
     };
 
     return vectorDesplazamiento;
@@ -111,7 +111,7 @@ function CalcularCurva(){
         var cantidadDeCurvasDeBezier = ( bufferPuntosDeControl.length / 3 ) / 4;
         //alert(cantidadDeCurvasDeBezier);
         for (var i = 0; i < cantidadDeCurvasDeBezier; i++) {
-          
+
             inicio = 0 + i;
             fin = 1 + i;
             factor = 4;
@@ -160,9 +160,9 @@ function CalcularCurva(){
         for ( i = inicio; i < fin; i++) {
 
             for (var j = 0; j < intervaloDelPaso; j++) {
-                
+
                 var u = j/(intervaloDelPaso-1);
-                
+
                 var indice = factor * i + sumador;
 
                 var punto0 = vec3.fromValues(bufferPuntosDeControl[3*(indice-2)],bufferPuntosDeControl[3*(indice-2)+1],bufferPuntosDeControl[3*(indice-2)+2]);

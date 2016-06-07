@@ -1,19 +1,16 @@
 function Escena(canvas){
   canvas.onmousedown = this.apretaronUnBotonDelMouse .bind(this);
 	canvas.onmouseup = this.soltaronUnBotonDelMouse.bind(this);
-	//canvas.onmousemove = this.seMueveElMouse.bind(this);
   document.onmousemove=this.seMueveElMouse.bind(this);
   canvas.tabIndex = 1000;
   canvas.onwheel= this.seMueveLaRuedaDelMouse.bind(this);
   var fabricaEspacioEstelar= new FabricaEspacioEstelar();
   this.espacioEstelar=fabricaEspacioEstelar.crear();
+  this.trayectoriaMedia=this.obtenerTrayectoriaMedia();
   this.camaras= {Orbital: new CamaraOrbital(canvas, 85,0.5 * Math.PI, 0.5 * Math.PI),
-                PrimerPersonaBahia: new PrimerPersonaBahiaDeCarga(canvas,this.obtenerPosicionDelOjoDeLaPersonaEnBahiaDeCarga())};
-  this.camaraActual=this.camaras["Orbital"];
-  var sol=this.obtenerUnObjetoDeLaEscena(CLAVESOL);
-  sol.asignarCamara(this.camaraActual);
+                PrimerPersonaBahia: new PrimerPersonaBahiaDeCarga(canvas,this.trayectoriaMedia)};
+  this.asignarCamara("Orbital");
   cilindro = new Cilindro(64,64,DORADO,0);
-
   this.espacioEstelar.inicializarTextura();
   this.matrizDeProyeccion = mat4.create();
   this.campoVerticalDeVista=Math.PI/12.0;
@@ -24,7 +21,11 @@ Escena.prototype.obtenerUnObjetoDeLaEscena=function(claveDelObjeto){
   return this.espacioEstelar.obtenerHijo(claveDelObjeto)
 }
 Escena.prototype.asignarCamara=function(claveCamara){
+  console.log("Asigno camara: ", claveCamara);
   this.camaraActual=this.camaras[claveCamara];
+  var sol=this.obtenerUnObjetoDeLaEscena(CLAVESOL);
+  sol.asignarCamara(this.camaraActual);
+  this.camaraActual.actualizar();
 }
 Escena.prototype.seMueveLaRuedaDelMouse=function(evento){
   this.camaraActual.seMueveLaRuedaDelMouse(evento);
@@ -48,10 +49,10 @@ Escena.prototype.alejarse=function(evento){
   this.camaraActual.alejarse(evento);
 }
 Escena.prototype.moverseHaciaAdelante=function(evento){
-
+  this.camaraActual.moverseHaciaAdelante();
 }
 Escena.prototype.moverseHaciaAtras=function(evento){
-
+  this.camaraActual.moverseHaciaAtras();
 }
 Escena.prototype.moverseHaciaLaIzquierda=function(evento){
 
@@ -66,10 +67,20 @@ Escena.prototype.configurarMatrizDeProyeccion=function(){
   mat4.perspective(this.matrizDeProyeccion, this.campoVerticalDeVista, this.relacionDeAspecto,BORDECERCANOFRUSTUM, BORDELEJANOFRUSTUM);
   gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, this.matrizDeProyeccion);
 }
-Escena.prototype.obtenerPosicionDelOjoDeLaPersonaEnBahiaDeCarga=function(){
+Escena.prototype.obtenerTrayectoriaMedia=function(){
   var estacionEspacial=this.espacioEstelar.obtenerHijo(CLAVEESTACION);
-  var tapaInicial= estacionEspacial.obtenerHijo(CLAVETAPAINICIALESTACION);
-  return tapaInicial.obtenerPosicionDelOjoDeLaPersonaEnBahiaDeCarga();
+  var anilloInterior= estacionEspacial.obtenerHijo(CLAVEINTERIORESTACION);
+  var anilloExterior= estacionEspacial.obtenerHijo(CLAVEEXTERIORESTACION);
+  var trayectoriaInterior=anilloInterior.obtenerTrayectoria();
+  var trayectoriaExterior=anilloExterior.obtenerTrayectoria();
+  var trayectoriaMedia=[];
+  for(var indice in trayectoriaExterior){
+    var posicionMedia=vec3.create();
+    vec3.add(posicionMedia,trayectoriaInterior[indice],trayectoriaExterior[indice]);
+    vec3.scale(posicionMedia,posicionMedia,0.5);
+    trayectoriaMedia.push(posicionMedia);
+  }
+  return trayectoriaMedia;
 }
 Escena.prototype.dibujar=function(){
   console.log("Escena.dibujar()");

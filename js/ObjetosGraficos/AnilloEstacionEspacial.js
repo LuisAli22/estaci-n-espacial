@@ -19,8 +19,8 @@ function AnilloEstacionEspacial(material){
                                     -1.25, -0.25, 0.0, -1.5, -0.125, 0.0, -1.5, 0.125, 0.0, -1.25, 0.25, 0.0,
                                     -1.25, 0.25, 0.0, -1.333, 0.25, 0.0, -1.4166, 0.25, 0.0, -1.5, 0.25, 0.0];
 
-    var puntosDeControlInterior = [-1.0, 0.5, 0.0, -0.25, 1.0, 0.0, 0.25, 1.0, 0.0, 1.0, 0.5, 0.0, 
-                                   1.0, 0.5, 0.0, 1.0, 0.166, 0.0, 1.0, -0.166, 0.0, 1.0, -0.5, 0.0, 
+    var puntosDeControlInterior = [-1.0, 0.5, 0.0, -0.25, 1.0, 0.0, 0.25, 1.0, 0.0, 1.0, 0.5, 0.0,
+                                   1.0, 0.5, 0.0, 1.0, 0.166, 0.0, 1.0, -0.166, 0.0, 1.0, -0.5, 0.0,
                                    1.0, -0.5, 0.0, 0.333, -0.5, 0.0, -0.333, -0.5, 0.0, -1.0, -0.5, 0.0,
                                    -1.0, -0.5, 0.0, -1.0, -0.166, 0.0, -1.0, 0.166, 0.0, -1.0, 0.5, 0.0];
 
@@ -106,7 +106,7 @@ function AnilloEstacionEspacial(material){
             bufferNormalesATransformar = bufferNormalesATransformar.concat(bufferInicialNormales);
 
             var desplazamiento = transformarXZ(bufferCoordenadasATransformar,bufferNormalesATransformar,t,puntosDeControlXTransformar,puntosDeControlZTransformar);
-            
+
             this.trayectoria.push(desplazamiento);
 
             this.position_buffer = this.position_buffer.concat(bufferCoordenadasATransformar);
@@ -141,7 +141,8 @@ function AnilloEstacionEspacial(material){
         this.cargarPerfilInterior(this.bufferInicialCoordenadas,this.bufferInicialNormales);
         this.inicializarLosBuffer(this.bufferInicialCoordenadas,this.bufferInicialNormales);
     }
-    
+    this.obtenerTrayectoria=function(){return this.trayectoria;}
+
 }
 
 //inheritPrototype(ExteriorEstacionEspacial, DrawObject);

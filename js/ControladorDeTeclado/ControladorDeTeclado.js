@@ -32,9 +32,14 @@ function ControladorDeTeclado(escena) {
 	document.onkeydown = this.sePresionaUnaTecla.bind(this);
 	document.onkeyup = this.seSueltaUnaTecla.bind(this);
 };
-
+ControladorDeTeclado.prototype.deshabilitarAccionPorDefectoDeFlechasYEspacio=function(evento){
+  if([32, 37, 38, 39, 40].indexOf(evento.keyCode) > -1) {
+        evento.preventDefault();
+    }
+}
 ControladorDeTeclado.prototype.sePresionaUnaTecla = function(evento) {
   console.log("Codigo de tecla: ",evento.keyCode);
+  this.deshabilitarAccionPorDefectoDeFlechasYEspacio(evento);
   var key=evento.keyCode.toString();
   if (this.comandos.hasOwnProperty(key)){
     this.comandos[key].indicarQueEstaActualmentePresionada(true);

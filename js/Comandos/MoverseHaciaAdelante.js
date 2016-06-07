@@ -7,5 +7,5 @@ MoverseHaciaAdelante.prototype.ejecutar=function(evento){
   this.escena.moverseHaciaAdelante();
 }
 MoverseHaciaAdelante.prototype.soltar=function(){
-  this.escena.soltarTeclaNave();
+//  this.escena.soltarTeclaNave();
 }
