@@ -69,18 +69,9 @@ Escena.prototype.configurarMatrizDeProyeccion=function(){
 }
 Escena.prototype.obtenerTrayectoriaMedia=function(){
   var estacionEspacial=this.espacioEstelar.obtenerHijo(CLAVEESTACION);
-  var anilloInterior= estacionEspacial.obtenerHijo(CLAVEINTERIORESTACION);
   var anilloExterior= estacionEspacial.obtenerHijo(CLAVEEXTERIORESTACION);
-  var trayectoriaInterior=anilloInterior.obtenerTrayectoria();
   var trayectoriaExterior=anilloExterior.obtenerTrayectoria();
-  var trayectoriaMedia=[];
-  for(var indice in trayectoriaExterior){
-    var posicionMedia=vec3.create();
-    vec3.add(posicionMedia,trayectoriaInterior[indice],trayectoriaExterior[indice]);
-    vec3.scale(posicionMedia,posicionMedia,0.5);
-    trayectoriaMedia.push(posicionMedia);
-  }
-  return trayectoriaMedia;
+  return anilloExterior.obtenerTrayectoria();
 }
 Escena.prototype.dibujar=function(){
   console.log("Escena.dibujar()");

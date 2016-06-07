@@ -14,7 +14,10 @@ PrimerPersonaBahiaDeCarga.prototype.actualizar = function(){
 };
 PrimerPersonaBahiaDeCarga.prototype.seMueveElMouse = function(evento) {
 		console.log("Se mueve el mouse y la camara es la de la persona en bahia");
-    CamaraOrbital.prototype.calcularNuevaPosicionYActualizar.call(this,evento);
+    Camara.prototype.seMueveElMouse.call(this,evento);
+    if (this.estaAdentroDelCanvas(evento)){
+      this.calcularNuevaPosicionYActualizar.call(this,evento);
+    }
 }
 PrimerPersonaBahiaDeCarga.prototype.asignarPosicion = function(posicionDelOjo) {
   this.ojo =posicionDelOjo;

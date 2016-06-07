@@ -10,7 +10,7 @@
   line-height:30px;
   background-color:#eeeeee;
   height:300px;
-  width:125px;
+  width:160px;
   float:left;
   padding:5px;
 }
@@ -55,5 +55,7 @@ section {
 }
 
 #camaras { width: 600px; height: 300px; display: block;}
+#CamaraOrbital{ width: 600px;height: 300px; }
+#CamaraPrimeraPersona{ width: 600px;height: 300px; }
 #Nave { width: 600px;height: 300px;  }
 #Estacion { width: 600px;height: 300px;  }
