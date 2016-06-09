@@ -55,10 +55,10 @@ Escena.prototype.moverseHaciaAtras=function(evento){
   this.camaraActual.moverseHaciaAtras();
 }
 Escena.prototype.moverseHaciaLaIzquierda=function(evento){
-
+  this.camaraActual.moverseHaciaLaIzquierda();
 }
 Escena.prototype.moverseHaciaLaDerecha=function(evento){
-
+  this.camaraActual.moverseHaciaLaDerecha();
 }
 Escena.prototype.generarMipMap=function(){
   this.espacioEstelar.generarMipMap();
