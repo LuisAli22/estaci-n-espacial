@@ -8,12 +8,10 @@ function PrimerPersonaBahiaDeCarga(canvas,trayectoria){
   this.radioTrayectoria=0;
   this.pasoDesplazamientoRadial=0.1;
   this.desplazamiento=0;
-  this.desplazarIzquierda=false;
-  this.desplazarDerecha=false;
 }
 PrimerPersonaBahiaDeCarga.prototype.actualizar = function(){
 	mat4.identity(this.matrizMirarHacia);
-  this.ojo=/*this.trayectoria[this.indiceDeUbicacionDeLaPersona];*/this.obtenerPosicionPersona();
+  this.ojo=this.obtenerPosicionPersona();
   this.objetivo=this.obtenerCoordenadasEspaciales();
 	mat4.lookAt(this.matrizMirarHacia, this.ojo, this.objetivo, this.arriba);
   Camara.prototype.actualizar.call(this);
@@ -24,17 +22,12 @@ PrimerPersonaBahiaDeCarga.prototype.estaDentroDeLaBahia=function(posicion){
 PrimerPersonaBahiaDeCarga.prototype.seQuiereDesplazarIzqODer=function(){
   return (this.desplazarIzquierda||this.desplazarDerecha);
 }
-PrimerPersonaBahiaDeCarga.prototype.comprobarYAplicarDesplazamientoIzquierdaODerecha=function(){
-  if (this.seQuiereDesplazarIzqODer()){
-    var sentido=(this.desplazarIzquierda)?(1):(-1);
+PrimerPersonaBahiaDeCarga.prototype.comprobarYAplicarDesplazamientoIzquierdaODerecha=function(sentido){
     var nuevaPosicion=this.ubicacionRadialEnBahia+ sentido*this.pasoDesplazamientoRadial;
     if (this.estaDentroDeLaBahia(nuevaPosicion)){
       this.desplazamiento=this.desplazamiento+sentido*this.pasoDesplazamientoRadial;
     }
-    this.desplazarIzquierda=false;
-    this.desplazarDerecha=false;
-  }
-
+    this.actualizar();
 }
 PrimerPersonaBahiaDeCarga.prototype.obtenerPosicionPersona=function(){
   var posicionPuntoLateral=this.trayectoria[this.indiceDeUbicacionDeLaPersona];
@@ -43,7 +36,6 @@ PrimerPersonaBahiaDeCarga.prototype.obtenerPosicionPersona=function(){
   var z=posicionPuntoLateral[2];
   this.radioTrayectoria=Math.sqrt(Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2));
   this.ubicacionRadialEnBahia= this.radioTrayectoria+this.desplazamiento-2;
-  this.comprobarYAplicarDesplazamientoIzquierdaODerecha();
   var coeficienteRadial=this.ubicacionRadialEnBahia/this.radioTrayectoria;
   return [x*coeficienteRadial,y*coeficienteRadial,z*coeficienteRadial];
 
@@ -59,23 +51,24 @@ PrimerPersonaBahiaDeCarga.prototype.obtenerPosicionPersona=function(){
 PrimerPersonaBahiaDeCarga.prototype.asignarPosicion = function(posicionDelOjo) {
   this.ojo =posicionDelOjo;
 };
-PrimerPersonaBahiaDeCarga.prototype.moverseHaciaAdelante=function(){
-  if (this.indiceDeUbicacionDeLaPersona>0){
-    this.indiceDeUbicacionDeLaPersona-=1;
+PrimerPersonaBahiaDeCarga.prototype.moverseAtrasOAdelante=function(sentido){
+  if (this.indiceDeUbicacionEstaDentroDeTrayectoria()){
+    this.indiceDeUbicacionDeLaPersona+=sentido;
     this.actualizar();
   }
 }
+PrimerPersonaBahiaDeCarga.prototype.moverseHaciaAdelante=function(){
+  this.moverseAtrasOAdelante(DESPLAZARADELANTE);
+}
+PrimerPersonaBahiaDeCarga.prototype.indiceDeUbicacionEstaDentroDeTrayectoria=function(){
+  return ((this.indiceDeUbicacionDeLaPersona>=0)&&(this.indiceDeUbicacionDeLaPersona<this.trayectoria.length-1));
+}
 PrimerPersonaBahiaDeCarga.prototype.moverseHaciaAtras=function(){
-  if (this.indiceDeUbicacionDeLaPersona<this.trayectoria.length-1){
-    this.indiceDeUbicacionDeLaPersona+=1;
-    this.actualizar();
-;  }
+  this.moverseAtrasOAdelante(DESPLAZARATRAS);
 }
 PrimerPersonaBahiaDeCarga.prototype.moverseHaciaLaIzquierda=function(){
-  this.desplazarIzquierda=true;
-  this.actualizar();
+  this.comprobarYAplicarDesplazamientoIzquierdaODerecha(DESPLAZARIZQUIERDA);
 }
 PrimerPersonaBahiaDeCarga.prototype.moverseHaciaLaDerecha=function(){
-  this.desplazarDerecha=true;
-  this.actualizar();
+  this.comprobarYAplicarDesplazamientoIzquierdaODerecha(DESPLAZARDERECHA);
 }
