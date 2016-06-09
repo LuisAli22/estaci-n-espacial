@@ -52,16 +52,17 @@ PrimerPersonaBahiaDeCarga.prototype.asignarPosicion = function(posicionDelOjo) {
   this.ojo =posicionDelOjo;
 };
 PrimerPersonaBahiaDeCarga.prototype.moverseAtrasOAdelante=function(sentido){
+  this.indiceDeUbicacionDeLaPersona+=sentido;
   if (this.indiceDeUbicacionEstaDentroDeTrayectoria()){
-    this.indiceDeUbicacionDeLaPersona+=sentido;
     this.actualizar();
-  }
+  }else this.indiceDeUbicacionDeLaPersona-=sentido;
 }
 PrimerPersonaBahiaDeCarga.prototype.moverseHaciaAdelante=function(){
   this.moverseAtrasOAdelante(DESPLAZARADELANTE);
 }
 PrimerPersonaBahiaDeCarga.prototype.indiceDeUbicacionEstaDentroDeTrayectoria=function(){
-  return ((this.indiceDeUbicacionDeLaPersona>=0)&&(this.indiceDeUbicacionDeLaPersona<this.trayectoria.length-1));
+  console.log("trayectoria length: ",this.trayectoria.length);
+  return ((this.indiceDeUbicacionDeLaPersona>=0)&&(this.indiceDeUbicacionDeLaPersona<this.trayectoria.length));
 }
 PrimerPersonaBahiaDeCarga.prototype.moverseHaciaAtras=function(){
   this.moverseAtrasOAdelante(DESPLAZARATRAS);
