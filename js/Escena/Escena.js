@@ -6,9 +6,9 @@ function Escena(canvas){
   canvas.onwheel= this.seMueveLaRuedaDelMouse.bind(this);
   var fabricaEspacioEstelar= new FabricaEspacioEstelar();
   this.espacioEstelar=fabricaEspacioEstelar.crear();
-  this.trayectoriaMedia=this.obtenerTrayectoriaMedia();
   this.camaras= {Orbital: new CamaraOrbital(canvas, 85,0.5 * Math.PI, 0.5 * Math.PI),
-                PrimerPersonaBahia: new PrimerPersonaBahiaDeCarga(canvas,this.trayectoriaMedia)};
+                PrimerPersonaBahia: new PrimerPersonaBahiaDeCarga(canvas,this.obtenerTrayectoriaMedia()),
+                CabinaNave: new CamaraCabinaNave(canvas,this.obtenerPosicionNave())};
   this.asignarCamara("Orbital");
   cilindro = new Cilindro(64,64,DORADO,0);
   this.espacioEstelar.inicializarTextura();
@@ -72,6 +72,10 @@ Escena.prototype.obtenerTrayectoriaMedia=function(){
   var anilloExterior= estacionEspacial.obtenerHijo(CLAVEEXTERIORESTACION);
   var trayectoriaExterior=anilloExterior.obtenerTrayectoria();
   return anilloExterior.obtenerTrayectoria();
+}
+Escena.prototype.obtenerPosicionNave=function(){
+  var nave=this.espacioEstelar.obtenerHijo(CLAVENAVE);
+  return nave.obtenerPosicion();
 }
 Escena.prototype.dibujar=function(){
   console.log("Escena.dibujar()");

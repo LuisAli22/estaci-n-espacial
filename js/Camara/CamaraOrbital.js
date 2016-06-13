@@ -53,9 +53,3 @@ CamaraOrbital.prototype.obtenerCoordenadasEspaciales=function(){
 CamaraOrbital.prototype.asignarPosicionesDeOjoYObjetivo=function(){
 	this.ojo=this.obtenerCoordenadasEspaciales();
 }
-CamaraOrbital.prototype.actualizar = function(){
-	mat4.identity(this.matrizMirarHacia);
-	this.asignarPosicionesDeOjoYObjetivo();
-	mat4.lookAt(this.matrizMirarHacia, this.ojo, this.objetivo, this.arriba);
-	Camara.prototype.actualizar.call(this);
-};

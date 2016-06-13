@@ -28,7 +28,8 @@ function ControladorDeTeclado(escena) {
                   83: new MoverseHaciaAtras(escena),
                   87: new MoverseHaciaAdelante(escena),
                   49: new AsignarCamaraOrbital(escena),
-                  50: new AsignarCamaraPrimeraPersona(escena)};
+                  50: new AsignarCamaraPrimeraPersona(escena),
+                  51: new AsignarCamaraCabinaNave(escena)};
 	document.onkeydown = this.sePresionaUnaTecla.bind(this);
 	document.onkeyup = this.seSueltaUnaTecla.bind(this);
 };

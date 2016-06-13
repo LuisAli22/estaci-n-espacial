@@ -11,7 +11,11 @@ function Camara(canvas) {
 Camara.prototype.obtenerMatriz=function(){
 	return this.matrizMirarHacia;
 }
+Camara.prototype.asignarPosicionesDeOjoYObjetivo=function(){}
 Camara.prototype.actualizar = function() {
+	mat4.identity(this.matrizMirarHacia);
+	this.asignarPosicionesDeOjoYObjetivo();
+	mat4.lookAt(this.matrizMirarHacia, this.ojo, this.objetivo, this.arriba);
 	gl.uniformMatrix4fv(shaderProgram.ViewMatrixUniform, false,this.matrizMirarHacia);
 }
 Camara.prototype.esBotonIzquierdo = function(evento){
