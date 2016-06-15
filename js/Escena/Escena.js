@@ -8,7 +8,8 @@ function Escena(canvas){
   this.espacioEstelar=fabricaEspacioEstelar.crear();
   this.camaras= {Orbital: new CamaraOrbital(canvas, 85,0.5 * Math.PI, 0.5 * Math.PI),
                 PrimerPersonaBahia: new PrimerPersonaBahiaDeCarga(canvas,this.obtenerTrayectoriaMedia()),
-                CabinaNave: new CamaraCabinaNave(canvas,this.obtenerPosicionNave())};
+                CabinaNave: new Cabina(canvas),
+                Persecucion: new Persecucion(canvas)};
   this.asignarCamara("Orbital");
   cilindro = new Cilindro(64,64,DORADO,0);
   this.espacioEstelar.inicializarTextura();
@@ -20,15 +21,30 @@ function Escena(canvas){
 Escena.prototype.obtenerUnObjetoDeLaEscena=function(claveDelObjeto){
   return this.espacioEstelar.obtenerHijo(claveDelObjeto)
 }
+Escena.prototype.asignarEstadoDeFuncionamientoCamaraNave=function(tipoDeCamara){
+  if ((tipoDeCamara=="CabinaNave") ||(tipoDeCamara="Persecucion")){
+    var camaraEncendida=this.camaraActual==this.camaras[tipoDeCamara];
+    this.camaras[tipoDeCamara].asignarEstadoDeFuncionamiento(camaraEncendida);
+  }
+}
+Escena.prototype.camaraActualEsCamaraEnNave=function(){
+  return  (this.camaraActual==this.camaras["CabinaNave"] ||
+          this.camaraActual==this.camaras["Persecucion"]);
+}
 Escena.prototype.asignarCamara=function(claveCamara){
-  console.log("Asigno camara: ", claveCamara);
   this.camaraActual=this.camaras[claveCamara];
+  this.asignarEstadoDeFuncionamientoCamaraNave("CabinaNave");
+  this.asignarEstadoDeFuncionamientoCamaraNave("Persecucion");
+  if (this.camaraActualEsCamaraEnNave()){
+    var nave=this.espacioEstelar.obtenerHijo(CLAVENAVE);
+    nave.asignarCamara(this.camaraActual);
+  }
   var sol=this.obtenerUnObjetoDeLaEscena(CLAVESOL);
   sol.asignarCamara(this.camaraActual);
   this.camaraActual.actualizar();
 }
 Escena.prototype.seMueveLaRuedaDelMouse=function(evento){
-  this.camaraActual.seMueveLaRuedaDelMouse(evento);
+  if (this.camaraActual==this.camaras["Orbital"] )this.camaraActual.seMueveLaRuedaDelMouse(evento);
 }
 Escena.prototype.apretaronUnBotonDelMouse=function(evento){
   this.camaraActual.apretaronUnBotonDelMouse(evento);
@@ -76,6 +92,10 @@ Escena.prototype.obtenerTrayectoriaMedia=function(){
 Escena.prototype.obtenerPosicionNave=function(){
   var nave=this.espacioEstelar.obtenerHijo(CLAVENAVE);
   return nave.obtenerPosicion();
+}
+Escena.prototype.obtenerDireccionNave=function(){
+  var nave=this.espacioEstelar.obtenerHijo(CLAVENAVE);
+  return nave.obtenerDireccion();
 }
 Escena.prototype.dibujar=function(){
   console.log("Escena.dibujar()");

@@ -7,5 +7,5 @@ MoverNaveDerecha.prototype.ejecutar=function(){
   this.nave.moverDerecha();
 }
 MoverNaveDerecha.prototype.soltar=function(){
-  this.nave.soltarTeclaNave(6);
+  this.nave.soltarTecla(6);
 }
