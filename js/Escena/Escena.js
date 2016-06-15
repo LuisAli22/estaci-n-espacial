@@ -85,7 +85,7 @@ Escena.prototype.configurarMatrizDeProyeccion=function(){
 }
 Escena.prototype.obtenerTrayectoriaMedia=function(){
   var estacionEspacial=this.espacioEstelar.obtenerHijo(CLAVEESTACION);
-  var anilloExterior= estacionEspacial.obtenerHijo(CLAVEEXTERIORESTACION);
+  var anilloExterior= estacionEspacial.obtenerHijo(CLAVEEXTERIORPISO);
   var trayectoriaExterior=anilloExterior.obtenerTrayectoria();
   return anilloExterior.obtenerTrayectoria();
 }

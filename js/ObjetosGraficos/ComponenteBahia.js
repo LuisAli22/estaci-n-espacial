@@ -19,7 +19,8 @@ function ComponenteBahia(filas,columnas,material){
 	ComponenteEstacionEspacial.call(this,filas,columnas,material);
 
 	this.inicializarLosBuffer = function(){
-
+        
+        this.trayectoria = [];
 
         this.texture_coord_buffer = [];
         this.position_buffer = [];
@@ -73,7 +74,7 @@ function ComponenteBahia(filas,columnas,material){
 
             var desplazamiento = transformarXZ(bufferCoordenadasATransformar,bufferNormalesATransformar,t,puntosDeControlXTransformar,puntosDeControlZTransformar);
 
-            //this.trayectoria.push(desplazamiento);
+            this.trayectoria.push(desplazamiento);
 
             this.position_buffer = this.position_buffer.concat(bufferCoordenadasATransformar);
             this.normal_buffer = this.normal_buffer.concat(bufferNormalesATransformar);
@@ -92,6 +93,10 @@ function ComponenteBahia(filas,columnas,material){
 
         };
 
+    }
+
+    this.obtenerTrayectoria=function(){
+        return this.trayectoria;
     }
 
 }

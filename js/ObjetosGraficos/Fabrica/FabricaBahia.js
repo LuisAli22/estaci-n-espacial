@@ -10,6 +10,31 @@ FabricaBahia.prototype.crear=function(estacionEspacial){
   var exteriorTecho = new ConstructorTechoExterior(5.0);
   var exteriorPiso = new ConstructorPisoExterior(5.0);
 
+  var bufferInicialInterior = [];
+  var bufferInicialExterior = [];
+  var bufferFinalInterior = [];
+  var bufferFinalExterior = [];
+
+  bufferInicialInterior = bufferInicialInterior.concat(interiorIzquierda.componenteBahia.bufferInicial);
+  bufferInicialInterior = bufferInicialInterior.concat(interiorTecho.componenteBahia.bufferInicial);
+  bufferInicialInterior = bufferInicialInterior.concat(interiorDerecha.componenteBahia.bufferInicial);
+  bufferInicialInterior = bufferInicialInterior.concat(interiorPiso.componenteBahia.bufferInicial);
+
+  bufferInicialExterior = bufferInicialExterior.concat(exteriorIzquierda.componenteBahia.bufferInicial);
+  bufferInicialExterior = bufferInicialExterior.concat(exteriorTecho.componenteBahia.bufferInicial);
+  bufferInicialExterior = bufferInicialExterior.concat(exteriorDerecha.componenteBahia.bufferInicial);
+  bufferInicialExterior = bufferInicialExterior.concat(exteriorPiso.componenteBahia.bufferInicial);
+
+  bufferFinalInterior = bufferFinalInterior.concat(interiorIzquierda.componenteBahia.bufferFinal);
+  bufferFinalInterior = bufferFinalInterior.concat(interiorTecho.componenteBahia.bufferFinal);
+  bufferFinalInterior = bufferFinalInterior.concat(interiorDerecha.componenteBahia.bufferFinal);
+  bufferFinalInterior = bufferFinalInterior.concat(interiorPiso.componenteBahia.bufferFinal);
+
+  bufferFinalExterior = bufferFinalExterior.concat(exteriorIzquierda.componenteBahia.bufferFinal);
+  bufferFinalExterior = bufferFinalExterior.concat(exteriorTecho.componenteBahia.bufferFinal);
+  bufferFinalExterior = bufferFinalExterior.concat(exteriorDerecha.componenteBahia.bufferFinal);
+  bufferFinalExterior = bufferFinalExterior.concat(exteriorPiso.componenteBahia.bufferFinal);
+
   estacionEspacial.agregar(CLAVEINTERIORPISO,interiorPiso.getComponenteBahia());
   estacionEspacial.agregar(CLAVEINTERIORTECHO,interiorTecho.getComponenteBahia());
   estacionEspacial.agregar(CLAVEINTERIORDERECHA,interiorDerecha.getComponenteBahia());
@@ -18,5 +43,11 @@ FabricaBahia.prototype.crear=function(estacionEspacial){
   estacionEspacial.agregar(CLAVEEXTERIORDERECHA,exteriorDerecha.getComponenteBahia());
   estacionEspacial.agregar(CLAVEEXTERIORTECHO,exteriorTecho.getComponenteBahia());
   estacionEspacial.agregar(CLAVEEXTERIORPISO,exteriorPiso.getComponenteBahia());
+
+  var tapaInicial = new TapaEstacionEspacial(bufferInicialExterior,bufferInicialInterior,BEIS);
+  var tapaFinal = new TapaEstacionEspacial(bufferFinalExterior,bufferFinalInterior,BEIS);
+
+  estacionEspacial.agregar(CLAVETAPAINICIALESTACION,tapaInicial);
+  estacionEspacial.agregar(CLAVETAPAFINALESTACION,tapaFinal );
 
 }
