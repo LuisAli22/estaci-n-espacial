@@ -50,7 +50,9 @@
 <script type="text/javascript" src="js/Camara/Camara.js"></script>
 <script type="text/javascript" src="js/Camara/CamaraOrbital.js"></script>
 <script type="text/javascript" src="js/Camara/PrimerPersonaBahiaDeCarga.js"></script>
-<script type="text/javascript" src="js/Camara/CamaraCabinaNave.js"></script>
+<script type="text/javascript" src="js/Camara/CamaraNave.js"></script>
+<script type="text/javascript" src="js/Camara/Cabina.js"></script>
+<script type="text/javascript" src="js/Camara/Persecucion.js"></script>
 <script type="text/javascript" src="js/Comandos/Comando.js"></script>
 <script type="text/javascript" src="js/Comandos/AbrirPaneles.js"></script>
 <script type="text/javascript" src="js/Comandos/Acercarse.js"></script>
@@ -77,6 +79,7 @@
 <script type="text/javascript" src="js/Comandos/AsignarCamaraOrbital.js"></script>
 <script type="text/javascript" src="js/Comandos/AsignarCamaraPrimeraPersona.js"></script>
 <script type="text/javascript" src="js/Comandos/AsignarCamaraCabinaNave.js"></script>
+<script type="text/javascript" src="js/Comandos/AsignarCamaraPersecucionNave.js"></script>
 <script type="text/javascript" src="js/ControladorDeTeclado/ControladorDeTeclado.js"></script>
 <script type="text/javascript" src="js/Escena/Escena.js"></script>
 <script type="text/javascript" src="js/shader/shaderScript.js"></script>
@@ -320,14 +323,13 @@
   <h2>Cambiar C&aacutemaras</h2>
   <dl>
     <dt class="thick">C&aacutemara orbital</dt>
-    <dd class="italic">Tecla <b>1</b> <b style="color:blue;font-size:70%;">(*)</b><dd>
+    <dd class="italic">Tecla <b>1</b> <b style="color:blue;font-size:70%;">[2]</b><dd>
     <dt class="thick">C&aacutemara de la persona que camina por la bah&iacutea de carga</dt>
-    <dd class="italic">Tecla <b>2</b> <b style="color:blue;font-size:70%;">(*)</b></dd>
+    <dd class="italic">Tecla <b>2</b> <b style="color:blue;font-size:70%;">[2]</b></dd>
     <dt class="thick">C&aacutemara de persecuci&oacuten de nave</dt>
-    <dd class="italic">Tecla <b>3</b> <b style="color:blue;font-size:70%;">(*)</b><dd>
+    <dd class="italic">Tecla <b>3</b> <b style="color:blue;font-size:70%;">[2]</b><dd>
     <dt class="thick">C&aacutemara de la cabina de la nave</dt>
-    <dd class="italic">Tecla <b>4</b> <b style="color:blue;font-size:70%;">(*)</b></dd>
-    <p><b>(*)</b>  (teclas del teclado com&uacuten, no del teclado num&eacuterico)</p>
+    <dd class="italic">Tecla <b>4</b> <b style="color:blue;font-size:70%;">[2]</b></dd>
   </dl>
 </section>
 <section id="CamaraOrbital">
@@ -352,25 +354,29 @@
   <h2>Nave</h2>
   <dl>
     <dt class="thick">Rotaci&oacuten de la nave</dt>
-    <dd class="italic">Izquierda/Abajo/Derecha/Arriba, <b>4/5/6/8</b> respectivamente <b style="color:blue;font-size:70%;">(*)</b> </dd>
+    <dd class="italic">Izquierda/Abajo/Derecha/Arriba, <b>4/5/6/8</b> respectivamente <b style="color:blue;font-size:70%;">[1]</b> </dd>
     <dt class="thick">Rotaci&oacuten de los brazos</dt>
     <dd class="italic">Horario/Antihorario, <b>l/k</b> respectivamente</dd>
     <dt class="thick">Rotaci&oacuten de las turbinas</dt>
     <dd class="italic">Horario/Antihorario, <b>p/o</b> respectivamente</dd>
     <dt class="thick">Aceleraci&oacuten</dt>
-    <dd class="italic">Aumentar/Disminuir, <b>2/1</b> respectivamente <b style="color:blue;font-size:70%;">(*)</b></dd>
-      <p><b>(*)</b> (teclado num&eacuterico)</p>
+    <dd class="italic">Aumentar/Disminuir, <b>2/1</b> respectivamente <b style="color:blue;font-size:70%;">[1]</b></dd>
+    <dt class="thick">Tren de aterrizaje</dt>
+    <dd class="italic">Abrir/Cerrar, <b> 	&#8592/&#8594</b> respectivamente <b style="color:blue;font-size:70%;">[2]</b></dd>
+      <p></p>
+      <p><</p>
   </dl>
 </section>
 <section id="Estacion">
   <h2>Estaci&oacuten espacial</h2>
   <dl>
     <dt class="thick">Abrir/Cerrar paneles</dt>
-    <dd class="italic">Flechas <b>&#8593/&#8595</b> <b style="color:blue;font-size:70%;">(*)</b></dd>
-    <p><b>(*)</b> (teclado com&uacuten)</p>
+    <dd class="italic">Flechas <b>&#8593/&#8595</b> <b style="color:blue;font-size:70%;">[2]</b></dd>
   </dl>
 </section>
 <div id="footer">
+  <b>[1]</b> (teclado num&eacuterico)<br>
+  <b>[2]</b> (teclado com&uacuten)<br>
   Las texturas son cortes&iacutea de <a href="http://maps.jpl.nasa.gov/">Jet Propulsion Laboratory</a>.
 </div>
 <script>

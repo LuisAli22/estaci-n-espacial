@@ -15,6 +15,10 @@ function Nave(){
   this.direccion=vec3.fromValues(0,0,0);
   this.inercia=0.99;
   this.matrizPosicion=mat4.create();
+  this.camara=null;
+}
+Nave.prototype.asignarCamara=function(camara){
+  this.camara=camara;
 }
 Nave.prototype.actualizarMomentos=function(){
   this.direccion[2]=Math.max(0,this.velocidad);
@@ -33,6 +37,10 @@ Nave.prototype.actualizarPosicion=function(){
   mat4.translate(this.matrizPosicion,this.matrizPosicion,this.posicion);
   mat4.multiply(this.matrizPosicion,this.matrizPosicion,this.rotacion);
 };
+Nave.prototype.estaEncendidaLaCamara=function(){
+  if (this.camara==null) return false;
+  return (this.camara.estaEncendida());
+}
 Nave.prototype.dibujar = function(){
   gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
   gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
@@ -41,11 +49,9 @@ Nave.prototype.dibujar = function(){
     mat4.multiply(mvMatrix, mvMatrix,this.matrizPosicion);
     mat4.scale(mvMatrix, mvMatrix, [FACTORESCALANAVE,FACTORESCALANAVE, FACTORESCALANAVE]);
     mat4.rotateY(mvMatrix, mvMatrix, Math.PI);
+    if (this.estaEncendidaLaCamara()) this.camara.actualizar();
     ObjetoGraficoCompuesto.prototype.dibujar.call(this);
   pilaMatrizDeModelado.sacar();
-}
-Nave.prototype.obtenerPosicion=function(){
-  return this.matrizPosicion;
 }
 Nave.prototype.giroHorario=function(){
 

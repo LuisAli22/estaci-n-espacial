@@ -34,7 +34,7 @@ function CuerpoNave(){
                                 -1.5, 1.25, 0.75, -1.75, 1.5, 0.0, -1.5, 1.0, -0.5/*,
                                 -1.75, 1.5, 0.0, -1.75, 1.125, 0.0,-1.75, 0.75, 0.0,-1.75, 0.375, 0.0,
                                 -1.75, 0.0, 0.0,-1.75, -0.375, 0.0,-1.75, -1.5, 0.0*/];
-        
+
         this.normal_buffer  = [/* 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,
                                 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,*/
                                 0.46, 0.0, -0.88, 0.46, 0.0, -0.88, 1.0, 0.0, 0.0, 0.89, 0.0, 0.45,
@@ -170,7 +170,7 @@ function TapaNave(){
         this.cargarTapaDelantera();
         this.inicializarLosBuffer();
     }
-    
+
     this.tapaTrasera=function(){
         this.cargarTapaTrasera();
         this.inicializarLosBuffer();
