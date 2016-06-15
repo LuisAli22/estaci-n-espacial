@@ -1,4 +1,8 @@
-function FabricaEstacionEspacial(){}
+function FabricaEstacionEspacial(){
+
+  this.fabricaBahia = new FabricaBahia();
+
+}
 FabricaEstacionEspacial.prototype.crear=function(){
   console.log("Crear estacion espacial");
   var estacionEspacial= new EstacionEspacial();
@@ -15,7 +19,8 @@ FabricaEstacionEspacial.prototype.crear=function(){
   var escotillas = new Escotillas();
   var manguera = new MangueraAstronauta(DORADO);
   var astronauta = new Astronauta();
-  estacionEspacial.agregar(CLAVEINTERIORESTACION,interiorEstacionEspacial);
+  //estacionEspacial.agregar(CLAVEINTERIORESTACION,interiorEstacionEspacial);
+  this.fabricaBahia.crear(estacionEspacial);
   estacionEspacial.agregar(CLAVEEXTERIORESTACION,exteriorEstacionEspacial);
   estacionEspacial.agregar(CLAVETAPAINICIALESTACION,tapaInicial);
   estacionEspacial.agregar(CLAVETAPAFINALESTACION,tapaFinal );
