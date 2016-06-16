@@ -25,21 +25,6 @@ function ComponenteBahia(filas,columnas,material){
         this.position_buffer = [];
         this.normal_buffer = [];
 
-        //Cargo las coordenadas de textura
-        /*for (var i = 0.0; i < this.rows; i++){
-            for (var j = 0.0; j < this.cols; j++){
-
-                var u = 1.0 - (j / (this.cols-1.0));
-                var v = 1.0 - (i / (this.rows-1.0));
-
-                this.texture_coord_buffer.push(u);
-                this.texture_coord_buffer.push(16.0*v);
-                this.texture_coord_buffer.push(this.material);
-                this.texture_coord_buffer.push(1.0);
-            };
-
-        };*/
-
         this.inicio = 0.25;
         this.fin = 1.0;
 
@@ -105,14 +90,5 @@ ComponenteBahia.prototype.cargarBuffers=function(coordenadas,normales){
     this.bufferCoordenadas= coordenadas;
 	this.bufferNormales= normales;
     this.inicializarLosBuffer();
-
-}
-
-
-ComponenteBahia.prototype.setMaterial=function(material){
-    
-    this.texture_coord_buffer = [];
-    this.rutaTextura = material.rutaTextura;
-    this.texture_coord_buffer = this.texture_coord_buffer.concat(material.texture_coord_buffer);
 
 }

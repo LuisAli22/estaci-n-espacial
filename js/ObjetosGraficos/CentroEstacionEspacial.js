@@ -41,7 +41,7 @@ function CentroEstacionEspacial(material){
         calculardorDePuntosDeCurva.obtenerPuntosDeBSplineXY(puntosDeControl,10,bufferInicialCoordenadas,bufferInicialNormales,1);
         
         //Cargo las coordenadas de textura
-        for (var i = 0.0; i < this.rows; i++){
+        /*for (var i = 0.0; i < this.rows; i++){
             for (var j = 0.0; j < this.cols; j++){
 
                 var u = 1.0 - (j / (this.cols-1.0));
@@ -54,7 +54,7 @@ function CentroEstacionEspacial(material){
                 this.texture_coord_buffer.push(0);
             };
 
-        };
+        };*/
 
         var matrizRotacion = mat4.create();
 
@@ -103,9 +103,13 @@ function CentroEstacionEspacial(material){
 
     this.inicializarLosBuffer = function(){
 
-        this.texture_coord_buffer = [];
+        //this.texture_coord_buffer = [];
         this.position_buffer = [];
         this.normal_buffer = [];
+
+        var material = new Material(RUTAIMAGENEXTERIOR,1.0,16.0,this.rows,this.cols);
+        material.cargar();
+        this.setMaterial(material);
 
         this.cargarCentro();
 

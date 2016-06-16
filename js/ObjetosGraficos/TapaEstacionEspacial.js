@@ -13,10 +13,13 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
 
     this.initBuffers = function(){
 
-        this.texture_coord_buffer = [];
+        var material = new Material(RUTAIMAGENTAPA,1.0,1.0,120,2);
+        material.cargar();
+
+        this.setMaterial(material);
+
+
         this.normal_buffer = [];
-
-
 
         this.position_buffer = [];
 
@@ -34,15 +37,6 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
         //Cargo las coordenadas de textura
         for (var i = 0.0; i < this.rows; i++){
             for (var j = 0.0; j < this.cols; j++){
-
-                var u = 1.0 - (j / (this.cols-1.0));
-                var v = 1.0 - (i / (this.rows-1.0));
-
-                this.texture_coord_buffer.push(u);
-                this.texture_coord_buffer.push(v);
-                //Defino material --> color dorado
-                this.texture_coord_buffer.push(this.material);
-                this.texture_coord_buffer.push(0);
 
                 this.normal_buffer.push(-1.0*vectorNormal[0]);
                 this.normal_buffer.push(-1.0*vectorNormal[1]);

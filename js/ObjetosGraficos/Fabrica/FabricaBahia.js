@@ -48,6 +48,6 @@ FabricaBahia.prototype.crear=function(estacionEspacial){
   var tapaFinal = new TapaEstacionEspacial(bufferFinalExterior,bufferFinalInterior,BEIS);
 
   estacionEspacial.agregar(CLAVETAPAINICIALESTACION,tapaInicial);
-  estacionEspacial.agregar(CLAVETAPAFINALESTACION,tapaFinal );
+  estacionEspacial.agregar(CLAVETAPAFINALESTACION,tapaFinal);
 
 }

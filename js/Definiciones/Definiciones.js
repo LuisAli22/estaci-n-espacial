@@ -11,6 +11,7 @@ const RUTAIMAGENPISOINTERIOR="img/piso.jpg";
 const RUTAIMAGENPAREDINTERIOR="img/paredInterna1.jpg";
 const RUTAIMAGENEXTERIOR="img/shiphull.jpg";
 const RUTAIMAGENVENTANALEXTERIOR="img/ventanal.jpg";
+const RUTAIMAGENTAPA="img/tapa.jpg";
 const TIPODESCRIPTINCORRECTO="El script debe ser de tipo x-shader/x-fragment o x-shader/x-vertex";
 const IDSHADERFRAGMENTOS="shader-fs";
 const IDSHADERVERTICES="shader-vs";

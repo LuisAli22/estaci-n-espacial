@@ -84,3 +84,11 @@ ObjetoGrafico.prototype.dibujar = function(){
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.webgl_index_buffer);
     gl.drawElements(gl.TRIANGLE_STRIP, this.webgl_index_buffer.numItems, gl.UNSIGNED_SHORT, 0);
 }
+
+ObjetoGrafico.prototype.setMaterial=function(material){
+    
+    this.texture_coord_buffer = [];
+    this.rutaTextura = material.rutaTextura;
+    this.texture_coord_buffer = this.texture_coord_buffer.concat(material.texture_coord_buffer);
+
+}
