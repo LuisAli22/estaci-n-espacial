@@ -1,10 +1,8 @@
 function PanelEstacionEspacial(material){
+ 
   this.abrirPaneles = false;
   this.cerrarPaneles = false;
   this.listo = true;
-
-
-
   this.angulo = 0;
   this.altura = [0.0,0.0,0.0,0.0];
   this.alturaMaxima = [1.3,2.5,3.7,4.9];
@@ -16,6 +14,10 @@ function PanelEstacionEspacial(material){
 	this.panelCerrado = false;
 
   this.panel = new Panel(material);
+  this.cilindro = new Cilindro(64,64,BEIS,0);
+  var material = new Material(RUTAIMAGENTAPA,8.0,1.0,64,64);
+  material.cargar();
+  this.cilindro.setMaterial(material);
 
   this.dibujarPanel = function(y){
 
@@ -54,7 +56,7 @@ function PanelEstacionEspacial(material){
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
 
-      cilindro.dibujar();
+      this.cilindro.dibujar();
     pilaMatrizDeModelado.sacar();
 
   };
@@ -91,9 +93,11 @@ PanelEstacionEspacial.prototype.dibujar = function(){
 }
 
 PanelEstacionEspacial.prototype.inicializarTextura=function(){
+  this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
   this.panel.inicializarTextura(RUTAIMAGENMARTE);
 }
-PanelEstacionEspacial.prototype.generarMipMap=function (){
+PanelEstacionEspacial.prototype.generarMipMap=function(){
+  this.cilindro.generarMipMap();
   this.panel.generarMipMap();
 }
 PanelEstacionEspacial.prototype.revisarEstados = function(){

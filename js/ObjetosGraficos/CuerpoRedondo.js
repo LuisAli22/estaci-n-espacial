@@ -32,7 +32,7 @@ CuerpoRedondo.prototype.cargarBufferDeTextura=function(){
   this.texture_coord_buffer.push(v);
   //Coordenada del material
   this.texture_coord_buffer.push(this.material);
-  this.texture_coord_buffer.push(0);
+  this.texture_coord_buffer.push(1.0);
 }
 CuerpoRedondo.prototype.cargarCoordenadasEnLosBuffersDePosicionYTextura=function(){
   for (this.numeroLatitud=0; this.numeroLatitud < this.topeBandasDeLatitud; this.numeroLatitud++) {

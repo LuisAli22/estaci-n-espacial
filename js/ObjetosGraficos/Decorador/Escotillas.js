@@ -1,5 +1,10 @@
 function Escotillas(){
-	this.cilindro = new Cilindro(64,64,BEIS,0);
+
+  this.cilindro = new Cilindro(64,64,BEIS,0);
+  var material = new Material(RUTAIMAGENTAPA,1.0,1.0,64,64);
+  material.cargar();
+  this.cilindro.setMaterial(material);
+
 	this.dibujarEscotilla = function(angulo){
 
 	  var matrizEscalado = mat4.create();
@@ -34,7 +39,7 @@ Escotillas.prototype.dibujar = function(){
 }
 
 Escotillas.prototype.inicializarTextura=function(){
-  this.cilindro.inicializarTextura(RUTAIMAGENMARTE);
+  this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
 }
 Escotillas.prototype.generarMipMap=function (){
   this.cilindro.generarMipMap();

@@ -1,6 +1,18 @@
 function Panel(material){
 
   this.cubo = new Cubo(6.0);
+  var materialCubo = new Material(RUTAIMAGENPANEL,1.0,1.0,40,40);
+  materialCubo.cargar();
+  var materialCuboTapa = new Material(RUTAIMAGENPANEL,3.0,32.0,2,40);
+  materialCuboTapa.cargar();
+  this.cubo.agregarMaterial(materialCubo,materialCuboTapa);
+
+  this.cubo.inicializarLosBuffer();
+
+  this.cilindro = new Cilindro(64,64,BEIS,0);
+  var materialCilindro = new Material(RUTAIMAGENTAPA,8.0,1.0,64,64);
+  materialCilindro.cargar();
+  this.cilindro.setMaterial(materialCilindro);
 
   this.dibujarPanel = function(x,y){
 
@@ -8,10 +20,9 @@ function Panel(material){
     var matrizTraslacionFinal = mat4.create();
 
     mat4.scale(matrizEscalado,matrizEscalado,[2.5,0.5,0.05]);
+    mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[x,y,0.0]);
 
     pilaMatrizDeModelado.meter();
-
-      mat4.translate(matrizTraslacionFinal,matrizTraslacionFinal,[x,y,0.0]);
 
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacionFinal);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
@@ -39,7 +50,7 @@ function Panel(material){
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
 
-      cilindro.dibujar();
+      this.cilindro.dibujar();
 
     pilaMatrizDeModelado.sacar();
 
@@ -61,7 +72,7 @@ Panel.prototype.dibujar = function(){
     mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
     mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
 
-    cilindro.dibujar();
+    this.cilindro.dibujar();
 
   pilaMatrizDeModelado.sacar();
 
@@ -76,8 +87,14 @@ Panel.prototype.dibujar = function(){
 }
 
 Panel.prototype.inicializarTextura=function(){
-  this.cubo.inicializarTextura(RUTAIMAGENMARTE);
+  this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
+  this.cubo.inicializarTextura(RUTAIMAGENPANEL);
+  this.cubo.tapSuperior.inicializarTextura(RUTAIMAGENPANEL);
+  this.cubo.tapInferior.inicializarTextura(RUTAIMAGENPANEL);
 }
 Panel.prototype.generarMipMap=function (){
+  this.cilindro.generarMipMap();
   this.cubo.generarMipMap();
+  this.cubo.tapSuperior.generarMipMap();
+  this.cubo.tapInferior.generarMipMap();
 }

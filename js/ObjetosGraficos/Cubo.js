@@ -18,7 +18,7 @@ function Cubo(material){
 
   ComponenteEstacionEspacial.call(this,40,40,material);
 
-  this.inicializarLosBuffer();
+  //this.inicializarLosBuffer();
 
 }
 
@@ -36,7 +36,7 @@ Cubo.prototype.inicializarLosBuffer=function(){
 
   this.cargarPerfil(this.bufferInicialCoordenadas,this.bufferInicialNormales);
 
-  this.texture_coord_buffer = [];
+  //this.texture_coord_buffer = [];
   this.position_buffer = [];
   this.normal_buffer = [];
 
@@ -44,7 +44,7 @@ Cubo.prototype.inicializarLosBuffer=function(){
   this.bufferFinal = [];
 
   //Cargo las coordenadas de textura
-  for (var i = 0.0; i < this.rows; i++){
+  /*for (var i = 0.0; i < this.rows; i++){
       for (var j = 0.0; j < this.cols; j++){
 
           var u = 1.0 - (j / (this.cols-1.0));
@@ -54,12 +54,15 @@ Cubo.prototype.inicializarLosBuffer=function(){
           this.texture_coord_buffer.push(v);
           //Defino material 1 --> dorado
           this.texture_coord_buffer.push(this.material);
-          this.texture_coord_buffer.push(0);
+          this.texture_coord_buffer.push(0.0);
       };
 
-  };
+  };*/
 
   this.transformar(this.bufferInicialCoordenadas,this.bufferInicialNormales);
+
+  this.tapSuperior.inicializarLosBuffer();
+  this.tapInferior.inicializarLosBuffer();
 
   // Buffer de indices de los triangulos
   this.crearBufferDeIndices();
@@ -114,6 +117,16 @@ Cubo.prototype.transformar = function(bufferInicialCoordenadas,bufferInicialNorm
 
 }
 
+Cubo.prototype.agregarMaterial = function(material,materialTapa){
+
+    this.texture_coord_buffer = [];
+    this.rutaTextura = material.rutaTextura;
+    this.texture_coord_buffer = this.texture_coord_buffer.concat(material.texture_coord_buffer);
+    this.tapInferior.agregarMaterial(materialTapa);
+    this.tapSuperior.agregarMaterial(materialTapa);
+
+}
+
 Cubo.prototype.dibujar = function(){
 
   ObjetoGrafico.prototype.dibujar.call(this);
@@ -131,18 +144,18 @@ function TapaCubo(material,altura,normal){
 
   this.altura = altura;
   this.normal = normal;
-  this.inicializarLosBuffer();
+  //this.inicializarLosBuffer();
 
 }
 
 TapaCubo.prototype.inicializarLosBuffer=function(){
 
-  this.texture_coord_buffer = [];
+  //this.texture_coord_buffer = [];
   this.position_buffer = [];
   this.normal_buffer = [];
 
   //Cargo las coordenadas de textura
-  for (var i = 0.0; i < this.rows; i++){
+  /*for (var i = 0.0; i < this.rows; i++){
       for (var j = 0.0; j < this.cols; j++){
 
           var u = 1.0 - (j / (this.cols-1.0));
@@ -152,10 +165,10 @@ TapaCubo.prototype.inicializarLosBuffer=function(){
           this.texture_coord_buffer.push(v);
           //Defino material 1 --> dorado
           this.texture_coord_buffer.push(this.material);
-          this.texture_coord_buffer.push(0);
+          this.texture_coord_buffer.push(0.0);
       };
 
-  };
+  };*/
 
   this.cargarTapa(this.altura,this.normal);
 
@@ -185,5 +198,12 @@ TapaCubo.prototype.cargarTapa = function(altura,normal){
     };
 
   };
+
+}
+TapaCubo.prototype.agregarMaterial = function(material){
+
+    this.texture_coord_buffer = [];
+    this.rutaTextura = material.rutaTextura;
+    this.texture_coord_buffer = this.texture_coord_buffer.concat(material.texture_coord_buffer);
 
 }

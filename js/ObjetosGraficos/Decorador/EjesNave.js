@@ -4,6 +4,12 @@ function EjesNave(){
   this.objetoGraficoCompuesto=new ObjetoGraficoCompuesto();
   this.limiteAngular=Math.PI/2.0;
   this.cubo = new Cubo(7.0);
+  var materialCubo = new Material(RUTAIMAGENPANEL,64.0,64.0,40,40);
+  materialCubo.cargar();
+  var materialCuboTapa = new Material(RUTAIMAGENPANEL,64.0,64.0,40,2);
+  materialCuboTapa.cargar();
+  this.cubo.agregarMaterial(materialCubo,materialCuboTapa);
+  this.cubo.inicializarLosBuffer();
   this.cilindro = new Cilindro(64,64,7.0,0);
   this.desplazamientoX = 0.63388347565;
   this.desplazamientoY = -1.5303300859;

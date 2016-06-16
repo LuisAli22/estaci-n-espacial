@@ -11,7 +11,7 @@ function Escena(canvas){
                 CabinaNave: new Cabina(canvas),
                 Persecucion: new Persecucion(canvas)};
   this.asignarCamara("Orbital");
-  cilindro = new Cilindro(64,64,DORADO,0);
+  //cilindro = new Cilindro(64,64,DORADO,0);
   this.espacioEstelar.inicializarTextura();
   this.matrizDeProyeccion = mat4.create();
   this.campoVerticalDeVista=Math.PI/12.0;

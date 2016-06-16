@@ -1,6 +1,12 @@
 function PatasNave(){
 
 	this.cubo = new Cubo(7.0);
+	var materialCubo = new Material(RUTAIMAGENPANEL,64.0,64.0,40,40);
+	materialCubo.cargar();
+	var materialCuboTapa = new Material(RUTAIMAGENPANEL,64.0,64.0,40,2);
+	materialCuboTapa.cargar();
+	this.cubo.agregarMaterial(materialCubo,materialCuboTapa);
+	this.cubo.inicializarLosBuffer();
 	this.cilindro = new Cilindro(64,64,8.0,0);
 	this.altura=0;
 	this.ABRIR = 0;
@@ -108,7 +114,7 @@ PatasNave.prototype.dibujar = function(){
 
 PatasNave.prototype.inicializarTextura=function(){
   this.cubo.inicializarTextura(RUTAIMAGENMARTE);
-  this.cilindro.inicializarTextura(RUTAIMAGENMARTE);
+  this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
 }
 PatasNave.prototype.generarMipMap=function (){
   this.cubo.generarMipMap();

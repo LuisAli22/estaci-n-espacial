@@ -1,4 +1,10 @@
 function EjesAntenaEstacionEspacial(material){
+
+    this.cilindro = new Cilindro(64,64,BEIS,0);
+    var material = new Material(RUTAIMAGENTAPA,8.0,1.0,64,64);
+    material.cargar();
+    this.cilindro.setMaterial(material);
+    
 }
 EjesAntenaEstacionEspacial.prototype.dibujar = function(){
 
@@ -22,7 +28,7 @@ EjesAntenaEstacionEspacial.prototype.dibujar = function(){
         mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
         mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
 
-        cilindro.dibujar();
+        this.cilindro.dibujar();
       pilaMatrizDeModelado.sacar();       
     };
 
@@ -40,14 +46,14 @@ EjesAntenaEstacionEspacial.prototype.dibujar = function(){
         mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
         mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
 
-        cilindro.dibujar();
+        this.cilindro.dibujar();
       pilaMatrizDeModelado.sacar();
     };
 
 }
 EjesAntenaEstacionEspacial.prototype.inicializarTextura=function(){
-  cilindro.inicializarTextura(RUTAIMAGENMARTE);
+  this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
 }
 EjesAntenaEstacionEspacial.prototype.generarMipMap=function (){
-  cilindro.generarMipMap();
+  this.cilindro.generarMipMap();
 }
