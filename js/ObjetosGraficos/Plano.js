@@ -3,7 +3,7 @@ Plano.prototype.constructor=Plano;
 function Plano(){
 
   
-  ComponenteEstacionEspacial.call(this,2,2,1.0);
+  ComponenteEstacionEspacial.call(this,256,128,1.0);
 
   this.inicializarLosBuffer();
 
@@ -12,8 +12,27 @@ function Plano(){
 Plano.prototype.inicializarLosBuffer=function(){
 
   this.texture_coord_buffer = [];
-  this.position_buffer = [0.5,0.5,0.0, 0.5,-0.5,0.0, -0.5,0.5,0.0, -0.5,-0.5,0.0];
+  this.position_buffer = [];
+  this.normal_buffer = [];
+  /*this.position_buffer = [0.5,0.5,0.0, 0.5,-0.5,0.0, -0.5,0.5,0.0, -0.5,-0.5,0.0];
   this.normal_buffer = [0.0,0.0,1.0,0.0,0.0,1.0,0.0,0.0,1.0,0.0,0.0,1.0];
+*/
+  for (var i = 0.0; i < this.rows; i++) { 
+   for (var j = 0.0; j < this.cols; j++) {
+
+       // Para cada vértice definimos su posición
+       // como coordenada (x, y, z=0)
+       this.position_buffer.push(-0.5 + i/(this.rows-1.0));
+       this.position_buffer.push(-0.5 + j/(this.cols-1));
+       this.position_buffer.push(0.0);
+
+       // Para cada vértice definimos su color
+       this.normal_buffer.push(0.0);
+       this.normal_buffer.push(0.0);
+       this.normal_buffer.push(-1.0);
+                              
+    };
+  };
 
   //Cargo las coordenadas de textura
   for (var i = 0.0; i < this.rows; i++){

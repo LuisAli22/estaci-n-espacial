@@ -8,7 +8,7 @@ Astronauta.prototype.dibujar = function(){
     var matrizTraslacion = mat4.create();
     var matrizRotacion = mat4.create();
 
-    mat4.rotateZ(matrizRotacion,matrizRotacion,Math.PI/2.0);
+    mat4.rotateZ(matrizRotacion,matrizRotacion,3.0*Math.PI/2.0);
     mat4.translate(matrizTraslacion,matrizTraslacion,[-12.0, -1.75, 41.75]);
 
     pilaMatrizDeModelado.meter();

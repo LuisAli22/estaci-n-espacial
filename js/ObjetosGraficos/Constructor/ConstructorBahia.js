@@ -14,13 +14,15 @@ ConstructorBahia.prototype.setMaterial=function(material){
 
 }
 
-ConstructorBahia.prototype.construirEstructura=function(puntosDeControl,intervaloDelPaso,sentidoNormal){
+ConstructorBahia.prototype.construirEstructura=function(puntosDeControl,intervaloDelPaso,sentidoNormal,material){
+
+	this.componenteBahia.setMaterial(material);
 
 	var coordenadas = [];
 	var normales = [];
 
-    var calculardorDePuntosDeCurva = new CalcularCurva();
-    calculardorDePuntosDeCurva.obtenerPuntosDeBezierXY(puntosDeControl,intervaloDelPaso,coordenadas,normales,sentidoNormal);
+	var calculardorDePuntosDeCurva = new CalcularCurva();
+	calculardorDePuntosDeCurva.obtenerPuntosDeBezierXY(puntosDeControl,intervaloDelPaso,coordenadas,normales,sentidoNormal);
 
 	this.componenteBahia.cargarBuffers(coordenadas,normales);
 

@@ -5,6 +5,7 @@ function ObjetoGrafico(){
    this.webgl_texture_coord_buffer = null;
    this.webgl_index_buffer = null;
    this.textura = null;
+   this.rutaTextura = RUTAIMAGENMARTE;
 }
 ObjetoGrafico.prototype.inicializarTextura = function(archivoTextura){
 
