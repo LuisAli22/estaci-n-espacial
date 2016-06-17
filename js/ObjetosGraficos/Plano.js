@@ -22,8 +22,8 @@ Plano.prototype.inicializarLosBuffer=function(){
 
        // Para cada vértice definimos su posición
        // como coordenada (x, y, z=0)
-       this.position_buffer.push(-0.5 + i/(this.rows-1.0));
-       this.position_buffer.push(-0.5 + j/(this.cols-1));
+       this.position_buffer.push(-1 + 2*i/(this.rows-1.0));
+       this.position_buffer.push(-1 + 2*j/(this.cols-1));
        this.position_buffer.push(0.0);
 
        // Para cada vértice definimos su color
