@@ -11,8 +11,8 @@ Tierra.prototype.dibujar = function(){
   pilaMatrizDeModelado.sacar();
 }
 Tierra.prototype.inicializarTextura=function(){
-  this.esfera.inicializarTextura();
+  this.esfera.inicializarTextura(this.esfera.rutaTextura);
 }
 Tierra.prototype.generarMipMap=function (){
-  this.esfera.generarMipMap
+  this.esfera.generarMipMap();
 }
