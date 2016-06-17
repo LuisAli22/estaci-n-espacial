@@ -2,6 +2,7 @@ function FabricaEspacioEstelar(){
   this.fabricaEstacionEspacial=new FabricaEstacionEspacial();
   this.fabricaSol= new FabricaSol();
   this.fabricaTierra= new FabricaTierra();
+  this.fabricaUniverso = new FabricaUniverso();
   this.fabricaNave = new FabricaNave();
 }
 FabricaEspacioEstelar.prototype.crear=function(){
@@ -10,10 +11,12 @@ FabricaEspacioEstelar.prototype.crear=function(){
   var estacionEspacial = this.fabricaEstacionEspacial.crear();
   var sol=this.fabricaSol.crear();
   var tierra=this.fabricaTierra.crear();
+  var universo=this.fabricaUniverso.crear();
   var nave = this.fabricaNave.crear();
   espacioEstelar.agregar(CLAVEESTACION,estacionEspacial);
   espacioEstelar.agregar(CLAVESOL,sol);
   espacioEstelar.agregar(CLAVETIERRA,tierra);
+  espacioEstelar.agregar(CLAVEUNIVERSO,universo);
   espacioEstelar.agregar(CLAVENAVE,nave);
   return espacioEstelar;
 }
