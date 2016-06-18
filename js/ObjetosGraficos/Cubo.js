@@ -7,6 +7,8 @@ function Cubo(material){
 
   this.bufferInicialCoordenadas = [];
   this.bufferInicialNormales = [];
+  this.bufferInicialTangentes = [];
+  this.bufferInicialBinormales = [];
 
   this.bufferInicialCoordenadasTapa = [];
   this.bufferInicialNormalesTapa = [];
@@ -22,19 +24,19 @@ function Cubo(material){
 
 }
 
-Cubo.prototype.cargarPerfil = function(bufferInicialCoordenadas,bufferInicialNormales){
+Cubo.prototype.cargarPerfil = function(bufferInicialCoordenadas,bufferInicialNormales,bufferInicialTangentes,bufferInicialBinormales){
 
   var intervaloDelPaso = [10,10,10,10];
 
   var calculardorDePuntosDeCurva = new CalcularCurva();
 
-  calculardorDePuntosDeCurva.obtenerPuntosDeBezierXY(this.puntosDeControl,intervaloDelPaso,bufferInicialCoordenadas,bufferInicialNormales,-1);
+  calculardorDePuntosDeCurva.obtenerPuntosDeBezierXY(this.puntosDeControl,intervaloDelPaso,bufferInicialCoordenadas,bufferInicialNormales,bufferInicialTangentes,bufferInicialBinormales,-1);
 
 }
 
 Cubo.prototype.inicializarLosBuffer=function(){
 
-  this.cargarPerfil(this.bufferInicialCoordenadas,this.bufferInicialNormales);
+  this.cargarPerfil(this.bufferInicialCoordenadas,this.bufferInicialNormales,this.bufferInicialTangentes,this.bufferInicialBinormales);
 
   //this.texture_coord_buffer = [];
   this.position_buffer = [];
@@ -43,23 +45,7 @@ Cubo.prototype.inicializarLosBuffer=function(){
   this.bufferInicial = [];
   this.bufferFinal = [];
 
-  //Cargo las coordenadas de textura
-  /*for (var i = 0.0; i < this.rows; i++){
-      for (var j = 0.0; j < this.cols; j++){
-
-          var u = 1.0 - (j / (this.cols-1.0));
-          var v = 1.0 - (i / (this.rows-1.0));
-
-          this.texture_coord_buffer.push(u);
-          this.texture_coord_buffer.push(v);
-          //Defino material 1 --> dorado
-          this.texture_coord_buffer.push(this.material);
-          this.texture_coord_buffer.push(0.0);
-      };
-
-  };*/
-
-  this.transformar(this.bufferInicialCoordenadas,this.bufferInicialNormales);
+  this.transformar(this.bufferInicialCoordenadas,this.bufferInicialNormales,this.bufferInicialTangentes,this.bufferInicialBinormales);
 
   this.tapSuperior.inicializarLosBuffer();
   this.tapInferior.inicializarLosBuffer();
@@ -70,7 +56,7 @@ Cubo.prototype.inicializarLosBuffer=function(){
 
 }
 
-Cubo.prototype.transformar = function(bufferInicialCoordenadas,bufferInicialNormales){
+Cubo.prototype.transformar = function(bufferInicialCoordenadas,bufferInicialNormales,bufferInicialTangentes,bufferInicialBinormales){
     //Calculo las coordenadas para el perfil rotado
     for (var i = 0.0; i < this.rows; i++) {
         //Parametro t de la curva
@@ -79,9 +65,13 @@ Cubo.prototype.transformar = function(bufferInicialCoordenadas,bufferInicialNorm
         //Buffers auxiliares para no modificar los valores de los buffers iniciales
         var bufferCoordenadas = [];
         var bufferNormales = [];
+        var bufferTangentes = [];
+        var bufferBinormales = [];
 
         bufferCoordenadas = bufferCoordenadas.concat(bufferInicialCoordenadas);
         bufferNormales = bufferNormales.concat(bufferInicialNormales);
+        bufferTangentes = bufferTangentes.concat(bufferInicialTangentes);
+        bufferBinormales = bufferBinormales.concat(bufferInicialBinormales);
 
         var matTraslacion = mat4.create();
         var matTraslacion = mat4.translate(matTraslacion,matTraslacion,[0.0,0.0,t]);
@@ -92,11 +82,17 @@ Cubo.prototype.transformar = function(bufferInicialCoordenadas,bufferInicialNorm
 
           var vectorCoordenadas = vec4.create();
           var vectorNormales = vec4.create();
+          var vectorTangentes = vec4.create();
+          var vectorBinormales = vec4.create();
 
           vec4.set(vectorCoordenadas,bufferCoordenadas[3*j],bufferCoordenadas[3*j+1],bufferCoordenadas[3*j+2],1.0);
           vec4.set(vectorNormales,bufferNormales[3*j],bufferNormales[3*j+1],bufferNormales[3*j+2],1.0);
+          vec4.set(vectorTangentes,bufferTangentes[3*j],bufferTangentes[3*j+1],bufferTangentes[3*j+2],1.0);
+          vec4.set(vectorBinormales,bufferBinormales[3*j],bufferBinormales[3*j+1],bufferBinormales[3*j+2],1.0);
 
           vec4.normalize(vectorNormales,vectorNormales);
+          vec4.normalize(vectorTangentes,vectorTangentes);
+          vec4.normalize(vectorBinormales,vectorBinormales);
 
           vec4.transformMat4(vectorCoordenadas,vectorCoordenadas,matTraslacion);
 
@@ -108,10 +104,20 @@ Cubo.prototype.transformar = function(bufferInicialCoordenadas,bufferInicialNorm
           bufferNormales[3*j+1] = vectorNormales[1];
           bufferNormales[3*j+2] = vectorNormales[2];
 
+          bufferTangentes[3*j] = vectorTangentes[0];
+          bufferTangentes[3*j+1] = vectorTangentes[1];
+          bufferTangentes[3*j+2] = vectorTangentes[2];
+
+          bufferBinormales[3*j] = vectorBinormales[0];
+          bufferBinormales[3*j+1] = vectorBinormales[1];
+          bufferBinormales[3*j+2] = vectorBinormales[2];
+
         }
 
         this.position_buffer = this.position_buffer.concat(bufferCoordenadas);
         this.normal_buffer = this.normal_buffer.concat(bufferNormales);
+        this.tangente_buffer = this.tangente_buffer.concat(bufferTangentes);
+        this.binormal_buffer = this.binormal_buffer.concat(bufferBinormales);
 
     };
 
@@ -144,7 +150,6 @@ function TapaCubo(material,altura,normal){
 
   this.altura = altura;
   this.normal = normal;
-  //this.inicializarLosBuffer();
 
 }
 
@@ -153,22 +158,6 @@ TapaCubo.prototype.inicializarLosBuffer=function(){
   //this.texture_coord_buffer = [];
   this.position_buffer = [];
   this.normal_buffer = [];
-
-  //Cargo las coordenadas de textura
-  /*for (var i = 0.0; i < this.rows; i++){
-      for (var j = 0.0; j < this.cols; j++){
-
-          var u = 1.0 - (j / (this.cols-1.0));
-          var v = 1.0 - (i / (this.rows-1.0));
-
-          this.texture_coord_buffer.push(u);
-          this.texture_coord_buffer.push(v);
-          //Defino material 1 --> dorado
-          this.texture_coord_buffer.push(this.material);
-          this.texture_coord_buffer.push(0.0);
-      };
-
-  };*/
 
   this.cargarTapa(this.altura,this.normal);
 

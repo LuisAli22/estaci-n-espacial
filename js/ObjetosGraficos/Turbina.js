@@ -18,9 +18,11 @@ function Turbina(){
 
         var bufferInicialCoordenadas = [];
         var bufferInicialNormales = [];
+        var bufferInicialTangentes = [];
+        var bufferInicialBinormales = [];
 
         var calculardorDePuntosDeCurva = new CalcularCurva();
-        calculardorDePuntosDeCurva.obtenerPuntosDeBSplineXY(puntosDeControl,INTERVALODELPASO,bufferInicialCoordenadas,bufferInicialNormales,-1);
+        calculardorDePuntosDeCurva.obtenerPuntosDeBSplineXY(puntosDeControl,INTERVALODELPASO,bufferInicialCoordenadas,bufferInicialNormales,bufferInicialTangentes,bufferInicialBinormales,-1);
 
         //Cargo las coordenadas de textura
         for (var i = 0.0; i < this.rows; i++){
@@ -70,18 +72,42 @@ function Turbina(){
                 this.position_buffer.push(coordenada[2]);
 
                 var normales = vec3.create();
+                var tangentes = vec3.create();
+                var binormales = vec3.create();
 
                 normales[0] = bufferInicialNormales[3*j];
                 normales[1] = bufferInicialNormales[3*j+1];
                 normales[2] = bufferInicialNormales[3*j+2];
 
+                tangentes[0] = bufferInicialTangentes[3*j];
+                tangentes[1] = bufferInicialTangentes[3*j+1];
+                tangentes[2] = bufferInicialTangentes[3*j+2];
+
+                binormales[0] = bufferInicialBinormales[3*j];
+                binormales[1] = bufferInicialBinormales[3*j+1];
+                binormales[2] = bufferInicialBinormales[3*j+2];
+
                 //Aplico la transformacion de revolucion a las normales
                 vec3.transformMat4(normales,normales,matizModelado);
                 vec3.normalize(normales,normales);
 
+                vec3.transformMat4(tangentes,tangentes,matizModelado);
+                vec3.normalize(tangentes,tangentes);
+
+                vec3.transformMat4(binormales,binormales,matizModelado);
+                vec3.normalize(binormales,binormales);
+
                 this.normal_buffer.push(normales[0]);
                 this.normal_buffer.push(normales[1]);
                 this.normal_buffer.push(normales[2]);
+
+                this.tangente_buffer.push(tangentes[0]);
+                this.tangente_buffer.push(tangentes[1]);
+                this.tangente_buffer.push(tangentes[2]);
+
+                this.binormal_buffer.push(binormales[0]);
+                this.binormal_buffer.push(binormales[1]);
+                this.binormal_buffer.push(binormales[2]);
 
             };
 
@@ -93,7 +119,7 @@ function Turbina(){
 
         this.texture_coord_buffer = [];
         this.position_buffer = [];
-        this.normal_buffer = [];
+        //this.normal_buffer = [];
 
         this.cargarTurbina();
 

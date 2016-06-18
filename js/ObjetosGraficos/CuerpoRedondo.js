@@ -9,9 +9,10 @@ function CuerpoRedondo(bandasDeLatitud, bandasLongitudinales,material){
   this.phi =0;
   this.topeBandasDeLatitud=0;
   this.position_buffer=[];
-  this.normal_buffer=[];
+  //this.normal_buffer=[];
   this.texture_coord_buffer=[];
   this.index_buffer=[];
+  ObjetoGrafico.call(this);
 }
 CuerpoRedondo.prototype.obtenerElValorDeLaCoordenada=function(coordenada){
   throw Error("Cuerpo Redondo es como una clase abstracta. La funcion obtenerElValorDeLaCoordenada() se debe implementar en un hijo en concreto de CuerpoRedondo");

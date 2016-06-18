@@ -18,7 +18,6 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
 
         this.setMaterial(material);
 
-
         this.normal_buffer = [];
 
         this.position_buffer = [];
@@ -34,6 +33,14 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
         vec3.cross(vectorNormal,this.pos1,this.pos2);
         vec3.normalize(vectorNormal,vectorNormal);
 
+        var vectorTangente = vec3.create();
+        vec3.subtract(vectorTangente,this.pos1,this.pos2);
+        vec3.normalize(vectorTangente,vectorTangente);
+
+        var vectorBinormal = vec3.create();
+        vec3.cross(vectorBinormal,vectorTangente,vectorNormal);
+        vec3.normalize(vectorBinormal,vectorBinormal);
+
         //Cargo las coordenadas de textura
         for (var i = 0.0; i < this.rows; i++){
             for (var j = 0.0; j < this.cols; j++){
@@ -41,6 +48,14 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
                 this.normal_buffer.push(-1.0*vectorNormal[0]);
                 this.normal_buffer.push(-1.0*vectorNormal[1]);
                 this.normal_buffer.push(-1.0*vectorNormal[2]);
+
+                this.tangente_buffer.push(-1.0*vectorTangente[0]);
+                this.tangente_buffer.push(-1.0*vectorTangente[1]);
+                this.tangente_buffer.push(-1.0*vectorTangente[2]);
+
+                this.binormal_buffer.push(-1.0*vectorBinormal[0]);
+                this.binormal_buffer.push(-1.0*vectorBinormal[1]);
+                this.binormal_buffer.push(-1.0*vectorBinormal[2]);
 
             };
 

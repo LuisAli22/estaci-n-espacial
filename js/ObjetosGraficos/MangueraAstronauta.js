@@ -4,8 +4,12 @@ function MangueraAstronauta(material){
 
     this.bufferInicialCoordenadas = [];
     this.bufferInicialNormales = [];
+    this.bufferInicialTangentes = [];
+    this.bufferInicialBinormales = [];
     this.trayectoria = [];
     this.normalTrayectoria = [];
+    this.tangenteTrayectoria = [];
+    this.binormalTrayectoria = [];
 
     var puntosDeControl = [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.0, 5.0, 0.0,
                             6.0, 7.0, 0.0, 13.0, 8.0, 0.0, 17.0, 4.0, 0.0, 20.0, 4.0, 2.0,
@@ -28,7 +32,7 @@ function MangueraAstronauta(material){
     this.calcularTrayectoria = function(){
 
         var calculardorDePuntosDeCurva = new CalcularCurva();
-        calculardorDePuntosDeCurva.obtenerPuntosDeBSplineXY(puntosDeControl,INTERVALODELPASO,this.trayectoria,this.normalTrayectoria,1);
+        calculardorDePuntosDeCurva.obtenerPuntosDeBSplineXY(puntosDeControl,INTERVALODELPASO,this.trayectoria,this.normalTrayectoria,this.tangenteTrayectoria,this.binormalTrayectoria,1);
 
     }
 
@@ -49,6 +53,22 @@ function MangueraAstronauta(material){
             this.bufferInicialNormales.push(normales[0]);
             this.bufferInicialNormales.push(normales[1]);
             this.bufferInicialNormales.push(normales[2]);
+
+            var tangentes = vec3.fromValues(-y,x,z);
+            vec3.normalize(tangentes,tangentes);
+
+            this.bufferInicialTangentes.push(tangentes[0]);
+            this.bufferInicialTangentes.push(tangentes[1]);
+            this.bufferInicialTangentes.push(tangentes[2]);
+
+            var binormales = vec3.create();
+            vec3.cross(binormales,tangentes,normales);
+            vec3.normalize(binormales,binormales);
+
+            this.bufferInicialBinormales.push(binormales[0]);
+            this.bufferInicialBinormales.push(binormales[1]);
+            this.bufferInicialBinormales.push(binormales[2]);
+
         };
 
     }
@@ -103,15 +123,25 @@ function MangueraAstronauta(material){
 
                 var vectorCoordenadas = vec4.create();
                 var vectorNormales = vec4.create();
+                var vectorTangentes = vec4.create();
+                var vectorBinormales = vec4.create();
 
                 vec4.set(vectorCoordenadas,this.bufferInicialCoordenadas[3*j],this.bufferInicialCoordenadas[3*j+1],this.bufferInicialCoordenadas[3*j+2],1.0);
                 vec4.set(vectorNormales,this.bufferInicialNormales[3*j],this.bufferInicialNormales[3*j+1],this.bufferInicialNormales[3*j+2],1.0);
+                vec4.set(vectorTangentes,this.bufferInicialTangentes[3*j],this.bufferInicialTangentes[3*j+1],this.bufferInicialTangentes[3*j+2],1.0);
+                vec4.set(vectorBinormales,this.bufferInicialBinormales[3*j],this.bufferInicialBinormales[3*j+1],this.bufferInicialBinormales[3*j+2],1.0);
 
+                /*vec4.normalize(vectorNormales,vectorNormales);
                 vec4.normalize(vectorNormales,vectorNormales);
-
+                vec4.normalize(vectorNormales,vectorNormales);
+*/
                 vec4.transformMat4(vectorCoordenadas,vectorCoordenadas,matrizFinal);
                 vec4.transformMat4(vectorNormales,vectorNormales,matrizRotacion);
+                vec4.transformMat4(vectorTangentes,vectorTangentes,matrizRotacion);
+                vec4.transformMat4(vectorBinormales,vectorBinormales,matrizRotacion);
                 vec4.normalize(vectorNormales,vectorNormales);
+                vec4.normalize(vectorTangentes,vectorTangentes);
+                vec4.normalize(vectorBinormales,vectorBinormales);
 
                 this.position_buffer.push(vectorCoordenadas[0]);
                 this.position_buffer.push(vectorCoordenadas[1]);
@@ -120,6 +150,15 @@ function MangueraAstronauta(material){
                 this.normal_buffer.push(vectorNormales[0]);
                 this.normal_buffer.push(vectorNormales[1]);
                 this.normal_buffer.push(vectorNormales[2]);
+
+                this.tangente_buffer.push(vectorNormales[0]);
+                this.tangente_buffer.push(vectorNormales[1]);
+                this.tangente_buffer.push(vectorNormales[2]);
+
+
+                this.binormal_buffer.push(vectorNormales[0]);
+                this.binormal_buffer.push(vectorNormales[1]);
+                this.binormal_buffer.push(vectorNormales[2]);
 
             };
 
@@ -132,21 +171,6 @@ function MangueraAstronauta(material){
         //this.texture_coord_buffer = [];
         this.position_buffer = [];
         this.normal_buffer = [];
-
-        //Cargo las coordenadas de textura
-        /*for (var i = 0.0; i < this.rows; i++){
-            for (var j = 0.0; j < this.cols; j++){
-
-                var u = 1.0 - (j / (this.cols-1.0));
-                var v = 1.0 - (i / (this.rows-1.0));
-
-                this.texture_coord_buffer.push(u);
-                this.texture_coord_buffer.push(v);
-                this.texture_coord_buffer.push(this.material);
-                this.texture_coord_buffer.push(0);
-            };
-
-        };*/
 
         this.calcularTrayectoria();
         this.cargarPerfil();
@@ -179,6 +203,6 @@ MangueraAstronauta.prototype.dibujar = function(){
 
       ComponenteEstacionEspacial.prototype.dibujar.call(this);
 
-      pilaMatrizDeModelado.sacar();
+    pilaMatrizDeModelado.sacar();
 
 }

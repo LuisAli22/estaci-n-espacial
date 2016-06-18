@@ -14,9 +14,7 @@ Plano.prototype.inicializarLosBuffer=function(){
   this.texture_coord_buffer = [];
   this.position_buffer = [];
   this.normal_buffer = [];
-  /*this.position_buffer = [0.5,0.5,0.0, 0.5,-0.5,0.0, -0.5,0.5,0.0, -0.5,-0.5,0.0];
-  this.normal_buffer = [0.0,0.0,1.0,0.0,0.0,1.0,0.0,0.0,1.0,0.0,0.0,1.0];
-*/
+
   for (var i = 0.0; i < this.rows; i++) { 
    for (var j = 0.0; j < this.cols; j++) {
 
@@ -30,6 +28,14 @@ Plano.prototype.inicializarLosBuffer=function(){
        this.normal_buffer.push(0.0);
        this.normal_buffer.push(0.0);
        this.normal_buffer.push(-1.0);
+
+       this.tangente_buffer.push(0.0);
+       this.tangente_buffer.push(1.0);
+       this.tangente_buffer.push(0.0);
+
+       this.binormal_buffer.push(1.0);
+       this.binormal_buffer.push(0.0);
+       this.binormal_buffer.push(0.0);
                               
     };
   };

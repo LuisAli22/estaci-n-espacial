@@ -20,10 +20,12 @@ ConstructorBahia.prototype.construirEstructura=function(puntosDeControl,interval
 
 	var coordenadas = [];
 	var normales = [];
+	var tangentes = [];
+	var binormales = [];
 
 	var calculardorDePuntosDeCurva = new CalcularCurva();
-	calculardorDePuntosDeCurva.obtenerPuntosDeBezierXY(puntosDeControl,intervaloDelPaso,coordenadas,normales,sentidoNormal);
+	calculardorDePuntosDeCurva.obtenerPuntosDeBezierXY(puntosDeControl,intervaloDelPaso,coordenadas,normales,tangentes,binormales,sentidoNormal);
 
-	this.componenteBahia.cargarBuffers(coordenadas,normales);
+	this.componenteBahia.cargarBuffers(coordenadas,normales,tangentes,binormales);
 
 }

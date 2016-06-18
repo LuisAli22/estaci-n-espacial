@@ -1,4 +1,4 @@
-function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,puntosDeControlZ){
+function transformarXZ(bufferCoordenadas,bufferNormales,bufferTangente,buffersBinormal,t,puntosDeControlX,puntosDeControlZ){
 
     var cantidadIteraciones = bufferCoordenadas.length/3.0;
 
@@ -8,7 +8,7 @@ function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,punto
 
     var vectorTangente = vec3.create();
     var vectorNormal = vec3.create();
-    var vectorBinomial = vec3.create();
+    var vectorBinormal = vec3.create();
 
     vectorTangente[0] = 3.0*Math.pow(t,2)*puntosDeControlX[0]+2.0*t*puntosDeControlX[1]+puntosDeControlX[2];
     vectorTangente[1] = 3.0*Math.pow(t,2)*puntosDeControlY[0]+2.0*t*puntosDeControlY[1]+puntosDeControlY[2];
@@ -21,9 +21,9 @@ function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,punto
     vec3.normalize(vectorNormal,vectorNormal);
     vec3.normalize(vectorTangente,vectorTangente);
 
-    vec3.cross(vectorBinomial,vectorTangente,vectorNormal);
+    vec3.cross(vectorBinormal,vectorTangente,vectorNormal);
 
-    vec3.normalize(vectorBinomial,vectorBinomial);
+    vec3.normalize(vectorBinormal,vectorBinormal);
 
     var matrizFinal = mat4.create();
     var matrizRotacion = mat4.create();
@@ -31,9 +31,9 @@ function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,punto
     matrizRotacion[0] = vectorNormal[0];
     matrizRotacion[1] = vectorNormal[1];
     matrizRotacion[2] = vectorNormal[2];
-    matrizRotacion[4] = vectorBinomial[0];
-    matrizRotacion[5] = vectorBinomial[1];
-    matrizRotacion[6] = vectorBinomial[2];
+    matrizRotacion[4] = vectorBinormal[0];
+    matrizRotacion[5] = vectorBinormal[1];
+    matrizRotacion[6] = vectorBinormal[2];
     matrizRotacion[8] = vectorTangente[0];
     matrizRotacion[9] = vectorTangente[1];
     matrizRotacion[10] = vectorTangente[2];
@@ -55,15 +55,26 @@ function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,punto
 
         var vectorCoordenadas = vec4.create();
         var vectorNormales = vec4.create();
+        var vectorTangentes = vec4.create();
+        var vectorBinormales = vec4.create();
 
         vec4.set(vectorCoordenadas,bufferCoordenadas[3*i],bufferCoordenadas[3*i+1],bufferCoordenadas[3*i+2],1.0);
         vec4.set(vectorNormales,bufferNormales[3*i],bufferNormales[3*i+1],bufferNormales[3*i+2],1.0);
+        vec4.set(vectorTangentes,bufferTangente[3*i],bufferTangente[3*i+1],bufferTangente[3*i+2],1.0);
+        vec4.set(vectorBinormales,buffersBinormal[3*i],buffersBinormal[3*i+1],buffersBinormal[3*i+2],1.0);
 
         vec4.normalize(vectorNormales,vectorNormales);
+        vec4.normalize(vectorTangentes,vectorTangentes);
+        vec4.normalize(vectorBinormales,vectorBinormales);
 
         vec4.transformMat4(vectorCoordenadas,vectorCoordenadas,matrizFinal);
         vec4.transformMat4(vectorNormales,vectorNormales,matrizRotacion);
+        vec4.transformMat4(vectorTangentes,vectorTangentes,matrizRotacion);
+        vec4.transformMat4(vectorBinormales,vectorBinormales,matrizRotacion);
+        
         vec4.normalize(vectorNormales,vectorNormales);
+        vec4.normalize(vectorTangentes,vectorTangentes);
+        vec4.normalize(vectorBinormales,vectorBinormales);
 
         bufferCoordenadas[3*i] = vectorCoordenadas[0];
         bufferCoordenadas[3*i+1] = vectorCoordenadas[1];
@@ -72,6 +83,14 @@ function transformarXZ(bufferCoordenadas,bufferNormales,t,puntosDeControlX,punto
         bufferNormales[3*i] = vectorNormales[0];
         bufferNormales[3*i+1] = vectorNormales[1];
         bufferNormales[3*i+2] = vectorNormales[2];
+
+        bufferTangente[3*i] = vectorTangentes[0];
+        bufferTangente[3*i+1] = vectorTangentes[1];
+        bufferTangente[3*i+2] = vectorTangentes[2];
+
+        buffersBinormal[3*i] = vectorBinormales[0];
+        buffersBinormal[3*i+1] = vectorBinormales[1];
+        buffersBinormal[3*i+2] = vectorBinormales[2];
 
     };
 
@@ -88,7 +107,7 @@ function CalcularCurva(){
     var factor,sumador;
 
     //Calcula sobre el plano XY con Z = 0
-    this.obtenerPuntosDeBezierXY = function(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,factorNormal){
+    this.obtenerPuntosDeBezierXY = function(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,bufferTangentes,buffersBinormales,factorNormal){
 
         Base0=function(u) { return (1-u)*(1-u)*(1-u);}
 
@@ -117,7 +136,7 @@ function CalcularCurva(){
             factor = 4;
             sumador = 2;
 
-            calcular(bufferPuntosDeControl,intervaloDelPaso[i],bufferCoordenadas,bufferNormales,factorNormal);
+            calcular(bufferPuntosDeControl,intervaloDelPaso[i],bufferCoordenadas,bufferNormales,bufferTangentes,buffersBinormales,factorNormal);
 
         };
 
@@ -127,7 +146,7 @@ function CalcularCurva(){
     //Recibe  los puntos de control en bufferPuntosDeControl
     //un valor intervaloDelPaso para los puntos de la curva de BSpline
     //Los buffers de coordendas y normales a cargar
-    this.obtenerPuntosDeBSplineXY = function(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,factorNormal){
+    this.obtenerPuntosDeBSplineXY = function(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,bufferTangentes,buffersBinormales,factorNormal){
 
         Base0=function(u) { return (1-3*u+3*u*u-u*u*u)*1/6;}
 
@@ -151,11 +170,11 @@ function CalcularCurva(){
         factor = 1;
         sumador = 0;
 
-        calcular(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,factorNormal);
+        calcular(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,bufferTangentes,buffersBinormales,factorNormal);
 
     }
 
-    function calcular(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,factorNormal){
+    function calcular(bufferPuntosDeControl,intervaloDelPaso,bufferCoordenadas,bufferNormales,bufferTangentes,buffersBinormales,factorNormal){
 
         for ( i = inicio; i < fin; i++) {
 
@@ -185,9 +204,17 @@ function CalcularCurva(){
 
                 //Calculo el vector normal
                 var vectorNormal = vec3.fromValues(factorNormal*-ty,factorNormal*tx,factorNormal*tz);
+                var vectorTangente = vec3.fromValues(tx,ty,tz);
 
                 //Normalizo el vector normal
                 vec3.normalize(vectorNormal,vectorNormal);
+                vec3.normalize(vectorTangente,vectorTangente);
+
+                var vectorBinormal = vec3.create();
+
+                vec3.cross(vectorBinormal,vectorTangente,vectorNormal);
+
+                vec3.normalize(vectorBinormal,vectorBinormal);
 
                 bufferCoordenadas.push(x);
                 bufferCoordenadas.push(y);
@@ -196,6 +223,15 @@ function CalcularCurva(){
                 bufferNormales.push(vectorNormal[0]);
                 bufferNormales.push(vectorNormal[1]);
                 bufferNormales.push(vectorNormal[2]);
+
+                bufferTangentes.push(vectorTangente[0]);
+                bufferTangentes.push(vectorTangente[1]);
+                bufferTangentes.push(vectorTangente[2]);
+
+                buffersBinormales.push(vectorBinormal[0]);
+                buffersBinormales.push(vectorBinormal[1]);
+                buffersBinormales.push(vectorBinormal[2]);
+
 
             };
         };

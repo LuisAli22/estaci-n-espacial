@@ -188,6 +188,8 @@
 <script id="shader-vs" type="x-shader/x-vertex">
     attribute vec3 aVertexPosition;
     attribute vec3 aVertexNormal;
+    attribute vec3 aVertexTangente;
+    attribute vec3 aVertexBinormal;
     attribute vec4 aTextureCoord;
 
     uniform mat4 uViewMatrix;
@@ -220,12 +222,9 @@
 		// Calculos de la iluminaci�n
 		vec3 light_dir =  uLightPosition - vec3( pos_camera_view );
 		normalize(light_dir);
-    if (!uUseLighting)
-		{
+        if (!uUseLighting){
             vLightWeighting = vec3(1.0, 1.0, 1.0);
-        }
-		else
-		{
+        }else{
             vec3 transformedNormal = normalize(uNMatrix * aVertexNormal);
             float directionalLightWeighting = max(dot(transformedNormal, light_dir), 0.0);
             vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting*0.125;

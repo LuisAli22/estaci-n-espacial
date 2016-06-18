@@ -11,6 +11,8 @@ function ComponenteBahia(filas,columnas,material){
     //Buffers que contienen el perfil inicial
     this.bufferCoordenadas = [];
     this.bufferNormales = [];
+    this.buffeTangentes = [];
+    this.buffeBinormales = [];
 
     //Buffers auxiliares utilizados para las tapas
     this.bufferInicial = [];
@@ -52,16 +54,22 @@ function ComponenteBahia(filas,columnas,material){
             //Buffers auxiliares para no modificar los valores de los buffers iniciales
             var bufferCoordenadasATransformar = [];
             var bufferNormalesATransformar = [];
+            var bufferTangentesATransformar = [];
+            var bufferBinormalesATransformar = [];
 
             bufferCoordenadasATransformar = bufferCoordenadasATransformar.concat(this.bufferCoordenadas);
             bufferNormalesATransformar = bufferNormalesATransformar.concat(this.bufferNormales);
+            bufferTangentesATransformar = bufferTangentesATransformar.concat(this.buffeTangentes);
+            bufferBinormalesATransformar = bufferBinormalesATransformar.concat(this.buffeBinormales);
 
-            var desplazamiento = transformarXZ(bufferCoordenadasATransformar,bufferNormalesATransformar,t,puntosDeControlXTransformar,puntosDeControlZTransformar);
+            var desplazamiento = transformarXZ(bufferCoordenadasATransformar,bufferNormalesATransformar,bufferTangentesATransformar,bufferBinormalesATransformar,t,puntosDeControlXTransformar,puntosDeControlZTransformar);
 
             this.trayectoria.push(desplazamiento);
 
             this.position_buffer = this.position_buffer.concat(bufferCoordenadasATransformar);
             this.normal_buffer = this.normal_buffer.concat(bufferNormalesATransformar);
+            this.tangente_buffer = this.tangente_buffer.concat(bufferTangentesATransformar);
+            this.binormal_buffer = this.binormal_buffer.concat(bufferBinormalesATransformar);
 
             if( i == (this.rows/2-1) && this.fin == 0.75 ){
 
@@ -85,10 +93,12 @@ function ComponenteBahia(filas,columnas,material){
 
 }
 
-ComponenteBahia.prototype.cargarBuffers=function(coordenadas,normales){
+ComponenteBahia.prototype.cargarBuffers=function(coordenadas,normales,tangentes,binormales){
 	
-    this.bufferCoordenadas= coordenadas;
-	this.bufferNormales= normales;
+    this.bufferCoordenadas = coordenadas;
+	this.bufferNormales = normales;
+    this.buffeTangentes = tangentes;
+    this.buffeBinormales = binormales;
     this.inicializarLosBuffer();
 
 }

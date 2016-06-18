@@ -24,6 +24,12 @@ PrepararProgramaEjecutable.prototype.comenzar=function(vertexShader,fragmentShad
   shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, AVERTEXNORMAL);
   gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
 
+  shaderProgram.vertexTangenteAttribute = gl.getAttribLocation(shaderProgram, AVERTEXTANGENTE);
+  gl.enableVertexAttribArray(shaderProgram.vertexTangenteAttribute);
+
+  shaderProgram.vertexBinormalAttribute = gl.getAttribLocation(shaderProgram, AVERTEXBINORMAL);
+  gl.enableVertexAttribArray(shaderProgram.vertexBinormalAttribute);
+
   shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, UPMATRIX);
   shaderProgram.ViewMatrixUniform = gl.getUniformLocation(shaderProgram,UVIEWMATRIX);
   shaderProgram.ModelMatrixUniform = gl.getUniformLocation(shaderProgram, UMODELMATRIX);

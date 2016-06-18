@@ -2,10 +2,15 @@ function ObjetoGrafico(){
 
    this.webgl_position_buffer = null;
    this.webgl_normal_buffer = null;
+   this.webgl_tangente_buffer = null;
+   this.webgl_binormal_buffer = null;
    this.webgl_texture_coord_buffer = null;
    this.webgl_index_buffer = null;
    this.textura = null;
    this.rutaTextura = RUTAIMAGENMARTE;
+   this.normal_buffer = [];
+   this.tangente_buffer = [];
+   this.binormal_buffer = [];
 }
 ObjetoGrafico.prototype.inicializarTextura = function(archivoTextura){
 
@@ -30,13 +35,26 @@ ObjetoGrafico.prototype.generarMipMap=function (){
  }
  ObjetoGrafico.prototype.atarLosBuffer = function(position_buffer,normal_buffer,texture_coord_buffer,index_buffer){
 
-
+    //var tangente_buffer = [];
+    //var binormal_buffer = [];
     // Creaci�n e Inicializaci�n de los buffers a nivel de OpenGL
     this.webgl_normal_buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_normal_buffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal_buffer), gl.STATIC_DRAW);
     this.webgl_normal_buffer.itemSize = 3;
     this.webgl_normal_buffer.numItems = normal_buffer.length / 3;
+
+    this.webgl_tangente_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_tangente_buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.tangente_buffer), gl.STATIC_DRAW);
+    this.webgl_tangente_buffer.itemSize = 3;
+    this.webgl_tangente_buffer.numItems = this.tangente_buffer.length / 3;
+
+    this.webgl_binormal_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_binormal_buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.binormal_buffer), gl.STATIC_DRAW);
+    this.webgl_binormal_buffer.itemSize = 3;
+    this.webgl_binormal_buffer.numItems = this.binormal_buffer.length / 3;
 
     this.webgl_texture_coord_buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_texture_coord_buffer);
@@ -68,6 +86,13 @@ ObjetoGrafico.prototype.dibujar = function(){
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_normal_buffer);
     gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, this.webgl_normal_buffer.itemSize, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_tangente_buffer);
+    gl.vertexAttribPointer(shaderProgram.vertexTangenteAttribute, this.webgl_tangente_buffer.itemSize, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_binormal_buffer);
+    gl.vertexAttribPointer(shaderProgram.vertexBinormalAttribute, this.webgl_binormal_buffer.itemSize, gl.FLOAT, false, 0, 0);
+
 
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, this.textura);
