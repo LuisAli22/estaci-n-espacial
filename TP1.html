@@ -134,19 +134,14 @@
       if (material == 8.0) return obtenerColor(vec3(255,255,255));
       return obtenerColor(vec3(0,0,0));
     }
-
+    vec4 obtenerTexel(){
+      vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+      return vec4(textureColor.rgb * vLightWeighting, textureColor.a);
+    }
     void main(void) {
-
-        if(vTextureCoord[3]==0.0){
-            vec4 aux = tablaMateriales(vTextureCoord.z,vLightWeighting);
-            gl_FragColor = aux;
-        }else{
-
-            vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-            gl_FragColor = vec4(textureColor.rgb * vLightWeighting, textureColor.a);
-
-        }
-
+      gl_FragColor= (vTextureCoord[3]==0.0)?
+                    (tablaMateriales(vTextureCoord.z,vLightWeighting)):
+                    (obtenerTexel());
     }
 
 </script>
