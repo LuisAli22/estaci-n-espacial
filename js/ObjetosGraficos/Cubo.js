@@ -2,8 +2,7 @@ Cubo.prototype=new ComponenteEstacionEspacial;
 Cubo.prototype.constructor=Cubo;
 function Cubo(material){
 
-  this.tapInferior = new TapaCubo(material,-0.5,-1.0);
-  this.tapSuperior = new TapaCubo(material,0.5,1.0);
+  this.tapas = [];
 
   this.bufferInicialCoordenadas = [];
   this.bufferInicialNormales = [];
@@ -20,7 +19,9 @@ function Cubo(material){
 
   ComponenteEstacionEspacial.call(this,40,40,material);
 
-  //this.inicializarLosBuffer();
+  this.agregarTapa=function(tapa){
+      this.tapas.push(tapa);
+  }
 
 }
 
@@ -46,11 +47,6 @@ Cubo.prototype.inicializarLosBuffer=function(){
   this.bufferFinal = [];
 
   this.transformar(this.bufferInicialCoordenadas,this.bufferInicialNormales,this.bufferInicialTangentes,this.bufferInicialBinormales);
-
-  this.tapSuperior.inicializarLosBuffer();
-  this.tapInferior.inicializarLosBuffer();
-
-  this.compilar();
 
 }
 
@@ -135,17 +131,29 @@ Cubo.prototype.agregarMaterial = function(material,materialTapa){
     this.texture_coord_buffer = [];
     this.rutaTextura = material.rutaTextura;
     this.texture_coord_buffer = this.texture_coord_buffer.concat(material.texture_coord_buffer);
-    this.tapInferior.agregarMaterial(materialTapa);
-    this.tapSuperior.agregarMaterial(materialTapa);
 
 }
 
 Cubo.prototype.dibujar = function(){
 
   ObjetoGrafico.prototype.dibujar.call(this);
-  this.tapInferior.dibujar();
-  this.tapSuperior.dibujar();
+  for(indiceComponente in this.tapas){
+    this.tapas[indiceComponente].dibujar();
+  }
 
+}
+
+Cubo.prototype.inicializarTextura=function(ruta){
+  ObjetoGrafico.prototype.inicializarTextura.call(this,ruta);
+  for(indiceComponente in this.tapas){
+    this.tapas[indiceComponente].inicializarTextura(ruta);
+  }
+}
+Cubo.prototype.generarMipMap=function (){
+  ObjetoGrafico.prototype.generarMipMap.call(this);
+  for(indiceComponente in this.tapas){
+    this.tapas[indiceComponente].generarMipMap();
+  }
 }
 
 
@@ -167,8 +175,6 @@ TapaCubo.prototype.inicializarLosBuffer=function(){
   this.normal_buffer = [];
 
   this.cargarTapa(this.altura,this.normal);
-
-  this.compilar();
   
 }
 

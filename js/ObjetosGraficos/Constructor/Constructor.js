@@ -11,7 +11,7 @@ Constructor.prototype.obtenerComponente=function(){
 }
 Constructor.prototype.definirMaterial=function(material){
 
-	//this.componente.guardarMaterial(material);
+	this.componente.guardarMaterial(material);
 
 }
 Constructor.prototype.compilar=function(){

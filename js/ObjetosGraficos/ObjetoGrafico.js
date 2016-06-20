@@ -22,11 +22,16 @@ ObjetoGrafico.prototype.inicializarTextura = function(archivoTextura){
     this.textura.imagen.onload = function () {
            manejarTexturaCargada();
     }
-    this.textura.imagen.src = archivoTextura;
+    if(this.materialAux != null){
+      this.textura.imagen.src = this.materialAux.rutaTextura;
+    }else{
+      this.textura.imagen.src = archivoTextura;
+    }
 }
 
 ObjetoGrafico.prototype.guardarMaterial=function (material){
   this.materialAux = material;
+  this.texture_coord_buffer = this.texture_coord_buffer.concat(material.texture_coord_buffer);
 }
 
 ObjetoGrafico.prototype.generarMipMap=function (){
@@ -66,7 +71,7 @@ ObjetoGrafico.prototype.generarMipMap=function (){
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texture_coord_buffer), gl.STATIC_DRAW);
     this.webgl_texture_coord_buffer.itemSize = 4;
     this.webgl_texture_coord_buffer.numItems = texture_coord_buffer.length / 4;
-
+    
     this.webgl_position_buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_position_buffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(position_buffer), gl.STATIC_DRAW);

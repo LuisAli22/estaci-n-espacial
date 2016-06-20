@@ -1,19 +1,6 @@
 function Panel(material){
 
-  this.cubo = new Cubo(6.0);
-
-  var materialCubo = new Material(40,40);
-  materialCubo.cargarTextura(RUTAIMAGENPANEL);
-  materialCubo.cargarCoordenadasDeTextura();
-
-  var materialCuboTapa = new Material(2,40);
-  materialCuboTapa.cargarTextura(RUTAIMAGENPANEL);
-  materialCuboTapa.cargarRepeticionDeTextura(3,32);
-  materialCuboTapa.cargarCoordenadasDeTextura();
-
-  this.cubo.agregarMaterial(materialCubo,materialCuboTapa);
-
-  this.cubo.inicializarLosBuffer();
+  this.cubo = new Director( new ConstructorPanel() );
 
   this.cilindro = new Cilindro(64,64,BEIS,0);
 
@@ -98,12 +85,8 @@ Panel.prototype.dibujar = function(){
 Panel.prototype.inicializarTextura=function(){
   this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
   this.cubo.inicializarTextura(RUTAIMAGENPANEL);
-  this.cubo.tapSuperior.inicializarTextura(RUTAIMAGENPANEL);
-  this.cubo.tapInferior.inicializarTextura(RUTAIMAGENPANEL);
 }
 Panel.prototype.generarMipMap=function (){
   this.cilindro.generarMipMap();
   this.cubo.generarMipMap();
-  this.cubo.tapSuperior.generarMipMap();
-  this.cubo.tapInferior.generarMipMap();
 }

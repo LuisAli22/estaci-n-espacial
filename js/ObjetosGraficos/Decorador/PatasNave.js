@@ -1,16 +1,7 @@
 function PatasNave(){
 
-	this.cubo = new Cubo(7.0);
-	var materialCubo = new Material(40,40);
-	materialCubo.cargarTextura(RUTAIMAGENPANEL);
-	materialCubo.cargarCoordenadasDeTextura();
-
-	var materialCuboTapa = new Material(40,2);
-	materialCuboTapa.cargarTextura(RUTAIMAGENPANEL);
-	materialCuboTapa.cargarCoordenadasDeTextura();
-
-	this.cubo.agregarMaterial(materialCubo,materialCuboTapa);
-	this.cubo.inicializarLosBuffer();
+	this.cubo = new Director( new ConstructorCuboEjesNave() );
+	
 	this.cilindro = new Cilindro(64,64,8.0,0);
 	this.altura=0;
 	this.ABRIR = 0;
