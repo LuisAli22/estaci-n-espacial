@@ -57,7 +57,14 @@ Plano.prototype.inicializarLosBuffer=function(){
   };
 
   // Buffer de indices de los triangulos
-  this.crearBufferDeIndices();
-  this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+  this.compilar();
+}
+
+Plano.prototype.compilar= function(){
+
+    this.crearBufferDeIndices();
+
+    this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
 }
+

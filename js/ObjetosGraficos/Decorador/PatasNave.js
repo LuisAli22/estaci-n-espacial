@@ -1,10 +1,14 @@
 function PatasNave(){
 
 	this.cubo = new Cubo(7.0);
-	var materialCubo = new Material(RUTAIMAGENPANEL,64.0,64.0,40,40);
-	materialCubo.cargar();
-	var materialCuboTapa = new Material(RUTAIMAGENPANEL,64.0,64.0,40,2);
-	materialCuboTapa.cargar();
+	var materialCubo = new Material(40,40);
+	materialCubo.cargarTextura(RUTAIMAGENPANEL);
+	materialCubo.cargarCoordenadasDeTextura();
+
+	var materialCuboTapa = new Material(40,2);
+	materialCuboTapa.cargarTextura(RUTAIMAGENPANEL);
+	materialCuboTapa.cargarCoordenadasDeTextura();
+
 	this.cubo.agregarMaterial(materialCubo,materialCuboTapa);
 	this.cubo.inicializarLosBuffer();
 	this.cilindro = new Cilindro(64,64,8.0,0);

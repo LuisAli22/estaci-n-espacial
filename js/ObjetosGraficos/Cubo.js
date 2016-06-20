@@ -50,11 +50,18 @@ Cubo.prototype.inicializarLosBuffer=function(){
   this.tapSuperior.inicializarLosBuffer();
   this.tapInferior.inicializarLosBuffer();
 
-  // Buffer de indices de los triangulos
-  this.crearBufferDeIndices();
-  this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+  this.compilar();
 
 }
+
+Cubo.prototype.compilar= function(){
+
+    this.crearBufferDeIndices();
+
+    this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+
+}
+
 
 Cubo.prototype.transformar = function(bufferInicialCoordenadas,bufferInicialNormales,bufferInicialTangentes,bufferInicialBinormales){
     //Calculo las coordenadas para el perfil rotado
@@ -161,9 +168,15 @@ TapaCubo.prototype.inicializarLosBuffer=function(){
 
   this.cargarTapa(this.altura,this.normal);
 
-  // Buffer de indices de los triangulos
-  this.crearBufferDeIndices();
-  this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+  this.compilar();
+  
+}
+
+TapaCubo.prototype.compilar= function(){
+
+    this.crearBufferDeIndices();
+
+    this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
 }
 

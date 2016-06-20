@@ -1,15 +1,16 @@
 ConstructorLateralIzquierdoExterior.prototype=new ConstructorBahia;
 ConstructorLateralIzquierdoExterior.prototype.constructor=ConstructorLateralIzquierdoExterior;
-function ConstructorLateralIzquierdoExterior(material){
+function ConstructorLateralIzquierdoExterior(){
 
-	ConstructorBahia.call(this,material);
-	this.construirEstructura();
+	ConstructorBahia.call(this);
+
 }
 
-ConstructorLateralIzquierdoExterior.prototype.construirEstructura=function(){
+ConstructorLateralIzquierdoExterior.prototype.definirMaterial=function(){
 
-	var material = new Material(RUTAIMAGENVENTANALEXTERIOR,4,1,120,30);
-	material.cargar();
+	var material = new Material(120,30);
+	material.cargarRepeticionDeTextura(4,1);
+	material.cargarTextura(RUTAIMAGENVENTANALEXTERIOR);
 
 	var intervaloDelPaso = [10,10,10];
 

@@ -1,15 +1,17 @@
 ConstructorTechoInterior.prototype=new ConstructorBahia;
 ConstructorTechoInterior.prototype.constructor=ConstructorTechoInterior;
-function ConstructorTechoInterior(material){
+function ConstructorTechoInterior(){
 
-	ConstructorBahia.call(this,material);
-	this.construirEstructura();
+	ConstructorBahia.call(this);
+
 }
 
-ConstructorTechoInterior.prototype.construirEstructura=function(){
+ConstructorTechoInterior.prototype.definirMaterial=function(){
 
-	var material = new Material(RUTAIMAGENTECHOINTERIOR,8.0,1.0,120,30);
-	material.cargar();
+	var material = new Material(120,30);
+	material.cargarRepeticionDeTextura(8,1);
+	material.cargarTextura(RUTAIMAGENTECHOINTERIOR);
+	material.noEsIluminadoPorElSol();
 
 	var intervaloDelPaso = [30];
 

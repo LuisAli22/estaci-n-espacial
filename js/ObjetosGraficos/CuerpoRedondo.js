@@ -62,6 +62,13 @@ CuerpoRedondo.prototype.cargarElBufferDeIndices=function(){
 
 CuerpoRedondo.prototype.inicializarLosBuffer=function(){
   this.cargarCoordenadasEnLosBuffersDePosicionYTextura();
-  this.cargarElBufferDeIndices();
-  this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+  this.compilar();
+}
+
+CuerpoRedondo.prototype.compilar= function(){
+
+    this.cargarElBufferDeIndices();
+
+    this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+
 }

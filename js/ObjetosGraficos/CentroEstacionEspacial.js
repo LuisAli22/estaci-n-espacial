@@ -118,17 +118,25 @@ function CentroEstacionEspacial(material){
         this.position_buffer = [];
         this.normal_buffer = [];
 
-        var material = new Material(RUTAIMAGENEXTERIOR,1.0,16.0,this.rows,this.cols);
-        material.cargar();
+        var material = new Material(this.rows,this.cols);
+        material.cargarTextura(RUTAIMAGENEXTERIOR);
+        material.cargarRepeticionDeTextura(1,16);
+        material.cargarCoordenadasDeTextura();
+
         this.setMaterial(material);
 
         this.cargarCentro();
 
-        // Buffer de indices de los triangulos
+        this.compilar();
+    }
+
+    this.compilar= function(){
+
         this.crearBufferDeIndices();
 
         this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
     }
+
     this.inicializarLosBuffer();
 }

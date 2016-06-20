@@ -1,15 +1,17 @@
 ConstructorPisoInterior.prototype=new ConstructorBahia;
 ConstructorPisoInterior.prototype.constructor=ConstructorPisoInterior;
-function ConstructorPisoInterior(material){
+function ConstructorPisoInterior(){
 
-	ConstructorBahia.call(this,material);
-	this.construirEstructura();
+	ConstructorBahia.call(this);
+
 }
 
-ConstructorPisoInterior.prototype.construirEstructura=function(){
+ConstructorPisoInterior.prototype.definirMaterial=function(){
 
-	var material = new Material(RUTAIMAGENPISOINTERIOR,4.0,1.0,120,30);
-	material.cargar();
+	var material = new Material(120,30);
+	material.cargarRepeticionDeTextura(4,1);
+	material.cargarTextura(RUTAIMAGENPISOINTERIOR);
+	material.noEsIluminadoPorElSol();
 
 	var intervaloDelPaso = [30];
 

@@ -13,8 +13,9 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
 
     this.initBuffers = function(){
 
-        var material = new Material(RUTAIMAGENTAPA,1.0,1.0,120,2);
-        material.cargar();
+        var material = new Material(120,2);
+        material.cargarTextura(RUTAIMAGENTAPA);
+        material.cargarCoordenadasDeTextura();
 
         this.setMaterial(material);
 
@@ -61,11 +62,16 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
 
         };
 
-        // Buffer de indices de los triangulos
-				this.crearBufferDeIndices();
+        this.compilar();
+    }
 
-				this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
+    this.compilar= function(){
+
+        this.crearBufferDeIndices();
+
+        this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
     }
+
 		this.initBuffers();
 }

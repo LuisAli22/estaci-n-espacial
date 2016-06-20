@@ -37,11 +37,16 @@ function ComponenteBahia(filas,columnas,material){
 
         this.transformar(puntoDeControlXFinal,puntoDeControlZFinal);
 
+	}
+
+    this.compilar= function(){
+
         this.crearBufferDeIndices();
+
         this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
+    }
 
-	}
 
 	this.transformar = function(puntosDeControlXTransformar,puntosDeControlZTransformar){
 

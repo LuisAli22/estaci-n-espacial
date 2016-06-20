@@ -25,8 +25,10 @@ function MangueraAstronauta(material){
     //Seteo las dimensiones de la grilla
     ComponenteEstacionEspacial.call(this,FILAS,COLUMNAS,material);
 
-    var material = new Material(RUTAIMAGENTAPA,1.0,1.0,FILAS,COLUMNAS);
-    material.cargar();
+    var material = new Material(FILAS,COLUMNAS);
+    material.cargarTextura(RUTAIMAGENTAPA);
+    material.cargarCoordenadasDeTextura();
+
     this.setMaterial(material);
 
     this.calcularTrayectoria = function(){
@@ -176,7 +178,11 @@ function MangueraAstronauta(material){
         this.cargarPerfil();
         this.transformar();
 
-        // Buffer de indices de los triangulos
+        this.compilar();
+    }
+
+    this.compilar= function(){
+
         this.crearBufferDeIndices();
 
         this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);

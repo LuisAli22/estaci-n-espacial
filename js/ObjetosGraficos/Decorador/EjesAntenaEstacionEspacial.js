@@ -1,8 +1,11 @@
 function EjesAntenaEstacionEspacial(material){
 
     this.cilindro = new Cilindro(64,64,BEIS,0);
-    var material = new Material(RUTAIMAGENTAPA,8.0,1.0,64,64);
-    material.cargar();
+    
+    var material = new Material(64,64);
+    material.cargarTextura(RUTAIMAGENTAPA);
+    material.cargarCoordenadasDeTextura();
+
     this.cilindro.setMaterial(material);
     
 }

@@ -1,9 +1,16 @@
-function Material(textura,repeticionU,repeticionV,rows,cols){
+function Material(rows,cols){
 
-	this.repeticionU = repeticionU;
-	this.repeticionV = repeticionV;
+	this.esIluminadoPorElSol = true;
+	this.interiorBahia = false;
+	this.ambiente;
+    this.difusa;
+    this.especular;
+    this.brillo;
+
+	this.repeticionU = 1;
+	this.repeticionV = 1;
 	this.texture_coord_buffer = [];
-	this.rutaTextura = textura;
+	this.rutaTextura;
 	this.UInicial = 0.0;
 	this.VInicial = 0.0;
 	this.USigno = 1.0;
@@ -13,7 +20,48 @@ function Material(textura,repeticionU,repeticionV,rows,cols){
 
 }
 
-Material.prototype.cargar=function(){
+Material.prototype.cargarRepeticionDeTextura=function(repeticionU,repeticionV){
+	
+	this.repeticionU = repeticionU;
+	this.repeticionV = repeticionV;
+
+}
+Material.prototype.noEsIluminadoPorElSol=function(){
+
+	this.esIluminadoPorElSol = false;
+
+}
+Material.prototype.esInteriorBahia=function(){
+
+	this.interiorBahia = true;
+
+}
+Material.prototype.cargarTextura=function(textura){
+
+	this.rutaTextura = textura;
+
+}
+Material.prototype.cargarAmbiente=function(ambiente){
+
+	this.ambiente = ambiente;
+
+}
+Material.prototype.cargarDifusa=function(difusa){
+
+	this.difusa = difusa;
+
+}
+Material.prototype.cargarEspecular=function(especular){
+
+	this.especular = especular;
+
+}
+Material.prototype.cargarBrillo=function(brillo){
+
+	this.brillo = brillo;
+
+}
+Material.prototype.cargarCoordenadasDeTextura=function(){
 
 	for (var i = 0.0; i < this.rows; i++){
 		for (var j = 0.0; j < this.cols; j++){
@@ -31,17 +79,27 @@ Material.prototype.cargar=function(){
     };
 
 }
-
 Material.prototype.cargarSigno=function(USigno,VSigno){
 
 	this.USigno = USigno;
 	this.VSigno = VSigno;
 
 }
-
 Material.prototype.cargarInico=function(UInicial,VInicial){
 
 	this.UInicial = UInicial;
 	this.VInicial = VInicial;
+
+}
+Material.prototype.configurarPropiedades=function(){
+
+	if (this.esIluminadoPorElSol){
+		gl.uniform1i(shaderProgram.useLightingUniform, true);
+	}else {
+		gl.uniform1i(shaderProgram.useLightingUniform, false);
+	}
+
+	/*.uniform3f(shaderProgram.ambientColorUniform, this.ambiente );
+  	gl.uniform3f(shaderProgram.directionalColorUniform, this.difusa);*/
 
 }

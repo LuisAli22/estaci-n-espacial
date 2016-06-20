@@ -1,22 +1,25 @@
-function ConstructorBahia(material){
+ConstructorBahia.prototype=new Constructor;
+ConstructorBahia.prototype.constructor=ConstructorBahia;
+function ConstructorBahia(){
 
-	this.componenteBahia = new ComponenteBahia(FILASESTACIONESPACIAL,30,material);
+	this.componente = new ComponenteBahia(FILASESTACIONESPACIAL,30,1.0);
 
 }
 ConstructorBahia.prototype.getComponenteBahia=function(){
 
-	return this.componenteBahia;
+	return this.componente;
 
 }
 ConstructorBahia.prototype.setMaterial=function(material){
 
-	this.componenteBahia.setMaterial(material);
+	this.componente.setMaterial(material);
 
 }
 
 ConstructorBahia.prototype.construirEstructura=function(puntosDeControl,intervaloDelPaso,sentidoNormal,material){
 
-	this.componenteBahia.setMaterial(material);
+	material.cargarCoordenadasDeTextura();
+	this.componente.setMaterial(material);
 
 	var coordenadas = [];
 	var normales = [];
@@ -26,6 +29,10 @@ ConstructorBahia.prototype.construirEstructura=function(puntosDeControl,interval
 	var calculardorDePuntosDeCurva = new CalcularCurva();
 	calculardorDePuntosDeCurva.obtenerPuntosDeBezierXY(puntosDeControl,intervaloDelPaso,coordenadas,normales,tangentes,binormales,sentidoNormal);
 
-	this.componenteBahia.cargarBuffers(coordenadas,normales,tangentes,binormales);
+	this.componente.cargarBuffers(coordenadas,normales,tangentes,binormales);
+
+	this.componente.guardarMaterial(material);
+
+	//Constructor.prototype.definirMaterial.call(material);
 
 }

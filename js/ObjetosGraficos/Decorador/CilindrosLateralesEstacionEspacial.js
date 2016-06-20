@@ -1,8 +1,11 @@
 function CilindrosLateralesEstacionEspacial(){
 
     this.cilindro = new Cilindro(64,64,BEIS,0);
-    var material = new Material(RUTAIMAGENRAYOS,8.0,1.0,64,64);
-    material.cargar();
+
+    var material = new Material(64,64);
+    material.cargarTextura(RUTAIMAGENRAYOS);
+    material.cargarCoordenadasDeTextura();
+
     this.cilindro.setMaterial(material);
     
 }

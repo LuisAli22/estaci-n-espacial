@@ -1,15 +1,17 @@
 ConstructorPisoExterior.prototype=new ConstructorBahia;
 ConstructorPisoExterior.prototype.constructor=ConstructorPisoExterior;
-function ConstructorPisoExterior(material){
+function ConstructorPisoExterior(){
 
-	ConstructorBahia.call(this,material);
-	this.construirEstructura();
+	ConstructorBahia.call(this);
+
 }
 
-ConstructorPisoExterior.prototype.construirEstructura=function(){
+ConstructorPisoExterior.prototype.definirMaterial=function(){
 
-	var material = new Material(RUTAIMAGENEXTERIOR,4.0,1.0,120,30);
-	material.cargar();
+
+	var material = new Material(120,30);
+	material.cargarRepeticionDeTextura(4,1);
+	material.cargarTextura(RUTAIMAGENEXTERIOR);
 
 	var intervaloDelPaso = [30];
 

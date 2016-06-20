@@ -11,6 +11,7 @@ function ObjetoGrafico(){
    this.normal_buffer = [];
    this.tangente_buffer = [];
    this.binormal_buffer = [];
+   this.materialAux = null;
 }
 ObjetoGrafico.prototype.inicializarTextura = function(archivoTextura){
 
@@ -22,6 +23,10 @@ ObjetoGrafico.prototype.inicializarTextura = function(archivoTextura){
            manejarTexturaCargada();
     }
     this.textura.imagen.src = archivoTextura;
+}
+
+ObjetoGrafico.prototype.guardarMaterial=function (material){
+  this.materialAux = material;
 }
 
 ObjetoGrafico.prototype.generarMipMap=function (){
@@ -76,6 +81,11 @@ ObjetoGrafico.prototype.generarMipMap=function (){
 }
 
 ObjetoGrafico.prototype.dibujar = function(){
+  
+    gl.uniform1i(shaderProgram.useLightingUniform, true);
+    if(this.materialAux!= null){
+      this.materialAux.configurarPropiedades();
+    }
 
     // Se configuran los buffers que alimentar�n el pipeline
     gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_position_buffer);

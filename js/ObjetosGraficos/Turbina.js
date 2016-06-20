@@ -123,12 +123,17 @@ function Turbina(){
 
         this.cargarTurbina();
 
-        // Buffer de indices de los triangulos
+        this.compilar();
+    }
+
+    this.compilar= function(){
+
         this.crearBufferDeIndices();
 
         this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
     }
+
     this.inicializarLosBuffer();
 
 }
