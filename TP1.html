@@ -107,6 +107,12 @@
 
     uniform sampler2D uSampler;
 
+    vec4 obtenerColor(vec3 codigoColor){
+      for (int index=0;index<3;index++){
+        codigoColor[index]*=(vLightWeighting[index]/255.0);
+      }
+      return vec4(codigoColor,1);
+    }
     // material:
     // 1 : dorado
     // 2 : violeta
@@ -118,55 +124,15 @@
     // 8 : blanco
     // 9 : negro
     vec4 tablaMateriales(float material,vec3 vLightWeighting){
-
-        vec4 color;
-
-        color.a = 1.0;
-
-        if ( material == 1.0){
-            color.x = 1.0;
-            color.y = 215.0/255.0;
-            color.z = 0.0;
-        }else if (material == 2.0){
-            color.x = 216.0/255.0;
-            color.y = 145.0/255.0;
-            color.z = 239.0/255.0;
-        }else if (material == 3.0){
-            color.x = 0.0;
-            color.y = 204.0/255.0;
-            color.z = 1.0;
-        }else if (material == 4.0){
-            color.x = 1.0;
-            color.y = 1.0;
-            color.z = 0.0;
-        }else if (material == 5.0){
-            color.x = 232.0/255.0;
-            color.y = 195.0/255.0;
-            color.z = 158.0/255.0;
-        }else if (material == 6.0){
-            color.x = 192.0/255.0;
-            color.y = 192.0/255.0;
-            color.z = 192.0/255.0;
-        } else if (material == 7.0){
-            color.x = 78.0/255.0;
-            color.y = 59.0/255.0;
-            color.z = 49.0/255.0;
-        } else if (material == 8.0){
-            color.x = 255.0/255.0;
-            color.y = 255.0/255.0;
-            color.z = 255.0/255.0;
-        } else if (material == 9.0){
-            color.x = 0.0;
-            color.y = 0.0;
-            color.z = 0.0;
-        }
-
-        color.x = color.x * vLightWeighting.x;
-        color.y = color.y * vLightWeighting.y;
-        color.z = color.z * vLightWeighting.z;
-
-        return color;
-
+      if (material == 1.0) return obtenerColor(vec3(255,215,0));
+      if (material == 2.0) return obtenerColor(vec3(216,145,239));
+      if (material == 3.0) return obtenerColor(vec3(0,204,255));
+      if (material == 4.0) return obtenerColor(vec3(255,255,0));
+      if (material == 5.0) return obtenerColor(vec3(232,195,158));
+      if (material == 6.0) return obtenerColor(vec3(192,192,192));
+      if (material == 7.0) return obtenerColor(vec3(78,59,49));
+      if (material == 8.0) return obtenerColor(vec3(255,255,255));
+      return obtenerColor(vec3(0,0,0));
     }
 
     void main(void) {
