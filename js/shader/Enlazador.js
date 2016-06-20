@@ -1,35 +1,19 @@
-function PrepararProgramaEjecutable(){
-  console.log("setUpProgram: Create shader program");
+function Enlazador(vertexShaderObject,fragmentShaderObject){
   shaderProgram = gl.createProgram();
-
+  this.vertexShader=vertexShaderObject;
+  this.fragmentShader=fragmentShaderObject;
 }
-PrepararProgramaEjecutable.prototype.comenzar=function(vertexShader,fragmentShader){
-  console.log("attach vertex shader");
-  gl.attachShader(shaderProgram, vertexShader);
-  console.log("attach fragment shader")
-  gl.attachShader(shaderProgram, fragmentShader);
-  console.log("linking program")
-  gl.linkProgram(shaderProgram);
-
-  if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS))
-      throw Error(PROGRAMPARAM);
-  gl.useProgram(shaderProgram);
-  console.log("poniendo la ubicacion de la variable aVertexPosition del shader de vertices");
+Enlazador.prototype.asignarUbicacionDeLasVariablesDelPrograma=function(){
   shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram,AVERTEXPOSITION);
   gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-  console.log("poniendo la ubicacion de la variable"+ATEXTURECOORD+"del shader de vertices");
   shaderProgram.textureCoordAttribute = gl.getAttribLocation(shaderProgram, ATEXTURECOORD);
   gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
-
   shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, AVERTEXNORMAL);
   gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
-
   shaderProgram.vertexTangenteAttribute = gl.getAttribLocation(shaderProgram, AVERTEXTANGENTE);
   gl.enableVertexAttribArray(shaderProgram.vertexTangenteAttribute);
-
   shaderProgram.vertexBinormalAttribute = gl.getAttribLocation(shaderProgram, AVERTEXBINORMAL);
   gl.enableVertexAttribArray(shaderProgram.vertexBinormalAttribute);
-
   shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, UPMATRIX);
   shaderProgram.ViewMatrixUniform = gl.getUniformLocation(shaderProgram,UVIEWMATRIX);
   shaderProgram.ModelMatrixUniform = gl.getUniformLocation(shaderProgram, UMODELMATRIX);
@@ -39,5 +23,13 @@ PrepararProgramaEjecutable.prototype.comenzar=function(vertexShader,fragmentShad
   shaderProgram.ambientColorUniform = gl.getUniformLocation(shaderProgram, UAMBIENTCOLOR);
   shaderProgram.lightingDirectionUniform = gl.getUniformLocation(shaderProgram, ULIGHTPOSITION);
   shaderProgram.directionalColorUniform = gl.getUniformLocation(shaderProgram, UDIRECTIONALCOLOR);
-  console.log("Termina el set up de programa ejecutable");
+}
+Enlazador.prototype.comenzar=function(){
+  gl.attachShader(shaderProgram, this.vertexShader);
+  gl.attachShader(shaderProgram, this.fragmentShader);
+  gl.linkProgram(shaderProgram);
+
+  if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS))
+      throw Error(PROGRAMPARAM);
+  gl.useProgram(shaderProgram);
 }

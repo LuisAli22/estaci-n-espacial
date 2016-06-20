@@ -95,8 +95,8 @@
 <script type="text/javascript" src="js/Comandos/AsignarCamaraPersecucionNave.js"></script>
 <script type="text/javascript" src="js/ControladorDeTeclado/ControladorDeTeclado.js"></script>
 <script type="text/javascript" src="js/Escena/Escena.js"></script>
-<script type="text/javascript" src="js/shader/shaderScript.js"></script>
-<script type="text/javascript" src="js/shader/PrepararProgramaEjecutable.js"></script>
+<script type="text/javascript" src="js/shader/Compilador.js"></script>
+<script type="text/javascript" src="js/shader/Enlazador.js"></script>
 
 
 <script id="shader-fs" type="x-shader/x-fragment">
@@ -198,38 +198,28 @@
     var gl;
     var shaderProgram;
     function crearContextoDeDibujoEnCanvas(canvas){
-      console.log("Obtengo el contexto del canvas y se lo asigno a la variable gl");
       gl = canvas.getContext("experimental-webgl");
-      console.log("si no pudo obtener el contexto (gl es null) va a lanzar un error a continuación");
       if (!gl) throw new Error(ERRORCONTEXTOCANVAS);
-      console.log("Asigna ancho de viewport= ancho del canvas");
       gl.viewportWidth = canvas.width;
-      console.log("Asigna altura del viewport= altura del canvas");
       gl.viewportHeight = canvas.height;
     }
     function inicializarGL(canvas) {
         try {
-            console.log("inicializarGL: va a crear el viewport dentro del canvas");
             crearContextoDeDibujoEnCanvas(canvas)
         } catch (e) {
             alert(e.name+" "+e.message);
         }
     }
-
     function obtenerShaderCompilado(id){
-        console.log("Estacion espacial: obtenerShaderCompilado()");
-        var shScript=new shaderScript(id);
-        console.log("Obtengo un shader compilado");
-        return shScript.obtenerShaderCompilado();
+        var compilador=new Compilador(id);
+        return compilador.arrancar();
     }
-    function inicializarShaders() {
-        console.log("inicializarShaders: Comienza la inicializacion de shaders");
+    function compilarYEnlazarShaders() {
         var fragmentShader = obtenerShaderCompilado(IDSHADERFRAGMENTOS);
         var vertexShader = obtenerShaderCompilado(IDSHADERVERTICES);
-
-        var prepararProgramaEjecutable= new PrepararProgramaEjecutable();
-        prepararProgramaEjecutable.comenzar(vertexShader,fragmentShader);
-        console.log("Se inicializaron los shaders");
+        var enlazador= new Enlazador(vertexShader,fragmentShader);
+        enlazador.comenzar();
+        enlazador.asignarUbicacionDeLasVariablesDelPrograma();
     }
 
     function manejarTexturaCargada() {
@@ -237,7 +227,6 @@
     }
     var mvMatrix = mat4.create();
     var pilaMatrizDeModelado = new PilaMatrizDeVistaModelado();
-    //var cilindro;
 
   var escena=null;
   var controladorDeTeclado=null;
@@ -249,11 +238,8 @@
 
 
     function obtenerCanvas(){
-      console.log("Obtengo el canvas con getElementById");
       var nuevoCanvas=document.getElementById("TpSistemasGraficosCanvas");
-      console.log("Si el canvas es null, lanza un error");
       if (!nuevoCanvas) throw Error(MENSAJEERRORCANVAS);
-      console.log("Obtuvo correctamente el canvas");
       return nuevoCanvas;
     }
     function webGLStart() {
@@ -261,12 +247,11 @@
         console.log("Comienza webGLStart");
         var canvas = obtenerCanvas();
         inicializarGL(canvas);
-        inicializarShaders();
+        compilarYEnlazarShaders();
         escena= new Escena(canvas);
         controladorDeTeclado= new ControladorDeTeclado(escena);
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.enable(gl.DEPTH_TEST);
-
         tick();
       }catch (e) {
         alert(e.name+" "+e.message);
