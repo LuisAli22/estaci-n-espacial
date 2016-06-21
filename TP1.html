@@ -133,9 +133,13 @@
     varying vec3 vTransformedNormal;
     varying vec3 vAmbientColor;
     varying vec3 vDirectionalColor;
+    varying vec4 vCam_pos;
 
     uniform bool uUseLighting;
     uniform sampler2D uSampler;
+    uniform bool uTieneEspecular;
+    uniform float uBrillo;
+    uniform vec3 uEspecular;
 
     vec4 obtenerColor(vec3 codigoColor,vec3 vLight){
       for (int index=0;index<3;index++){
@@ -171,14 +175,22 @@
     void main(void) {
 
       vec3 vLight;
+      vec3 light = normalize(vLightWeighting);
+      vec3 transformedNormal = normalize(vTransformedNormal);
 
       if (!uUseLighting){
         vLight = vec3(1.0, 1.0, 1.0);
       }else{
-        vec3 transformedNormal = normalize(vTransformedNormal);
-        vec3 light = normalize(vLightWeighting);
         float directionalLightWeighting = max(dot(transformedNormal, light), 0.0);
         vLight = vAmbientColor + vDirectionalColor * directionalLightWeighting;
+      }
+
+      if(uTieneEspecular){
+        float iluminacionEspecular = 0.0;
+        vec3 direccionDelOjo = normalize(vCam_pos.xyz);
+        vec3 direccionReflexion = 2.0 * transformedNormal * max(dot(transformedNormal, light), 0.0)-light;
+        iluminacionEspecular = pow(max(dot(direccionReflexion, direccionDelOjo), 0.0), uBrillo);
+        vLight = vLight + iluminacionEspecular * uEspecular;
       }
 
       gl_FragColor= (vTextureCoord[3]==0.0)?
@@ -212,10 +224,13 @@
     varying vec3 vTransformedNormal;
     varying vec3 vAmbientColor;
     varying vec3 vDirectionalColor;
+    varying vec4 vCam_pos;
 
     void main(void) {
 
       vec4 pos_camera_view = uViewMatrix * uModelMatrix * vec4(aVertexPosition, 1.0);
+
+      vCam_pos = pos_camera_view;
 
       gl_Position = uPMatrix * pos_camera_view;
 

@@ -23,6 +23,9 @@ Enlazador.prototype.asignarUbicacionDeLasVariablesDelPrograma=function(){
   shaderProgram.ambientColorUniform = gl.getUniformLocation(shaderProgram, UAMBIENTCOLOR);
   shaderProgram.lightingDirectionUniform = gl.getUniformLocation(shaderProgram, ULIGHTPOSITION);
   shaderProgram.directionalColorUniform = gl.getUniformLocation(shaderProgram, UDIRECTIONALCOLOR);
+  shaderProgram.tieneReflexionEspecular = gl.getUniformLocation(shaderProgram, UTIENEESPECULAR);
+  shaderProgram.brillo = gl.getUniformLocation(shaderProgram, UBRILLO);
+  shaderProgram.especular = gl.getUniformLocation(shaderProgram, UESPECULAR);
 }
 Enlazador.prototype.comenzar=function(){
   gl.attachShader(shaderProgram, this.vertexShader);

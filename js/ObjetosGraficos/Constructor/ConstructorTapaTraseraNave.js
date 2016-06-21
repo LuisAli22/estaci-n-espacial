@@ -12,6 +12,7 @@ ConstructorTapaTraseraNave.prototype.definirMaterial=function(){
 	var material = new Material(this.componente.rows,this.componente.cols);
 
 	material.cargarTextura(RUTAIMAGENNAVE);
+	material.conReflexionEspecular();
 	material.cargarCoordenadasDeTextura();
 	this.componente.tapaTrasera();
 
