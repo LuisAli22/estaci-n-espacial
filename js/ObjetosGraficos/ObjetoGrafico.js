@@ -31,7 +31,7 @@ ObjetoGrafico.prototype.inicializarTextura = function(archivoTextura){
 
 ObjetoGrafico.prototype.guardarMaterial=function (material){
   this.materialAux = material;
-  this.texture_coord_buffer = this.texture_coord_buffer.concat(material.texture_coord_buffer);
+  this.texture_coord_buffer = material.texture_coord_buffer;
 }
 
 ObjetoGrafico.prototype.generarMipMap=function (){

@@ -10,7 +10,7 @@ Universo.prototype.dibujar = function(){
   pilaMatrizDeModelado.sacar();
 }
 Universo.prototype.inicializarTextura=function(){
-  this.esfera.inicializarTextura(this.esfera.rutaTextura);
+  this.esfera.inicializarTextura(RUTAIMAGENUNIVERSO);
 }
 Universo.prototype.generarMipMap=function (){
   this.esfera.generarMipMap();
