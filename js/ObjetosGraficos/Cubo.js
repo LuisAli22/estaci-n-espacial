@@ -143,10 +143,10 @@ Cubo.prototype.dibujar = function(){
 
 }
 
-Cubo.prototype.inicializarTextura=function(ruta){
-  ObjetoGrafico.prototype.inicializarTextura.call(this,ruta);
+Cubo.prototype.inicializarTextura=function(){
+  ObjetoGrafico.prototype.inicializarTextura.call(this);
   for(indiceComponente in this.tapas){
-    this.tapas[indiceComponente].inicializarTextura(ruta);
+    this.tapas[indiceComponente].inicializarTextura();
   }
 }
 Cubo.prototype.generarMipMap=function (){

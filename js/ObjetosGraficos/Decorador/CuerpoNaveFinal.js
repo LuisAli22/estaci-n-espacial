@@ -29,7 +29,7 @@ CuerpoNaveFinal.prototype.dibujar = function(){
 }
 
 CuerpoNaveFinal.prototype.inicializarTextura=function(){
-  this.cuerpo.inicializarTextura(RUTAIMAGENNAVE);
+  this.cuerpo.inicializarTextura();
 }
 CuerpoNaveFinal.prototype.generarMipMap=function (){
   this.cuerpo.generarMipMap();

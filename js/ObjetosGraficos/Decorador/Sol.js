@@ -50,7 +50,7 @@ Sol.prototype.dibujar = function(){
   pilaMatrizDeModelado.sacar();
 }
 Sol.prototype.inicializarTextura=function(){
-  this.esfera.inicializarTextura(this.esfera.rutaTextura);
+  this.esfera.inicializarTextura();
 }
 Sol.prototype.generarMipMap=function (){
   this.esfera.generarMipMap();

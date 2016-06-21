@@ -3,7 +3,6 @@ TurbinasNave.prototype.constructor=TurbinasNave;
 function TurbinasNave(){
   this.limiteAngular=Math.PI/4.0;
   this.cuerpoTurbina = new Director(new ConstructorTurbina());
-  //this.cuerpoTurbina.definirMaterial();
   this.tapaSuperiorTurbina = new Director (new ConstructorTapaDelnteraTurbina());
   this.tapInferiorTurbina = new Director (new ConstructorTapaTraseraTurbina());
 
@@ -40,12 +39,10 @@ TurbinasNave.prototype.dibujar = function(){
 }
 
 TurbinasNave.prototype.inicializarTextura=function(){
-  this.cuerpoTurbina.inicializarTextura(RUTAIMAGENMARTE);
-  this.tapaSuperiorTurbina.inicializarTextura(RUTAIMAGENMARTE);
-  this.tapInferiorTurbina.inicializarTextura(RUTAIMAGENMARTE);
+  this.tapaSuperiorTurbina.inicializarTextura();
+  this.tapInferiorTurbina.inicializarTextura();
 }
 TurbinasNave.prototype.generarMipMap=function (){
-  this.cuerpoTurbina.generarMipMap();
   this.tapaSuperiorTurbina.generarMipMap();
   this.tapInferiorTurbina.generarMipMap();
 }

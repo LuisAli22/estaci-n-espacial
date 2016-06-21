@@ -13,7 +13,7 @@ function ObjetoGrafico(){
    this.binormal_buffer = [];
    this.materialAux = null;
 }
-ObjetoGrafico.prototype.inicializarTextura = function(archivoTextura){
+ObjetoGrafico.prototype.inicializarTextura = function(){
 
     var texturaAuxiliar = gl.createTexture();
     this.textura = texturaAuxiliar;

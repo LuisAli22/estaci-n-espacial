@@ -20,7 +20,7 @@ Astronauta.prototype.dibujar = function(){
 }
 
 Astronauta.prototype.inicializarTextura=function(){
-  this.plano.inicializarTextura(RUTAIMAGENASTRONAUTA);
+  this.plano.inicializarTextura();
 }
 Astronauta.prototype.generarMipMap=function (){
   this.plano.generarMipMap();

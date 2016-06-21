@@ -23,7 +23,7 @@ CilindrosLateralesEstacionEspacial.prototype.dibujar = function(){
   }
 }
 CilindrosLateralesEstacionEspacial.prototype.inicializarTextura=function(){
-  this.cilindro.inicializarTextura(RUTAIMAGENRAYOS);
+  this.cilindro.inicializarTextura();
 }
 CilindrosLateralesEstacionEspacial.prototype.generarMipMap=function (){
   this.cilindro.generarMipMap();

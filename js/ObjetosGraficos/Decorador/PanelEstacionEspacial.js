@@ -90,11 +90,9 @@ PanelEstacionEspacial.prototype.dibujar = function(){
 }
 
 PanelEstacionEspacial.prototype.inicializarTextura=function(){
-  this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
-  this.panel.inicializarTextura(RUTAIMAGENMARTE);
+  this.panel.inicializarTextura();
 }
 PanelEstacionEspacial.prototype.generarMipMap=function(){
-  this.cilindro.generarMipMap();
   this.panel.generarMipMap();
 }
 PanelEstacionEspacial.prototype.revisarEstados = function(){

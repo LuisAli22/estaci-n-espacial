@@ -36,8 +36,8 @@ Escotillas.prototype.dibujar = function(){
 }
 
 Escotillas.prototype.inicializarTextura=function(){
-  this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
+
 }
 Escotillas.prototype.generarMipMap=function (){
-  this.cilindro.generarMipMap();
+
 }

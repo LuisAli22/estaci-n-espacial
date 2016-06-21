@@ -108,8 +108,8 @@ PatasNave.prototype.dibujar = function(){
 }
 
 PatasNave.prototype.inicializarTextura=function(){
-  this.cubo.inicializarTextura(RUTAIMAGENMARTE);
-  this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
+  this.cubo.inicializarTextura();
+  this.cilindro.inicializarTextura();
 }
 PatasNave.prototype.generarMipMap=function (){
   this.cubo.generarMipMap();

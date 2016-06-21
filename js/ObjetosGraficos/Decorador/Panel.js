@@ -77,8 +77,8 @@ Panel.prototype.dibujar = function(){
 }
 
 Panel.prototype.inicializarTextura=function(){
-  this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
-  this.cubo.inicializarTextura(RUTAIMAGENPANEL);
+  this.cilindro.inicializarTextura();
+  this.cubo.inicializarTextura();
 }
 Panel.prototype.generarMipMap=function (){
   this.cilindro.generarMipMap();

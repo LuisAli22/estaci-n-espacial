@@ -49,8 +49,8 @@ EjesAntenaEstacionEspacial.prototype.dibujar = function(){
 
 }
 EjesAntenaEstacionEspacial.prototype.inicializarTextura=function(){
-  this.cilindro.inicializarTextura(RUTAIMAGENTAPA);
+
 }
 EjesAntenaEstacionEspacial.prototype.generarMipMap=function (){
-  this.cilindro.generarMipMap();
+
 }

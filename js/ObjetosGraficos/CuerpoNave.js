@@ -92,10 +92,10 @@ function CuerpoNave(){
     }
 
 
-    this.inicializarTextura=function(ruta){
-      ObjetoGrafico.prototype.inicializarTextura.call(this,ruta);
+    this.inicializarTextura=function(){
+      ObjetoGrafico.prototype.inicializarTextura.call(this);
       for(indiceComponente in this.tapas){
-        this.tapas[indiceComponente].inicializarTextura(ruta);
+        this.tapas[indiceComponente].inicializarTextura();
       }
     }
     this.generarMipMap=function (){

@@ -69,8 +69,8 @@ EjesNave.prototype.dibujar = function(){
 }
 
 EjesNave.prototype.inicializarTextura=function(){
-  this.cubo.inicializarTextura(RUTAIMAGENMARTE);
-  this.cilindro.inicializarTextura(RUTAIMAGENMARTE);
+  this.cubo.inicializarTextura();
+  this.cilindro.inicializarTextura();
   this.objetoGraficoCompuesto.inicializarTextura();
 }
 EjesNave.prototype.generarMipMap=function (){

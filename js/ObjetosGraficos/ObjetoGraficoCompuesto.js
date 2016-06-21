@@ -8,7 +8,7 @@ ObjetoGraficoCompuesto.prototype.dibujar = function(){
 }
 ObjetoGraficoCompuesto.prototype.inicializarTextura=function(){
   for(indiceComponente in this.componentes){
-    this.componentes[indiceComponente].inicializarTextura(this.componentes[indiceComponente].rutaTextura);
+    this.componentes[indiceComponente].inicializarTextura();
   }
 }
 ObjetoGraficoCompuesto.prototype.generarMipMap=function (){
