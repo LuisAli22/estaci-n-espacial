@@ -2,7 +2,6 @@ Plano.prototype=new ComponenteEstacionEspacial;
 Plano.prototype.constructor=Plano;
 function Plano(){
 
-  
   ComponenteEstacionEspacial.call(this,256,128,1.0);
 
   this.inicializarLosBuffer();

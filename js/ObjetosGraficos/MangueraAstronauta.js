@@ -26,10 +26,10 @@ function MangueraAstronauta(material){
     ComponenteEstacionEspacial.call(this,FILAS,COLUMNAS,material);
 
     var material = new Material(FILAS,COLUMNAS);
-    material.cargarTextura(RUTAIMAGENTAPA);
+    material.sinTextura(GRIS);
     material.cargarCoordenadasDeTextura();
 
-    this.setMaterial(material);
+    this.guardarMaterial(material);
 
     this.calcularTrayectoria = function(){
 

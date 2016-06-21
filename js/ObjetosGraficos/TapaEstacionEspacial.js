@@ -14,10 +14,10 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
     this.initBuffers = function(){
 
         var material = new Material(120,2);
-        material.cargarTextura(RUTAIMAGENTAPA);
+        material.sinTextura(GRIS);
         material.cargarCoordenadasDeTextura();
 
-        this.setMaterial(material);
+        this.guardarMaterial(material);
 
         this.normal_buffer = [];
 

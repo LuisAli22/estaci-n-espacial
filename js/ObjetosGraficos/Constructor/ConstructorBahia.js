@@ -10,16 +10,11 @@ ConstructorBahia.prototype.getComponenteBahia=function(){
 	return this.componente;
 
 }
-ConstructorBahia.prototype.setMaterial=function(material){
-
-	this.componente.setMaterial(material);
-
-}
 
 ConstructorBahia.prototype.construirEstructura=function(puntosDeControl,intervaloDelPaso,sentidoNormal,material){
 
 	material.cargarCoordenadasDeTextura();
-	this.componente.setMaterial(material);
+
 
 	var coordenadas = [];
 	var normales = [];
@@ -32,7 +27,5 @@ ConstructorBahia.prototype.construirEstructura=function(puntosDeControl,interval
 	this.componente.cargarBuffers(coordenadas,normales,tangentes,binormales);
 
 	this.componente.guardarMaterial(material);
-
-	//Constructor.prototype.definirMaterial.call(material);
 
 }

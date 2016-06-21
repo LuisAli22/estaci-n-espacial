@@ -10,7 +10,9 @@ function Material(rows,cols){
 	this.repeticionU = 1;
 	this.repeticionV = 1;
 	this.texture_coord_buffer = [];
-	this.rutaTextura;
+	this.rutaTextura = RUTAIMAGENDEFAULT;
+	this.tieneTextura = 1.0;
+	this.indiceDelMaterial = 1.0;
 	this.UInicial = 0.0;
 	this.VInicial = 0.0;
 	this.USigno = 1.0;
@@ -18,6 +20,10 @@ function Material(rows,cols){
 	this.rows = rows;
 	this.cols = cols;
 
+}
+Material.prototype.sinTextura=function(indiceDelMaterial){
+	this.tieneTextura = 0.0;
+	this.indiceDelMaterial = indiceDelMaterial;
 }
 
 Material.prototype.cargarRepeticionDeTextura=function(repeticionU,repeticionV){
@@ -71,8 +77,8 @@ Material.prototype.cargarCoordenadasDeTextura=function(){
 
             this.texture_coord_buffer.push(this.repeticionU*u);
             this.texture_coord_buffer.push(this.repeticionV*v);
-            this.texture_coord_buffer.push(0.0);
-            this.texture_coord_buffer.push(1.0);
+            this.texture_coord_buffer.push(this.indiceDelMaterial);
+            this.texture_coord_buffer.push(this.tieneTextura);
 
         };
 

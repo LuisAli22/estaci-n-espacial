@@ -1,11 +1,11 @@
 Esfera.prototype=new CuerpoRedondo;
 Esfera.prototype.constructor=Esfera;
-function Esfera(bandasDeLatitud, bandasLongitudinales,material){
+function Esfera(bandasDeLatitud, bandasLongitudinales,material,conTextura){
   this.theta=0;
   this.sinTheta=0;
   this.cosTheta=0;
 
-  CuerpoRedondo.call(this,bandasDeLatitud, bandasLongitudinales,material);
+  CuerpoRedondo.call(this,bandasDeLatitud, bandasLongitudinales,material,conTextura);
   this.topeBandasDeLatitud=bandasDeLatitud+1;
   this.inicializarLosBuffer();
 }

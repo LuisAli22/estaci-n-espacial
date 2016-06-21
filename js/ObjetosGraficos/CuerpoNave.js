@@ -118,19 +118,12 @@ function ParabrisaNave(){
 
         this.position_buffer = [1.51, 1.25, 0.5,  0.76, 1.25, 1.0, 1.51, -1.25, 0.5, 0.76, -1.25, 1.0];
         this.normal_buffer  = [0.70,0.0,0.70,0.70,0.0,0.70,0.70,0.0,0.70,0.70,0.0,0.70];
-        for (var i = 0.0; i < this.rows; i++){
-            for (var j = 0.0; j < this.cols; j++){
+        
+        var material = new Material(2.0,2.0);
+        material.sinTextura(NEGRO);
+        material.cargarCoordenadasDeTextura();
 
-                var u = 1.0 - (j / (this.cols-1.0));
-                var v = 1.0 - (i / (this.rows-1.0));
-
-                this.texture_coord_buffer.push(u);
-                this.texture_coord_buffer.push(v);
-                this.texture_coord_buffer.push(9.0);
-                this.texture_coord_buffer.push(0);
-            };
-
-        };
+        this.guardarMaterial(material);
 
         this.compilar();
 

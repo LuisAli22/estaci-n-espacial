@@ -1,9 +1,9 @@
 Cilindro.prototype=new CuerpoRedondo;
 Cilindro.prototype.constructor=Cilindro;
-function Cilindro(bandasDeLatitud, bandasLongitudinales,material,identificador){
+function Cilindro(bandasDeLatitud, bandasLongitudinales,material,identificador,conTextura){
   this.altura =0;
   this.identificador=identificador;
-  CuerpoRedondo.call(this,bandasDeLatitud, bandasLongitudinales,material);
+  CuerpoRedondo.call(this,bandasDeLatitud, bandasLongitudinales,material,conTextura);
   this.topeBandasDeLatitud=bandasDeLatitud-1;
   this.inicializarLosBuffer();
 }

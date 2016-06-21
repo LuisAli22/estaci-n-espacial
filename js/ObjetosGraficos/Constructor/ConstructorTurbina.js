@@ -15,7 +15,7 @@ ConstructorTurbina.prototype.definirMaterial=function(){
 
 	var material = new Material(this.componente.rows,this.componente.cols);
 
-	material.cargarTextura(RUTAIMAGENTAPA);
+	material.sinTextura(GRIS);
 	material.cargarCoordenadasDeTextura();	
 
 	Constructor.prototype.definirMaterial.call(this,material);

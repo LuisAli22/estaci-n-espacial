@@ -12,7 +12,7 @@ ConstructorPanel.prototype.definirMaterial=function(){
 
 	var material = new Material(this.componente.rows,this.componente.cols);
 
-	material.cargarTextura(RUTAIMAGENTAPA);
+	material.sinTextura(NEGRO);
 	material.cargarCoordenadasDeTextura();
 
 	this.componente.inicializarLosBuffer();

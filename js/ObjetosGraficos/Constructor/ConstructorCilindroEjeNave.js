@@ -2,7 +2,7 @@ ConstructorCilindroEjeNave.prototype=new Constructor;
 ConstructorCilindroEjeNave.prototype.constructor=ConstructorCilindroEjeNave;
 function ConstructorCilindroEjeNave(){
 	Constructor.call(this);
-	this.componente = new Cilindro(64,64,BEIS,0);
+	this.componente = new Cilindro(64,64,BEIS,0,1.0);
 }
 
 ConstructorCilindroEjeNave.prototype.definirMaterial=function(){

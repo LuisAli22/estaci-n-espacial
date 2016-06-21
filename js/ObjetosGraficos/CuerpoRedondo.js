@@ -1,9 +1,10 @@
 CuerpoRedondo.prototype=new ObjetoGrafico;
 CuerpoRedondo.prototype.constructor=CuerpoRedondo;
-function CuerpoRedondo(bandasDeLatitud, bandasLongitudinales,material){
+function CuerpoRedondo(bandasDeLatitud, bandasLongitudinales,material,conTextura){
   this.bandasDeLatitud = bandasDeLatitud;
   this.bandasLongitudinales = bandasLongitudinales;
   this.material = material;
+  this.conTextura = conTextura;
   this.numeroLatitud=0;
   this.numeroDeLongitud=0;
   this.phi =0;
@@ -33,7 +34,7 @@ CuerpoRedondo.prototype.cargarBufferDeTextura=function(){
   this.texture_coord_buffer.push(v);
   //Coordenada del material
   this.texture_coord_buffer.push(this.material);
-  this.texture_coord_buffer.push(1.0);
+  this.texture_coord_buffer.push(this.conTextura);
 }
 CuerpoRedondo.prototype.cargarCoordenadasEnLosBuffersDePosicionYTextura=function(){
   for (this.numeroLatitud=0; this.numeroLatitud < this.topeBandasDeLatitud; this.numeroLatitud++) {
