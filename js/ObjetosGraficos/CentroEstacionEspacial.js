@@ -118,16 +118,8 @@ function CentroEstacionEspacial(material){
         this.position_buffer = [];
         this.normal_buffer = [];
 
-        var material = new Material(this.rows,this.cols);
-        material.cargarTextura(RUTAIMAGENEXTERIOR);
-        material.cargarRepeticionDeTextura(1,16);
-        material.cargarCoordenadasDeTextura();
-
-        this.setMaterial(material);
-
         this.cargarCentro();
 
-        this.compilar();
     }
 
     this.compilar= function(){

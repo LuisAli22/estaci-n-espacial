@@ -2,7 +2,7 @@ TurbinasNave.prototype= new ParteGiratoriaDeAla;
 TurbinasNave.prototype.constructor=TurbinasNave;
 function TurbinasNave(){
   this.limiteAngular=Math.PI/4.0;
-  this.turbina = new Turbina();
+  this.turbina = new Director (new ConstructorTurbina());
 
   this.dibujarTurbina = function(x,y){
 

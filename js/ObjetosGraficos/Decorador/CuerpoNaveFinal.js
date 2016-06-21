@@ -1,6 +1,6 @@
 function CuerpoNaveFinal(){
 
-  this.cuerpo = new CuerpoNave();
+  this.cuerpo = new Director(new ConstructorCuerpoNave());
 
   this.dibujarCuerpoNave = function(){
 
@@ -29,7 +29,7 @@ CuerpoNaveFinal.prototype.dibujar = function(){
 }
 
 CuerpoNaveFinal.prototype.inicializarTextura=function(){
-  this.cuerpo.inicializarTextura(RUTAIMAGENMARTE);
+  this.cuerpo.inicializarTextura(RUTAIMAGENNAVE);
 }
 CuerpoNaveFinal.prototype.generarMipMap=function (){
   this.cuerpo.generarMipMap();

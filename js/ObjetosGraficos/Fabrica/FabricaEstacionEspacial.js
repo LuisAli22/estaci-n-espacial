@@ -6,7 +6,7 @@ function FabricaEstacionEspacial(){
 FabricaEstacionEspacial.prototype.crear=function(){
   console.log("Crear estacion espacial");
   var estacionEspacial= new EstacionEspacial();
-  var centro = new CentroEstacionEspacial(BEIS);
+  var centro = new Director(new ConstructorCentroEstacionEspacial());
   var cilindrosLaterales = new CilindrosLateralesEstacionEspacial();
   var ejes = new EjesAntenaEstacionEspacial(DORADO);
   var panel = new PanelEstacionEspacial(DORADO);

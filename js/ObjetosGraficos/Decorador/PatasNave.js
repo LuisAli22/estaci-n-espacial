@@ -2,7 +2,7 @@ function PatasNave(){
 
 	this.cubo = new Director( new ConstructorCuboEjesNave() );
 	
-	this.cilindro = new Cilindro(64,64,8.0,0);
+	this.cilindro = new Director (new ConstructorCilindroBasePatasNave());
 	this.altura=0;
 	this.ABRIR = 0;
 	this.CERRAR = 1;

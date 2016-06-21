@@ -4,11 +4,8 @@ function CuerpoNave(){
 
     ComponenteEstacionEspacial.call(this,9,7,8.0);
     this.parabrisa = new ParabrisaNave();
-    this.tapaDelantera = new TapaNave();
-    this.tapaDelantera.tapaDelantera();
-    this.tapaTrasera = new TapaNave();
-    this.tapaTrasera.tapaTrasera();
-
+    this.tapas = [];
+    
     this.normalizarBuffer = function(){
         for (var i = 0; i < 63; i++) {
             var normal = vec3.fromValues(this.normal_buffer[3*i],this.normal_buffer[3*i+1],this.normal_buffer[3*i+2]);
@@ -17,6 +14,12 @@ function CuerpoNave(){
             this.normal_buffer[3*i+1] = normal[1];
             this.normal_buffer[3*i+2] = normal[2];
         };
+    }
+
+    this.agregarTapa = function(tapa){
+
+        this.tapas.push(tapa);
+
     }
 
     this.inicializarLosBuffer = function(){
@@ -61,23 +64,9 @@ function CuerpoNave(){
                                -0.160 , 0.585 , 0.987 , 0.0 , 0.965 , -0.262 , 0.124 , 0.352 , -0.992 ,
                                -0.472 , 0.383 , -0.882 , -0.472 , -0.383 , -0.882 , -0.997 , -0.973 , -0.071 , -0.585 , -0.585 , 0.811 ,
                                -0.585 , 0.585 , 0.811 ,  -0.997 , 0.973 , -0.071 , -0.472 , 0.383 , -0.882 ];
-        this.normalizarBuffer();
-        //Cargo las coordenadas de textura
-        for (var i = 0.0; i < this.rows; i++){
-            for (var j = 0.0; j < this.cols; j++){
-
-                var u = 1.0 - (j / (this.cols-1.0));
-                var v = 1.0 - (i / (this.rows-1.0));
-
-                this.texture_coord_buffer.push(u);
-                this.texture_coord_buffer.push(v);
-                this.texture_coord_buffer.push(this.material);
-                this.texture_coord_buffer.push(0);
-            };
-
-        };
         
-        this.compilar();
+        this.normalizarBuffer();
+
 
     }
 
@@ -92,11 +81,31 @@ function CuerpoNave(){
     this.inicializarLosBuffer();
 
     this.dibujar=function(){
+
         ObjetoGrafico.prototype.dibujar.call(this);
+
         this.parabrisa.dibujar();
-        this.tapaDelantera.dibujar();
-        this.tapaTrasera.dibujar();
+        
+        for(indiceComponente in this.tapas){
+            this.tapas[indiceComponente].dibujar();
+        }
     }
+
+
+    this.inicializarTextura=function(ruta){
+      ObjetoGrafico.prototype.inicializarTextura.call(this,ruta);
+      for(indiceComponente in this.tapas){
+        this.tapas[indiceComponente].inicializarTextura(ruta);
+      }
+    }
+    this.generarMipMap=function (){
+      ObjetoGrafico.prototype.generarMipMap.call(this);
+      for(indiceComponente in this.tapas){
+        this.tapas[indiceComponente].generarMipMap();
+      }
+    }
+
+
 }
 
 ParabrisaNave.prototype=new ComponenteEstacionEspacial;
@@ -192,8 +201,6 @@ function TapaNave(){
             };
 
         };
-
-        this.compilar();
         
     }
 

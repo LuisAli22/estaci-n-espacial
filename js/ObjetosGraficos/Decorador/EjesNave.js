@@ -6,7 +6,7 @@ function EjesNave(){
   
   this.cubo = new Director( new ConstructorCuboEjesNave() );
 
-  this.cilindro = new Cilindro(64,64,7.0,0);
+  this.cilindro = new Director (new ConstructorCilindroEjeNave());
   
   this.desplazamientoX = 0.63388347565;
   this.desplazamientoY = -1.5303300859;

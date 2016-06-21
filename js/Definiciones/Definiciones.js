@@ -3,6 +3,7 @@ const MENSAJEERRORCANVAS="Error obteniendo el canvas (por id)";
 const MENSAJEERRORSHADER="Error obeniendo el shader (por id)";
 const XSHADERXFRAGMENT="x-shader/x-fragment";
 const XSHADERXVERTEX="x-shader/x-vertex";
+const RUTAIMAGENNAVE="img/nave.jpeg";
 const RUTAIMAGENLUNA="img/moon.gif";
 const RUTAIMAGENMARTE="img/mars_1k_color.jpg";
 const RUTAIMAGENASTRONAUTA="img/astronauta.png";

@@ -14,14 +14,7 @@ function PanelEstacionEspacial(material){
 	this.panelCerrado = false;
 
   this.panel = new Panel(material);
-  this.cilindro = new Cilindro(64,64,BEIS,0);
-
-  var material = new Material(64,64);
-  material.cargarTextura(RUTAIMAGENTAPA);
-  material.cargarRepeticionDeTextura(8,1);
-  material.cargarCoordenadasDeTextura();
-
-  this.cilindro.setMaterial(material);
+  this.cilindro = new Director (new ConstructorCilindroGris());
 
   this.dibujarPanel = function(y){
 

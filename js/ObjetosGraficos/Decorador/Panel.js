@@ -2,13 +2,7 @@ function Panel(material){
 
   this.cubo = new Director( new ConstructorPanel() );
 
-  this.cilindro = new Cilindro(64,64,BEIS,0);
-
-  var materialCilindro = new Material(64,64);
-  materialCilindro.cargarTextura(RUTAIMAGENTAPA);
-  materialCilindro.cargarCoordenadasDeTextura();
-
-  this.cilindro.setMaterial(materialCilindro);
+  this.cilindro = new Director (new ConstructorCilindroGris());
 
   this.dibujarPanel = function(x,y){
 
