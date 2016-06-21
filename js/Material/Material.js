@@ -99,16 +99,10 @@ Material.prototype.cargarInico=function(UInicial,VInicial){
 }
 Material.prototype.configurarPropiedades=function(){
 
-	if (this.esIluminadoPorElSol){
-		gl.uniform1i(shaderProgram.useLightingUniform, true);
-	}else {
-		gl.uniform1i(shaderProgram.useLightingUniform, false);
-	}
-	if(this.ambiente != null){
-		gl.uniform3f(shaderProgram.ambientColorUniform, this.ambiente[0],this.ambiente[1],this.ambiente[2] );
-		gl.uniform3f(shaderProgram.directionalColorUniform, this.difusa[0],this.difusa[1],this.difusa[2]);
-	}
+
+	gl.uniform1i(shaderProgram.useLightingUniform, this.esIluminadoPorElSol);
 	
-  	/*gl.uniform3f(shaderProgram.directionalColorUniform, this.difusa);*/
+	gl.uniform3f(shaderProgram.ambientColorUniform, this.ambiente[0],this.ambiente[1],this.ambiente[2] );
+	gl.uniform3f(shaderProgram.directionalColorUniform, this.difusa[0],this.difusa[1],this.difusa[2]);
 
 }
