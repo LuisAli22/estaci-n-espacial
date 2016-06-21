@@ -2,7 +2,10 @@ TurbinasNave.prototype= new ParteGiratoriaDeAla;
 TurbinasNave.prototype.constructor=TurbinasNave;
 function TurbinasNave(){
   this.limiteAngular=Math.PI/4.0;
-  this.turbina = new Director (new ConstructorTurbina());
+  this.cuerpoTurbina = new Director(new ConstructorTurbina());
+  //this.cuerpoTurbina.definirMaterial();
+  this.tapaSuperiorTurbina = new Director (new ConstructorTapaDelnteraTurbina());
+  this.tapInferiorTurbina = new Director (new ConstructorTapaTraseraTurbina());
 
   this.dibujarTurbina = function(x,y){
 
@@ -18,7 +21,9 @@ function TurbinasNave(){
       mat4.multiply(mvMatrix,mvMatrix,matrizTraslacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizRotacion);
       mat4.multiply(mvMatrix,mvMatrix,matrizEscalado);
-      this.turbina.dibujar();
+      this.cuerpoTurbina.dibujar();
+      this.tapaSuperiorTurbina.dibujar();
+      this.tapInferiorTurbina.dibujar();
     pilaMatrizDeModelado.sacar();
 
   }
@@ -35,8 +40,12 @@ TurbinasNave.prototype.dibujar = function(){
 }
 
 TurbinasNave.prototype.inicializarTextura=function(){
-  this.turbina.inicializarTextura(RUTAIMAGENMARTE);
+  this.cuerpoTurbina.inicializarTextura(RUTAIMAGENMARTE);
+  this.tapaSuperiorTurbina.inicializarTextura(RUTAIMAGENMARTE);
+  this.tapInferiorTurbina.inicializarTextura(RUTAIMAGENMARTE);
 }
 TurbinasNave.prototype.generarMipMap=function (){
-  this.turbina.generarMipMap();
+  this.cuerpoTurbina.generarMipMap();
+  this.tapaSuperiorTurbina.generarMipMap();
+  this.tapInferiorTurbina.generarMipMap();
 }

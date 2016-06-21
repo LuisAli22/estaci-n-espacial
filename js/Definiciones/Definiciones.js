@@ -18,6 +18,7 @@ const RUTAIMAGENPANEL="img/panelsolar-bump.gif";
 const RUTAIMAGENTIERRA="img/earth.jpg";
 const RUTAIMAGENSOL="img/sun.jpg";
 const RUTAIMAGENUNIVERSO="img/sky.jpg";
+const RUTAIMAGENTURBINA="img/turbina.jpg";
 const TIPODESCRIPTINCORRECTO="El script debe ser de tipo x-shader/x-fragment o x-shader/x-vertex";
 const IDSHADERFRAGMENTOS="shader-fs";
 const IDSHADERVERTICES="shader-vs";

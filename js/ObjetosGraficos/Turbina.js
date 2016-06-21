@@ -1,12 +1,8 @@
 Turbina.prototype=new ComponenteEstacionEspacial;
 Turbina.prototype.constructor=Turbina;
-function Turbina(){
+function Turbina(puntosDeControl){
 
-    var puntosDeControl = [ 0.0, -0.875, 0.0, 0.0, -0.875, 0.0, 0.0, -0.875, 0.0, 0.5, -0.875, 0.0,
-    						0.5, -0.875, 0.0, 0.5, -0.875, 0.0, 0.5, -1.0, 0.0, 0.5, -1.0, 0.0,
-    						0.5, -1.0, 0.0, 1.0, -1.0, 0.0, 0.25, 1.0, 0.0, 0.25, 1.0, 0.0,
-    						0.25, 1.0, 0.0, 0.25, 0.875, 0.0, 0.25, 0.875, 0.0, 0.25, 0.875, 0.0,
-    						0.0, 0.875, 0.0, 0.0, 0.875, 0.0, 0.0, 0.875, 0.0];
+    var puntosDeControl = puntosDeControl;
 
     const INTERVALODELPASO = 10;
     const COLUMNAS = INTERVALODELPASO*((puntosDeControl.length/3));

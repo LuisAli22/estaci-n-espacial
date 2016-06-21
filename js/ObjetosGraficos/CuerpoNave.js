@@ -85,7 +85,7 @@ function CuerpoNave(){
         ObjetoGrafico.prototype.dibujar.call(this);
 
         this.parabrisa.dibujar();
-        
+
         for(indiceComponente in this.tapas){
             this.tapas[indiceComponente].dibujar();
         }
@@ -170,7 +170,7 @@ function TapaNave(){
 
         this.normal_buffer = [0.462 , 0.230 , -0.887 , 0.462 , -0.230 , -0.887,  0.811 , 0.987 , -0.585, 0.811 , -0.987 , -0.585,
                               0.891 , 0.383 , 0.454 , 0.891 , -0.383 , 0.454 ];
-        this.material = 6.0;
+
         this.normalizarBuffer();
     }
 
@@ -183,25 +183,7 @@ function TapaNave(){
                               -0.585 , 0.585 , 0.811 , -0.585 , -0.585 , 0.811 ];
 
         this.normalizarBuffer();
-        //this.material = 10.0;
-    }
 
-    this.inicializarLosBuffer = function(){
-
-        for (var i = 0.0; i < this.rows; i++){
-            for (var j = 0.0; j < this.cols; j++){
-
-                var u = 1.0 - (j / (this.cols-1.0));
-                var v = 1.0 - (i / (this.rows-1.0));
-
-                this.texture_coord_buffer.push(u);
-                this.texture_coord_buffer.push(v);
-                this.texture_coord_buffer.push(this.material);
-                this.texture_coord_buffer.push(0);
-            };
-
-        };
-        
     }
 
     this.compilar= function(){
@@ -214,12 +196,10 @@ function TapaNave(){
 
     this.tapaDelantera=function(){
         this.cargarTapaDelantera();
-        this.inicializarLosBuffer();
     }
 
     this.tapaTrasera=function(){
         this.cargarTapaTrasera();
-        this.inicializarLosBuffer();
     }
 
 }
