@@ -2,8 +2,8 @@ function Material(rows,cols){
 
 	this.esIluminadoPorElSol = true;
 	this.interiorBahia = false;
-	this.ambiente;
-    this.difusa;
+	this.ambiente = vec3.fromValues(0.25,0.25,0.25);
+    this.difusa = vec3.fromValues(0.8,0.8,0.8);
     this.especular;
     this.brillo;
 
@@ -104,8 +104,11 @@ Material.prototype.configurarPropiedades=function(){
 	}else {
 		gl.uniform1i(shaderProgram.useLightingUniform, false);
 	}
-
-	/*.uniform3f(shaderProgram.ambientColorUniform, this.ambiente );
-  	gl.uniform3f(shaderProgram.directionalColorUniform, this.difusa);*/
+	if(this.ambiente != null){
+		gl.uniform3f(shaderProgram.ambientColorUniform, this.ambiente[0],this.ambiente[1],this.ambiente[2] );
+		gl.uniform3f(shaderProgram.directionalColorUniform, this.difusa[0],this.difusa[1],this.difusa[2]);
+	}
+	
+  	/*gl.uniform3f(shaderProgram.directionalColorUniform, this.difusa);*/
 
 }

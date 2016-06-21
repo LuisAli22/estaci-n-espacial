@@ -42,8 +42,8 @@ Nave.prototype.estaEncendidaLaCamara=function(){
   return (this.camara.estaEncendida());
 }
 Nave.prototype.dibujar = function(){
-  gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
-  gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
+  //gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
+  //gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
   this.actualizarPosicion();
   pilaMatrizDeModelado.meter();
     mat4.multiply(mvMatrix, mvMatrix,this.matrizPosicion);

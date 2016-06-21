@@ -17,7 +17,6 @@ Sol.prototype.configurarIluminacion=function(){
     vec3.transformMat4(this.vectorDireccionDeLaLuz, this.vectorDireccionDeLaLuz, mvMatrix);
   pilaMatrizDeModelado.sacar();
   gl.uniform3fv(shaderProgram.lightingDirectionUniform, this.vectorDireccionDeLaLuz);
-  gl.uniform1f(shaderProgram.intesidadLuzUniform, INTENSIDADLUZSOLAR);
 }
 Sol.prototype.calcularMatrizDeTraslacion=function(){
   mat4.identity(this.matrizDeTraslacionDelSolDesdeElOrigenDeLaTierra);
@@ -39,8 +38,8 @@ Sol.prototype.aplicarTransformacionesALaMatrizDeModelado=function(){
   mat4.multiply(mvMatrix, mvMatrix,this.matrizDeEscaladoDelSol);
 }
 Sol.prototype.dibujar = function(){
-  gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
-  gl.uniform3f(shaderProgram.directionalColorUniform, 0.5, 0.5, 0.5);
+  //gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
+  //gl.uniform3f(shaderProgram.directionalColorUniform, 0.5, 0.5, 0.5);
   pilaMatrizDeModelado.meter();
     this.calcularMatrizDeTraslacion();
     this.calcularMatrizDeRotacion();

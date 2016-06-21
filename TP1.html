@@ -135,7 +135,6 @@
     varying vec3 vDirectionalColor;
 
     uniform bool uUseLighting;
-    uniform float uIntensidadLuz;
     uniform sampler2D uSampler;
 
     vec4 obtenerColor(vec3 codigoColor,vec3 vLight){
@@ -179,7 +178,7 @@
         vec3 transformedNormal = normalize(vTransformedNormal);
         vec3 light = normalize(vLightWeighting);
         float directionalLightWeighting = max(dot(transformedNormal, light), 0.0);
-        vLight = vAmbientColor + vDirectionalColor * directionalLightWeighting*uIntensidadLuz;
+        vLight = vAmbientColor + vDirectionalColor * directionalLightWeighting;
       }
 
       gl_FragColor= (vTextureCoord[3]==0.0)?
