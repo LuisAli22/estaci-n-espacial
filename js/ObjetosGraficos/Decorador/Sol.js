@@ -17,6 +17,7 @@ Sol.prototype.configurarIluminacion=function(){
     vec3.transformMat4(this.vectorDireccionDeLaLuz, this.vectorDireccionDeLaLuz, mvMatrix);
   pilaMatrizDeModelado.sacar();
   gl.uniform3fv(shaderProgram.lightingDirectionUniform, this.vectorDireccionDeLaLuz);
+  gl.uniform1f(shaderProgram.intesidadLuzUniform, INTENSIDADLUZSOLAR);
 }
 Sol.prototype.calcularMatrizDeTraslacion=function(){
   mat4.identity(this.matrizDeTraslacionDelSolDesdeElOrigenDeLaTierra);
