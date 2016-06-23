@@ -1,6 +1,6 @@
 function Escotillas(){
 
-  this.cilindro = new Director (new ConstructorCilindroGris());
+  this.cilindro = new Director (new ConstructorEscotilla());
 
 	this.dibujarEscotilla = function(angulo){
 
@@ -36,8 +36,8 @@ Escotillas.prototype.dibujar = function(){
 }
 
 Escotillas.prototype.inicializarTextura=function(){
-
+  this.cilindro.inicializarTextura();
 }
 Escotillas.prototype.generarMipMap=function (){
-
+  this.cilindro.generarMipMap();
 }
