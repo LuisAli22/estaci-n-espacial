@@ -14,6 +14,7 @@ ConstructorCentroEstacionEspacial.prototype.definirMaterial=function(){
 	material.cargarTextura(RUTAIMAGENEXTERIOR);
 	material.cargarRepeticionDeTextura(1,16);
     material.cargarCoordenadasDeTextura();
+    material.agregarTexturaNormal(RUTAIMAGENEXTERIORNORMAL);
 
 	Constructor.prototype.definirMaterial.call(this,material);
 

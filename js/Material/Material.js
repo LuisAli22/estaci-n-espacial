@@ -9,10 +9,15 @@ function Material(rows,cols){
 
     this.tieneReflexionEspecular = false;
 
+    this.tieneMapaNormal = false;
+    this.rutaTexturaNormal;
+    this.texturaNormal= null;
+
 	this.repeticionU = 1;
 	this.repeticionV = 1;
 	this.texture_coord_buffer = [];
-	this.rutaTextura = RUTAIMAGENDEFAULT;
+	this.rutaTextura;
+	this.textura = null;
 	this.tieneTextura = 1.0;
 	this.indiceDelMaterial = 1.0;
 	this.UInicial = 0.0;
@@ -22,6 +27,41 @@ function Material(rows,cols){
 	this.rows = rows;
 	this.cols = cols;
 
+}
+
+Material.prototype.inicializarTexturaFinal = function(ruta){
+    var textura = gl.createTexture();
+    textura.imagen = new Image();
+
+    textura.imagen.onload = function () {
+           manejarTexturaCargada();
+    }
+    
+    textura.imagen.src = ruta;
+    return textura;
+}
+Material.prototype.inicializarTextura = function(){
+
+	this.textura = this.inicializarTexturaFinal(this.rutaTextura);
+	if(this.tieneMapaNormal){
+		this.texturaNormal = this.inicializarTexturaFinal(this.rutaTexturaNormal);
+	}
+    
+}
+Material.prototype.generarMipMapFinal=function (textura){
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+  gl.bindTexture(gl.TEXTURE_2D, textura);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textura.imagen);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+  gl.generateMipmap(gl.TEXTURE_2D);
+  gl.bindTexture(gl.TEXTURE_2D, null);
+}
+Material.prototype.generarMipMap=function (){
+	this.generarMipMapFinal(this.textura);
+	if(this.tieneMapaNormal){
+		this.generarMipMapFinal(this.texturaNormal);
+	}
 }
 Material.prototype.conReflexionEspecular=function(){
 	this.tieneReflexionEspecular = true;
@@ -102,6 +142,11 @@ Material.prototype.cargarInico=function(UInicial,VInicial){
 	this.VInicial = VInicial;
 
 }
+Material.prototype.agregarTexturaNormal=function(ruta){
+
+	this.tieneMapaNormal = true;
+	this.rutaTexturaNormal = ruta;
+}
 Material.prototype.configurarPropiedades=function(){
 
 	gl.uniform1i(shaderProgram.useLightingUniform, this.esIluminadoPorElSol);
@@ -116,5 +161,23 @@ Material.prototype.configurarPropiedades=function(){
 		gl.uniform3f(shaderProgram.especular, this.especular[0],this.especular[1],this.especular[2]);
 
 	}
+
+	gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, this.textura);
+    gl.uniform1i(shaderProgram.samplerUniform, 0);
+
+	gl.uniform1i(shaderProgram.tieneNormal, this.tieneMapaNormal);
+
+	if(this.tieneMapaNormal){
+		//alert(this.texturaNormal.imagen.src);
+		gl.activeTexture(gl.TEXTURE1);
+    	gl.bindTexture(gl.TEXTURE_2D, this.texturaNormal);
+    	gl.uniform1i(shaderProgram.samplerUniformN, 1);
+
+	}
+
+
+    gl.bindTexture(gl.TEXTURE_2D, this.textura);
+    if(this.tieneMapaNormal)gl.bindTexture(gl.TEXTURE_2D, this.texturaNormal);
 
 }

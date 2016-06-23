@@ -15,15 +15,7 @@ function ObjetoGrafico(){
 }
 ObjetoGrafico.prototype.inicializarTextura = function(){
 
-    var texturaAuxiliar = gl.createTexture();
-    this.textura = texturaAuxiliar;
-    this.textura.imagen = new Image();
-
-    this.textura.imagen.onload = function () {
-           manejarTexturaCargada();
-    }
-    
-    this.textura.imagen.src = this.materialAux.rutaTextura;
+    this.materialAux.inicializarTextura();
     
 }
 
@@ -34,16 +26,20 @@ ObjetoGrafico.prototype.guardarMaterial=function (material){
 }
 
 ObjetoGrafico.prototype.generarMipMap=function (){
-   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-   gl.bindTexture(gl.TEXTURE_2D, this.textura);
-   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.textura.imagen);
-   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
-   gl.generateMipmap(gl.TEXTURE_2D);
-   gl.bindTexture(gl.TEXTURE_2D, null);
+   this.materialAux.generarMipMap();
+ }
+ ObjetoGrafico.prototype.completar=function (){
+
+  for (var i = 0; i < this.normal_buffer.length; i++) {
+      this.tangente_buffer.push(1.0);
+      this.binormal_buffer.push(1.0);
+  };
+
  }
  ObjetoGrafico.prototype.atarLosBuffer = function(position_buffer,normal_buffer,texture_coord_buffer,index_buffer){
-
+    if(this.tangente_buffer.length == 0){
+      this.completar();
+    }
     // Creaci�n e Inicializaci�n de los buffers a nivel de OpenGL
     this.webgl_normal_buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_normal_buffer);
@@ -83,9 +79,7 @@ ObjetoGrafico.prototype.generarMipMap=function (){
 }
 
 ObjetoGrafico.prototype.dibujar = function(){
-  
 
-    this.materialAux.configurarPropiedades();
 
 
     // Se configuran los buffers que alimentar�n el pipeline
@@ -104,11 +98,13 @@ ObjetoGrafico.prototype.dibujar = function(){
     gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_binormal_buffer);
     gl.vertexAttribPointer(shaderProgram.vertexBinormalAttribute, this.webgl_binormal_buffer.itemSize, gl.FLOAT, false, 0, 0);
 
+  
 
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, this.textura);
+    this.materialAux.configurarPropiedades();
+    /*gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, this.materialAux.textura);
     gl.uniform1i(shaderProgram.samplerUniform, 0);
-
+*/
     gl.uniformMatrix4fv(shaderProgram.ModelMatrixUniform, false, mvMatrix);
     var matrizNormal = mat3.create();
     mat3.fromMat4(matrizNormal, mvMatrix);
@@ -116,7 +112,7 @@ ObjetoGrafico.prototype.dibujar = function(){
     mat3.transpose(matrizNormal, matrizNormal);
     gl.uniformMatrix3fv(shaderProgram.nMatrixUniform, false, matrizNormal);
 
-    gl.bindTexture(gl.TEXTURE_2D, this.textura);
+    
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.webgl_index_buffer);
     gl.drawElements(gl.TRIANGLE_STRIP, this.webgl_index_buffer.numItems, gl.UNSIGNED_SHORT, 0);
 }

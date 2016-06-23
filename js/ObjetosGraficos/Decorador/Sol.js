@@ -54,6 +54,7 @@ Sol.prototype.inicializarTextura=function(){
 }
 Sol.prototype.generarMipMap=function (){
   this.esfera.generarMipMap();
+
 }
 Sol.prototype.asignarCamara=function(camara){
   this.camara=camara;

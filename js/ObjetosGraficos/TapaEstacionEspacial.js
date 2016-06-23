@@ -14,6 +14,8 @@ function TapaEstacionEspacial(bufferExterior,bufferInterior,material){
     this.initBuffers = function(){
 
         var material = new Material(120,2);
+        material.cargarAmbiente(vec3.fromValues(0.19225,0.19225,0.19225));
+        material.cargarDifusa(vec3.fromValues(0.50754,0.50754,0.50754));
         material.sinTextura(GRIS);
         material.cargarCoordenadasDeTextura();
 

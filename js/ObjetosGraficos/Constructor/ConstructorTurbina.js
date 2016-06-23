@@ -14,7 +14,8 @@ function ConstructorTurbina(){
 ConstructorTurbina.prototype.definirMaterial=function(){
 
 	var material = new Material(this.componente.rows,this.componente.cols);
-
+	material.cargarAmbiente(vec3.fromValues(0.19225,0.19225,0.19225));
+	material.cargarDifusa(vec3.fromValues(0.50754,0.50754,0.50754));
 	material.sinTextura(GRIS);
 	material.cargarCoordenadasDeTextura();	
 

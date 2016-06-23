@@ -202,6 +202,12 @@ TapaCubo.prototype.cargarTapa = function(altura,normal){
       this.normal_buffer.push(0.0);
       this.normal_buffer.push(0.0);
       this.normal_buffer.push(normal);
+      this.tangente_buffer.push(normal);
+      this.tangente_buffer.push(0.0);
+      this.tangente_buffer.push(0.0);
+      this.binormal_buffer.push(0.0);
+      this.binormal_buffer.push(normal);
+      this.binormal_buffer.push(0.0);
 
     };
 

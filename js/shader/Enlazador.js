@@ -26,6 +26,8 @@ Enlazador.prototype.asignarUbicacionDeLasVariablesDelPrograma=function(){
   shaderProgram.tieneReflexionEspecular = gl.getUniformLocation(shaderProgram, UTIENEESPECULAR);
   shaderProgram.brillo = gl.getUniformLocation(shaderProgram, UBRILLO);
   shaderProgram.especular = gl.getUniformLocation(shaderProgram, UESPECULAR);
+  shaderProgram.tieneNormal = gl.getUniformLocation(shaderProgram, UTIENENORMAL);
+  shaderProgram.samplerUniformN = gl.getUniformLocation(shaderProgram, USAMPLERN);
 }
 Enlazador.prototype.comenzar=function(){
   gl.attachShader(shaderProgram, this.vertexShader);

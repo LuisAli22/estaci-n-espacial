@@ -12,6 +12,9 @@ ConstructorCilindroGris.prototype.definirMaterial=function(){
 	var material = new Material(this.componente.rows,this.componente.cols);
 
 	material.cargarCoordenadasDeTextura();
+	material.cargarAmbiente(vec3.fromValues(0.19225,0.19225,0.19225));
+	material.cargarDifusa(vec3.fromValues(0.50754,0.50754,0.50754));
+	material.sinTextura(GRIS);
 
 	Constructor.prototype.definirMaterial.call(this,material);
 

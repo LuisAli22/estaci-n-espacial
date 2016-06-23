@@ -43,6 +43,9 @@ function ComponenteBahia(filas,columnas,material){
 
         this.crearBufferDeIndices();
 
+        /*alert(this.tangente_buffer);
+        alert(this.binormal_buffer);*/
+
         this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 
     }

@@ -26,6 +26,8 @@ function MangueraAstronauta(material){
     ComponenteEstacionEspacial.call(this,FILAS,COLUMNAS,material);
 
     var material = new Material(FILAS,COLUMNAS);
+    material.cargarAmbiente(vec3.fromValues(0.19225,0.19225,0.19225));
+    material.cargarDifusa(vec3.fromValues(0.50754,0.50754,0.50754));
     material.sinTextura(GRIS);
     material.cargarCoordenadasDeTextura();
 

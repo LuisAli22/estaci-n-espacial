@@ -13,6 +13,7 @@ ConstructorTapaCuboInferiorPanel.prototype.definirMaterial=function(){
 	material.cargarTextura(RUTAIMAGENPANEL);
 	material.cargarRepeticionDeTextura(3,32);
 	material.cargarCoordenadasDeTextura();
+	material.agregarTexturaNormal(RUTAIMAGENPANELNORMAL);
 
 	this.componente.inicializarLosBuffer();
 

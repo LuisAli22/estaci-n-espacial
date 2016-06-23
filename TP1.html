@@ -131,22 +131,26 @@
     varying vec4 vTextureCoord;
     varying vec3 vLightWeighting;
     varying vec3 vTransformedNormal;
-    varying vec3 vAmbientColor;
-    varying vec3 vDirectionalColor;
+    varying vec3 vTransformedTangente;
+    varying vec3 vTransformedBinormal;
     varying vec4 vCam_pos;
 
     uniform bool uUseLighting;
     uniform sampler2D uSampler;
+    uniform sampler2D uSamplerN;
+    uniform bool uTieneNormal;
     uniform bool uTieneEspecular;
     uniform float uBrillo;
     uniform vec3 uEspecular;
+    uniform vec3 uAmbientColor;
+    uniform vec3 uDirectionalColor;
 
-    vec4 obtenerColor(vec3 codigoColor,vec3 vLight){
+    /*vec4 obtenerColor(vec3 codigoColor,vec3 vLight){
       for (int index=0;index<3;index++){
         codigoColor[index]*=(vLight[index]/255.0);
       }
       return vec4(codigoColor,1);
-    }
+    }*/
     // material:
     // 1 : dorado
     // 2 : violeta
@@ -157,7 +161,7 @@
     // 7 : marron
     // 8 : blanco
     // 9 : negro
-    vec4 tablaMateriales(float material,vec3 vLight){
+    /*vec4 tablaMateriales(float material,vec3 vLight){
       if (material == 1.0) return obtenerColor(vec3(255,215,0),vLight);
       if (material == 2.0) return obtenerColor(vec3(216,145,239),vLight);
       if (material == 3.0) return obtenerColor(vec3(0,204,255),vLight);
@@ -167,35 +171,110 @@
       if (material == 7.0) return obtenerColor(vec3(78,59,49),vLight);
       if (material == 8.0) return obtenerColor(vec3(255,255,255),vLight);
       return obtenerColor(vec3(0,0,0),vLight);
-    }
-    vec4 obtenerTexel(vec3 vLight){
+    }*/
+
+    /*void obtenerTexelNormal(vec3 vLight){
+
+      vec3 normal = texture2D(uSamplerN, vec2(vTextureCoord.s, vTextureCoord.t)).rgb;
+    // Transform normal vector to range [-1,1]
+      normal = normalize(normal * 2.0 - 1.0);
+      vec3 T = normalize(vTransformedTangente);
+      vec3 B = normalize(vTransformedBinormal);
+      vec3 N = normalize(vTransformedNormal);
+      mat3 TBN = mat3(T, B, N);
+
+      vec3 iluminacionTransformada = TBN * vLightWeighting;
+
+      float directionalLightWeighting =  max(dot(iluminacionTransformada, normal), 0.0);
+
+      vec3 iluminacionNormal = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+
       vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-      return vec4(textureColor.rgb * vLight, textureColor.a);
+
+      gl_FragColor = vec4(textureColor.rgb*iluminacionNormal , textureColor.a);
+      
     }
+
+    void obtenerTexel(vec3 vLight){
+      
+      vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+      
+      gl_FragColor = vec4(textureColor.rgb * vLight, textureColor.a);
+
+    }
+
+    void obtenerTexelFinal(vec3 vLight){
+      
+      vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+      
+      gl_FragColor = vec4(textureColor.rgb * vLight, textureColor.a);
+
+    }*/
+
     void main(void) {
 
-      vec3 vLight;
-      vec3 light = normalize(vLightWeighting);
-      vec3 transformedNormal = normalize(vTransformedNormal);
+      float difusa = 0.0;
+      vec3 normal = normalize(vTransformedNormal);
+      //vec3 intensidadLuzSol = vec3(0.04, 0.71, 0.94);
+      vec3 intensidadLuzSol = vec3(1.0, 1.0, 1.0);
+      vec3 intensidadLuzAmbiente = vec3(0.25,0.25,0.25);
 
-      if (!uUseLighting){
-        vLight = vec3(1.0, 1.0, 1.0);
+      if(vTextureCoord[3]==0.0){
+
+        float directionalLightWeighting = max(dot(normal, vLightWeighting), 0.0);
+
+        vec3 light = intensidadLuzAmbiente * uAmbientColor + intensidadLuzSol* uDirectionalColor * directionalLightWeighting;
+
+        gl_FragColor= vec4(light,1);//tablaMateriales(vTextureCoord.z,light);
+
       }else{
-        float directionalLightWeighting = max(dot(transformedNormal, light), 0.0);
-        vLight = vAmbientColor + vDirectionalColor * directionalLightWeighting;
+
+          vec3 light;
+          vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+
+          if (!uUseLighting){
+
+              light = vec3(1.0, 1.0, 1.0);
+              light = textureColor.rgb * light;
+
+          }else{
+
+              if(uTieneNormal){
+
+                  vec3 mapaNormal = texture2D(uSamplerN, vec2(vTextureCoord.s, vTextureCoord.t)).rgb;
+                  mapaNormal = normalize(mapaNormal * 2.0 - 1.0);
+
+                  vec3 T = normalize(vTransformedTangente);
+                  vec3 B = normalize(vTransformedBinormal);
+        
+                  mat3 TBN = mat3(T, B, normal);
+
+                  normal = normalize(TBN * mapaNormal);
+
+              }
+
+              float directionalLightWeighting = max(dot(normal, vLightWeighting), 0.0);
+
+              vec3 luzMaterial = intensidadLuzAmbiente + intensidadLuzSol * directionalLightWeighting;
+
+              vec3 luzEspecular = vec3(0.0, 0.0, 0.0);
+
+              if(uTieneEspecular){
+
+                  float especular = 0.0;
+                  vec3 direccionDelOjo = normalize(vCam_pos.xyz);
+                  vec3 direccionReflexion = 2.0 * normal * max(dot(normal, vLightWeighting), 0.0)-vLightWeighting;
+                  especular = pow(max(dot(direccionReflexion, direccionDelOjo), 0.0), uBrillo);
+                  luzEspecular = especular * uEspecular;
+
+              }
+
+              light = luzEspecular + textureColor.rgb * luzMaterial;
+          }
+
+          gl_FragColor = vec4(light, textureColor.a);
       }
 
-      if(uTieneEspecular){
-        float iluminacionEspecular = 0.0;
-        vec3 direccionDelOjo = normalize(vCam_pos.xyz);
-        vec3 direccionReflexion = 2.0 * transformedNormal * max(dot(transformedNormal, light), 0.0)-light;
-        iluminacionEspecular = pow(max(dot(direccionReflexion, direccionDelOjo), 0.0), uBrillo);
-        vLight = vLight + iluminacionEspecular * uEspecular;
-      }
-
-      gl_FragColor= (vTextureCoord[3]==0.0)?
-                    (tablaMateriales(vTextureCoord.z,vLight)):
-                    (obtenerTexel(vLight));
     }
 
 </script>
@@ -212,18 +291,16 @@
     uniform mat4 uPMatrix;
     uniform mat3 uNMatrix;
 
-    uniform vec3 uAmbientColor;
-
     uniform vec3 uLightPosition;
-    uniform vec3 uDirectionalColor;
 
     uniform bool uUseLighting;
+    uniform bool uTieneNormal;
 
     varying vec4 vTextureCoord;
     varying vec3 vLightWeighting;
     varying vec3 vTransformedNormal;
-    varying vec3 vAmbientColor;
-    varying vec3 vDirectionalColor;
+    varying vec3 vTransformedTangente;
+    varying vec3 vTransformedBinormal;
     varying vec4 vCam_pos;
 
     void main(void) {
@@ -237,12 +314,13 @@
       vTextureCoord = aTextureCoord;
 
       vec3 light_dir =  uLightPosition - vec3( pos_camera_view );
-      vLightWeighting = light_dir;
+      vLightWeighting = normalize(light_dir);
 
-      normalize(light_dir);
       vTransformedNormal = normalize(uNMatrix * aVertexNormal);
-      vDirectionalColor = uDirectionalColor;
-      vAmbientColor = uAmbientColor;
+      if(uTieneNormal){
+        vTransformedBinormal = normalize(uNMatrix * aVertexBinormal);
+        vTransformedTangente = normalize(uNMatrix * aVertexTangente);
+      }
 
     }
 </script>
