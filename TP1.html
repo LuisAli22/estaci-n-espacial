@@ -232,7 +232,9 @@
 
           vec3 light;
           vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-
+          if (textureColor.a < 0.5){
+            discard;
+          }
           if (!uUseLighting){
 
               light = vec3(1.0, 1.0, 1.0);
