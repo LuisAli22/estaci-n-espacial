@@ -15,7 +15,6 @@ ConstructorBahia.prototype.construirEstructura=function(puntosDeControl,interval
 
 	material.cargarCoordenadasDeTextura();
 
-
 	var coordenadas = [];
 	var normales = [];
 	var tangentes = [];

@@ -1,7 +1,7 @@
 ComponenteBahia.prototype=new ComponenteEstacionEspacial;
 ComponenteBahia.prototype.constructor=ComponenteBahia;
 function ComponenteBahia(filas,columnas,material){
-
+    
 	//Puntos para definir la trayectoria
 	var puntoDeControlXInicial = vec4.fromValues(0.0,18.0,-18.0,0.0);
     var puntoDeControlZInicial = vec4.fromValues(-18.0,27.0,0.0,-4.5);
@@ -42,9 +42,6 @@ function ComponenteBahia(filas,columnas,material){
     this.compilar= function(){
 
         this.crearBufferDeIndices();
-
-        /*alert(this.tangente_buffer);
-        alert(this.binormal_buffer);*/
 
         this.atarLosBuffer(this.position_buffer,this.normal_buffer,this.texture_coord_buffer,this.index_buffer);
 

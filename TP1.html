@@ -135,16 +135,29 @@
     varying vec3 vTransformedTangente;
     varying vec3 vTransformedBinormal;
     varying vec4 vCam_pos;
+    varying vec3 vLuzBahia1;
+    varying vec3 vLuzBahia2;
+    varying vec3 vLuzBahia3;
+    varying vec3 vLuzBahia4;
+    varying float dist1;
+    varying float dist2;
+    varying float dist3;
+    varying float dist4;
 
     uniform bool uUseLighting;
     uniform sampler2D uSampler;
     uniform sampler2D uSamplerN;
     uniform bool uTieneNormal;
     uniform bool uTieneEspecular;
+    uniform bool uInteriorBahia;
     uniform float uBrillo;
     uniform vec3 uEspecular;
     uniform vec3 uAmbientColor;
     uniform vec3 uDirectionalColor;
+    uniform vec3 uIntensidadLuzSolar;
+    uniform vec3 uIntensidadLuzAmbiente;
+    uniform vec3 uIntensidadLuzBahia;
+    uniform vec3 uIntensidadLuzAmbienteBahia;
 
     /*vec4 obtenerColor(vec3 codigoColor,vec3 vLight){
       for (int index=0;index<3;index++){
@@ -217,14 +230,28 @@
       float difusa = 0.0;
       vec3 normal = normalize(vTransformedNormal);
       //vec3 intensidadLuzSol = vec3(0.04, 0.71, 0.94);
-      vec3 intensidadLuzSol = vec3(1.0, 1.0, 1.0);
-      vec3 intensidadLuzAmbiente = vec3(0.25,0.25,0.25);
 
-      if(vTextureCoord[3]==0.0){
+      if(uInteriorBahia){
+
+        /*vec3 color = vec3(0.22,0.22,0.22);
+        vec3 luzAmbienteBahia = vec3(0.1,0.1,0.1);
+*/
+        float efectoLuz1 = max(dot(normal, normalize(vLuzBahia1)), 0.0)/dist1;
+        float efectoLuz2 = max(dot(normal, normalize(vLuzBahia2)), 0.0)/dist2;
+        float efectoLuz3 = max(dot(normal, normalize(vLuzBahia3)), 0.0)/dist3;
+        float efectoLuz4 = max(dot(normal, normalize(vLuzBahia4)), 0.0)/dist4;
+
+        vec3 light  =  uIntensidadLuzAmbienteBahia + uIntensidadLuzBahia*(efectoLuz1+efectoLuz2+efectoLuz3+efectoLuz4);
+
+        vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+
+        gl_FragColor = vec4(textureColor.rgb * light, textureColor.a);
+
+      }else if(vTextureCoord[3]==0.0){
 
         float directionalLightWeighting = max(dot(normal, vLightWeighting), 0.0);
 
-        vec3 light = intensidadLuzAmbiente * uAmbientColor + intensidadLuzSol* uDirectionalColor * directionalLightWeighting;
+        vec3 light = uIntensidadLuzAmbiente * uAmbientColor + uIntensidadLuzSolar* uDirectionalColor * directionalLightWeighting;
 
         gl_FragColor= vec4(light,1);//tablaMateriales(vTextureCoord.z,light);
 
@@ -258,7 +285,7 @@
 
               float directionalLightWeighting = max(dot(normal, vLightWeighting), 0.0);
 
-              vec3 luzMaterial = intensidadLuzAmbiente + intensidadLuzSol * directionalLightWeighting;
+              vec3 luzMaterial = uIntensidadLuzAmbiente + uIntensidadLuzSolar * directionalLightWeighting;
 
               vec3 luzEspecular = vec3(0.0, 0.0, 0.0);
 
@@ -293,11 +320,17 @@
     uniform mat4 uModelMatrix;
     uniform mat4 uPMatrix;
     uniform mat3 uNMatrix;
+    uniform vec3 uLuzBahia1;
+    uniform vec3 uLuzBahia2;
+    uniform vec3 uLuzBahia3;
+    uniform vec3 uLuzBahia4;
 
     uniform vec3 uLightPosition;
 
     uniform bool uUseLighting;
     uniform bool uTieneNormal;
+
+    uniform bool uInteriorBahia;
 
     varying vec4 vTextureCoord;
     varying vec3 vLightWeighting;
@@ -305,10 +338,20 @@
     varying vec3 vTransformedTangente;
     varying vec3 vTransformedBinormal;
     varying vec4 vCam_pos;
+    varying vec3 vLuzBahia1;
+    varying vec3 vLuzBahia2;
+    varying vec3 vLuzBahia3;
+    varying vec3 vLuzBahia4;
+    varying float dist1;
+    varying float dist2;
+    varying float dist3;
+    varying float dist4;
 
     void main(void) {
 
       vec4 pos_camera_view = uViewMatrix * uModelMatrix * vec4(aVertexPosition, 1.0);
+
+      vec3 pos = (uModelMatrix * vec4(aVertexPosition, 1.0)).xyz;
 
       vCam_pos = pos_camera_view;
 
@@ -320,10 +363,20 @@
       vLightWeighting = normalize(light_dir);
 
       vTransformedNormal = normalize(uNMatrix * aVertexNormal);
+
       if(uTieneNormal){
         vTransformedBinormal = normalize(uNMatrix * aVertexBinormal);
         vTransformedTangente = normalize(uNMatrix * aVertexTangente);
       }
+
+      vLuzBahia1 = normalize(uLuzBahia1-pos);
+      vLuzBahia2 = normalize(uLuzBahia2-pos);
+      vLuzBahia3 = normalize(uLuzBahia3-pos);
+      vLuzBahia4 = normalize(uLuzBahia4-pos);
+      dist1 = distance(uLuzBahia1,pos);
+      dist2 = distance(uLuzBahia2,pos);
+      dist3 = distance(uLuzBahia3,pos);
+      dist4 = distance(uLuzBahia4,pos);
 
     }
 </script>

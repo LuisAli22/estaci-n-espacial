@@ -13,7 +13,8 @@ ConstructorLateralDerechoInterior.prototype.definirMaterial=function(){
 	material.cargarTextura(RUTAIMAGENPAREDINTERIOR);
 	material.cargarInico(0.0,1.0);
 	material.cargarSigno(1.0,-1.0);
-	material.noEsIluminadoPorElSol();
+	//material.noEsIluminadoPorElSol();
+	material.agregarLuzBahia();
 
 	var intervaloDelPaso = [30];
 

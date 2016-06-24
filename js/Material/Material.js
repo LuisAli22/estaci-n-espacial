@@ -13,6 +13,10 @@ function Material(rows,cols){
     this.rutaTexturaNormal;
     this.texturaNormal= null;
 
+    this.lucesBahia = [];
+    this.intensidadLuzBahia;
+    this.intensidadLuzAmbienteBahia;
+	
 	this.repeticionU = 1;
 	this.repeticionV = 1;
 	this.texture_coord_buffer = [];
@@ -28,7 +32,18 @@ function Material(rows,cols){
 	this.cols = cols;
 
 }
+Material.prototype.agregarLuzBahia=function(){
+	
+    this.lucesBahia.push(vec3.fromValues(-2.238,0.45,0.372));
+    this.lucesBahia.push(vec3.fromValues(-1.089,0.45,2.025));
+    this.lucesBahia.push(vec3.fromValues(1.171,0.45,1.981));
+    this.lucesBahia.push(vec3.fromValues(2.245,0.45,0.287));
+    this.intensidadLuzBahia = vec3.fromValues(0.22,0.22,0.22);
+    this.intensidadLuzAmbienteBahia = vec3.fromValues(0.1,0.1,0.1);
 
+	this.interiorBahia = true;
+
+}
 Material.prototype.inicializarTexturaFinal = function(ruta){
     var textura = gl.createTexture();
     textura.imagen = new Image();
@@ -80,11 +95,6 @@ Material.prototype.cargarRepeticionDeTextura=function(repeticionU,repeticionV){
 Material.prototype.noEsIluminadoPorElSol=function(){
 
 	this.esIluminadoPorElSol = false;
-
-}
-Material.prototype.esInteriorBahia=function(){
-
-	this.interiorBahia = true;
 
 }
 Material.prototype.cargarTextura=function(textura){
@@ -169,13 +179,21 @@ Material.prototype.configurarPropiedades=function(){
 	gl.uniform1i(shaderProgram.tieneNormal, this.tieneMapaNormal);
 
 	if(this.tieneMapaNormal){
-		//alert(this.texturaNormal.imagen.src);
 		gl.activeTexture(gl.TEXTURE1);
     	gl.bindTexture(gl.TEXTURE_2D, this.texturaNormal);
     	gl.uniform1i(shaderProgram.samplerUniformN, 1);
 
 	}
 
+	gl.uniform1i(shaderProgram.interiorBahia, this.interiorBahia);
+	if(this.interiorBahia){
+		gl.uniform3fv(shaderProgram.luzBahia1,this.lucesBahia[0]);
+		gl.uniform3fv(shaderProgram.luzBahia2,this.lucesBahia[1]);
+		gl.uniform3fv(shaderProgram.luzBahia3,this.lucesBahia[2]);
+		gl.uniform3fv(shaderProgram.luzBahia4,this.lucesBahia[3]);
+		gl.uniform3fv(shaderProgram.intensidadLuzBahia,this.intensidadLuzBahia);
+		gl.uniform3fv(shaderProgram.intensidadLuzAmbienteBahia,this.intensidadLuzAmbienteBahia);
+	}
 
     gl.bindTexture(gl.TEXTURE_2D, this.textura);
     if(this.tieneMapaNormal)gl.bindTexture(gl.TEXTURE_2D, this.texturaNormal);

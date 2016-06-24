@@ -28,6 +28,18 @@ Enlazador.prototype.asignarUbicacionDeLasVariablesDelPrograma=function(){
   shaderProgram.especular = gl.getUniformLocation(shaderProgram, UESPECULAR);
   shaderProgram.tieneNormal = gl.getUniformLocation(shaderProgram, UTIENENORMAL);
   shaderProgram.samplerUniformN = gl.getUniformLocation(shaderProgram, USAMPLERN);
+
+  shaderProgram.luzBahia1 = gl.getUniformLocation(shaderProgram, LUZBAHIA1);
+  shaderProgram.luzBahia2 = gl.getUniformLocation(shaderProgram, LUZBAHIA2);
+  shaderProgram.luzBahia3 = gl.getUniformLocation(shaderProgram, LUZBAHIA3);
+  shaderProgram.luzBahia4 = gl.getUniformLocation(shaderProgram, LUZBAHIA4);
+  shaderProgram.interiorBahia = gl.getUniformLocation(shaderProgram, INTERIORBAHIA);
+
+  shaderProgram.intensidadLuzSolar = gl.getUniformLocation(shaderProgram, UINTENSIDADLUZSOLAR);
+  shaderProgram.intensidadLuzAmbiente = gl.getUniformLocation(shaderProgram, UINTENSIDADLUZAMBIENTE);
+  shaderProgram.intensidadLuzBahia = gl.getUniformLocation(shaderProgram, UINTENSIDADLUZBAHIA);
+  shaderProgram.intensidadLuzAmbienteBahia = gl.getUniformLocation(shaderProgram, UINTENSIDADLUZAMBIENTEBAHIA);
+
 }
 Enlazador.prototype.comenzar=function(){
   gl.attachShader(shaderProgram, this.vertexShader);
