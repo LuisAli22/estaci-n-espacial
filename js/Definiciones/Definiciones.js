@@ -12,6 +12,7 @@ const RUTAIMAGENASTRONAUTA="img/astronauta.png";
 const RUTAIMAGENTECHOINTERIOR="img/techo.jpg";
 const RUTAIMAGENTECHOINTERIORILUMINACION="img/techo-ilumMap.jpg";
 const RUTAIMAGENPISOINTERIOR="img/piso.jpg";
+const RUTAIMAGENRESPLANDORTIERRA="img/resplandor.jpg";
 const RUTAIMAGENPAREDINTERIOR="img/paredInterna1.jpg";
 const RUTAIMAGENEXTERIOR="img/shiphull.jpg";
 const RUTAIMAGENEXTERIORNORMAL="img/shiphull_normalmap.jpg";

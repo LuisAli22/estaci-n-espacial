@@ -14,6 +14,10 @@ ConstructorTierra.prototype.definirMaterial=function(){
 	material.cargarTextura(RUTAIMAGENTIERRA);
 	material.cargarCoordenadasDeTextura();
 	material.noEsIluminadoPorLaTierra();
+	material.conReflexionEspecular();
+	material.cargarBrillo(50.0);
+	material.agregarTexturaIluminacion(RUTAIMAGENRESPLANDORTIERRA);
+	material.cargarFactorIluminacion(0.5);
 
 	Constructor.prototype.definirMaterial.call(this,material);
 
