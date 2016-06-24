@@ -12,8 +12,11 @@ ConstructorCuboEjesNave.prototype.definirMaterial=function(){
 
 	var material = new Material(this.componente.rows,this.componente.cols);
 
-	material.cargarTextura(RUTAIMAGENTAPA);
+	material.cargarAmbiente(vec3.fromValues(0.25,0.20725,0.20725));
+	material.cargarDifusa(vec3.fromValues(1,0.829,0.829));
+	material.sinTextura(GRIS);
 	material.cargarCoordenadasDeTextura();
+
 
 	this.componente.inicializarLosBuffer();
 
