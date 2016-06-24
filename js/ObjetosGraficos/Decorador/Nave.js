@@ -22,11 +22,13 @@ Nave.prototype.asignarCamara=function(camara){
   this.camara=camara;
 }
 Nave.prototype.actualizarMomentos=function(){
-  this.direccion[2]=Math.max(0,this.velocidad);
+  this.direccion=vec3.fromValues(0,0,Math.max(0,this.velocidad));
   vec3.transformMat4(this.direccion,this.direccion,this.rotacion);
-  for(var indice in this.momento){
-    this.momento[indice]=this.momento[indice]*this.inercia+this.direccion[indice]*0.0001;
-  }
+  var inercia=0.99;
+  this.momento[0]=this.momento[0]*inercia+this.direccion[0]*0.0001;
+  this.momento[1]=this.momento[1]*inercia+this.direccion[1]*0.0001;
+  this.momento[2]=this.momento[2]*inercia+this.direccion[2]*0.0001;
+
 }
 Nave.prototype.actualizarPosicion=function(){
   mat4.rotate(this.rotacion,this.rotacion,this.angRolido,vec3.fromValues(1,0,0));
