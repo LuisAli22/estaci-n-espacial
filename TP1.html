@@ -148,6 +148,8 @@
     uniform bool uUseLighting;
     uniform sampler2D uSampler;
     uniform sampler2D uSamplerN;
+    uniform sampler2D uSamplerIluminacion;
+    uniform bool uCalcularIluminacionTextura;
     uniform bool uTieneNormal;
     uniform bool uTieneEspecular;
     uniform bool uInteriorBahia;
@@ -234,11 +236,14 @@
       vec3 normal = normalize(vTransformedNormal);
       //vec3 intensidadLuzSol = vec3(0.04, 0.71, 0.94);
 
+      vec3 iluinacionPorTextura = vec3(0.0,0.0,0.0);
+
+      if(uCalcularIluminacionTextura){
+          iluinacionPorTextura = 6.0 * texture2D(uSamplerIluminacion, vec2(vTextureCoord.s, vTextureCoord.t)).rgb;
+      }
+
       if(uInteriorBahia){
 
-        /*vec3 color = vec3(0.22,0.22,0.22);
-        vec3 luzAmbienteBahia = vec3(0.1,0.1,0.1);
-*/
         float efectoLuz1 = max(dot(normal, normalize(vLuzBahia1)), 0.0)/dist1;
         float efectoLuz2 = max(dot(normal, normalize(vLuzBahia2)), 0.0)/dist2;
         float efectoLuz3 = max(dot(normal, normalize(vLuzBahia3)), 0.0)/dist3;
@@ -248,7 +253,7 @@
 
         vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
 
-        gl_FragColor = vec4(textureColor.rgb * light, textureColor.a);
+        gl_FragColor = vec4((textureColor.rgb+iluinacionPorTextura.rgb) * light, textureColor.a);
 
       }else if(vTextureCoord[3]==0.0){
 
@@ -262,6 +267,7 @@
 
           vec3 light;
           vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+
           if (textureColor.a < 0.5){
             discard;
           }
@@ -285,7 +291,9 @@
                   normal = normalize(TBN * mapaNormal);
 
               }
+
               float direccionLuzTierra = 0.0;
+
               if(uIluminadoPorLaTierra){
                 direccionLuzTierra = max(dot(normal, vDireccionLuzTierra), 0.0);
               }
@@ -306,7 +314,7 @@
 
               }
 
-              light = luzEspecular + textureColor.rgb * luzMaterial;
+              light = luzEspecular + (textureColor.rgb+iluinacionPorTextura.rgb) * luzMaterial;
           }
 
           gl_FragColor = vec4(light, textureColor.a);

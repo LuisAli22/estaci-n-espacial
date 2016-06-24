@@ -14,6 +14,10 @@ function Material(rows,cols){
     this.rutaTexturaNormal;
     this.texturaNormal= null;
 
+    this.tieneMapaIluminacion = false;
+    this.rutaTexturaIluminacion;
+    this.texturaIluminacion= null;
+
     this.lucesBahia = [];
     this.intensidadLuzBahia;
     this.intensidadLuzAmbienteBahia;
@@ -65,6 +69,9 @@ Material.prototype.inicializarTextura = function(){
 	if(this.tieneMapaNormal){
 		this.texturaNormal = this.inicializarTexturaFinal(this.rutaTexturaNormal);
 	}
+	if(this.tieneMapaIluminacion){
+		this.texturaIluminacion = this.inicializarTexturaFinal(this.rutaTexturaIluminacion);
+	}
     
 }
 Material.prototype.generarMipMapFinal=function (textura){
@@ -80,6 +87,9 @@ Material.prototype.generarMipMap=function (){
 	this.generarMipMapFinal(this.textura);
 	if(this.tieneMapaNormal){
 		this.generarMipMapFinal(this.texturaNormal);
+	}
+	if(this.tieneMapaIluminacion){
+		this.generarMipMapFinal(this.texturaIluminacion);
 	}
 }
 Material.prototype.conReflexionEspecular=function(){
@@ -161,8 +171,16 @@ Material.prototype.agregarTexturaNormal=function(ruta){
 	this.tieneMapaNormal = true;
 	this.rutaTexturaNormal = ruta;
 }
+Material.prototype.agregarTexturaIluminacion=function(ruta){
+
+	this.tieneMapaIluminacion = true;
+    this.rutaTexturaIluminacion = ruta;
+
+}
 Material.prototype.configurarPropiedades=function(){
 
+
+	gl.uniform1i(shaderProgram.iluminacionTextura, this.tieneMapaIluminacion);
 	gl.uniform1i(shaderProgram.iluminadoPorLaTierra, this.esIluminadoPorLaTierra);
 
 	gl.uniform1i(shaderProgram.useLightingUniform, this.esIluminadoPorElSol);
@@ -190,6 +208,11 @@ Material.prototype.configurarPropiedades=function(){
     	gl.uniform1i(shaderProgram.samplerUniformN, 1);
 
 	}
+	if(this.tieneMapaIluminacion){
+		gl.activeTexture(gl.TEXTURE2);
+    	gl.bindTexture(gl.TEXTURE_2D, this.texturaIluminacion);
+    	gl.uniform1i(shaderProgram.samplerUniformIluminacion, 2);
+	}
 
 	gl.uniform1i(shaderProgram.interiorBahia, this.interiorBahia);
 	if(this.interiorBahia){
@@ -203,5 +226,6 @@ Material.prototype.configurarPropiedades=function(){
 
     gl.bindTexture(gl.TEXTURE_2D, this.textura);
     if(this.tieneMapaNormal)gl.bindTexture(gl.TEXTURE_2D, this.texturaNormal);
+    if(this.tieneMapaIluminacion)gl.bindTexture(gl.TEXTURE_2D, this.texturaIluminacion);
 
 }

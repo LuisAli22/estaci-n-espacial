@@ -44,6 +44,9 @@ Enlazador.prototype.asignarUbicacionDeLasVariablesDelPrograma=function(){
   shaderProgram.intensidadLuzTierra = gl.getUniformLocation(shaderProgram, UINTENSIDADLUZTIERRA);
   shaderProgram.iluminadoPorLaTierra = gl.getUniformLocation(shaderProgram, UILUMINADOPORLATIERRA);
 
+  shaderProgram.samplerUniformIluminacion = gl.getUniformLocation(shaderProgram, USAMPLERILUMINACION);
+  shaderProgram.iluminacionTextura = gl.getUniformLocation(shaderProgram, UILUMINACIONTEXTURA);
+
 }
 Enlazador.prototype.comenzar=function(){
   gl.attachShader(shaderProgram, this.vertexShader);

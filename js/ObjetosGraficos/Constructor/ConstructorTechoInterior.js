@@ -11,6 +11,7 @@ ConstructorTechoInterior.prototype.definirMaterial=function(){
 	var material = new Material(120,30);
 	material.cargarRepeticionDeTextura(4,1);
 	material.cargarTextura(RUTAIMAGENTECHOINTERIOR);
+	material.agregarTexturaIluminacion(RUTAIMAGENTECHOINTERIORILUMINACION);
 	//material.noEsIluminadoPorElSol();
 	material.agregarLuzBahia();
 
