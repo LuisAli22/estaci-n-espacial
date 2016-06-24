@@ -3,7 +3,7 @@ ConstructorCilindroBasePatasNave.prototype.constructor=ConstructorCilindroBasePa
 function ConstructorCilindroBasePatasNave(){
 
 	Constructor.call(this);
-	this.componente = new Cilindro(64,64,BEIS,0,1.0);
+	this.componente = new DecoradorObjetoGrafico(cilindroConTextura);
 
 }
 

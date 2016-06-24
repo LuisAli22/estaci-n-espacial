@@ -3,7 +3,7 @@ ConstructorCilindroGris.prototype.constructor=ConstructorCilindroGris;
 function ConstructorCilindroGris(){
 
 	Constructor.call(this);
-	this.componente = new Cilindro(64,64,GRIS,0,0.0);
+	this.componente = new DecoradorObjetoGrafico(cilindroSinTextura);
 
 }
 
