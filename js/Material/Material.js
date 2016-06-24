@@ -1,6 +1,7 @@
 function Material(rows,cols){
 
 	this.esIluminadoPorElSol = true;
+	this.esIluminadoPorLaTierra = true;
 	this.interiorBahia = false;
 	this.ambiente = vec3.fromValues(0.25,0.25,0.25);
     this.difusa = vec3.fromValues(0.8,0.8,0.8);
@@ -31,6 +32,9 @@ function Material(rows,cols){
 	this.rows = rows;
 	this.cols = cols;
 
+}
+Material.prototype.noEsIluminadoPorLaTierra=function(){
+	this.esIluminadoPorLaTierra = false;
 }
 Material.prototype.agregarLuzBahia=function(){
 	
@@ -158,6 +162,8 @@ Material.prototype.agregarTexturaNormal=function(ruta){
 	this.rutaTexturaNormal = ruta;
 }
 Material.prototype.configurarPropiedades=function(){
+
+	gl.uniform1i(shaderProgram.iluminadoPorLaTierra, this.esIluminadoPorLaTierra);
 
 	gl.uniform1i(shaderProgram.useLightingUniform, this.esIluminadoPorElSol);
 	

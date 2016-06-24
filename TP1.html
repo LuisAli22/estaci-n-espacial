@@ -143,6 +143,7 @@
     varying float dist2;
     varying float dist3;
     varying float dist4;
+    varying vec3 vDireccionLuzTierra;
 
     uniform bool uUseLighting;
     uniform sampler2D uSampler;
@@ -158,6 +159,8 @@
     uniform vec3 uIntensidadLuzAmbiente;
     uniform vec3 uIntensidadLuzBahia;
     uniform vec3 uIntensidadLuzAmbienteBahia;
+    uniform vec3 uIntensidadLuzTierra;
+    uniform bool uIluminadoPorLaTierra;
 
     /*vec4 obtenerColor(vec3 codigoColor,vec3 vLight){
       for (int index=0;index<3;index++){
@@ -282,10 +285,14 @@
                   normal = normalize(TBN * mapaNormal);
 
               }
+              float direccionLuzTierra = 0.0;
+              if(uIluminadoPorLaTierra){
+                direccionLuzTierra = max(dot(normal, vDireccionLuzTierra), 0.0);
+              }
 
               float directionalLightWeighting = max(dot(normal, vLightWeighting), 0.0);
 
-              vec3 luzMaterial = uIntensidadLuzAmbiente + uIntensidadLuzSolar * directionalLightWeighting;
+              vec3 luzMaterial = uIntensidadLuzAmbiente + uIntensidadLuzSolar * directionalLightWeighting+direccionLuzTierra*uIntensidadLuzTierra;
 
               vec3 luzEspecular = vec3(0.0, 0.0, 0.0);
 
@@ -326,6 +333,8 @@
     uniform vec3 uLuzBahia4;
 
     uniform vec3 uLightPosition;
+    uniform vec3 uPosicionLuzTierra;
+
 
     uniform bool uUseLighting;
     uniform bool uTieneNormal;
@@ -346,6 +355,7 @@
     varying float dist2;
     varying float dist3;
     varying float dist4;
+    varying vec3 vDireccionLuzTierra;
 
     void main(void) {
 
@@ -361,6 +371,9 @@
 
       vec3 light_dir =  uLightPosition - vec3( pos_camera_view );
       vLightWeighting = normalize(light_dir);
+
+      vDireccionLuzTierra = uPosicionLuzTierra;
+      vDireccionLuzTierra = normalize(vDireccionLuzTierra);
 
       vTransformedNormal = normalize(uNMatrix * aVertexNormal);
 

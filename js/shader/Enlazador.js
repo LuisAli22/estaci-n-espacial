@@ -40,6 +40,10 @@ Enlazador.prototype.asignarUbicacionDeLasVariablesDelPrograma=function(){
   shaderProgram.intensidadLuzBahia = gl.getUniformLocation(shaderProgram, UINTENSIDADLUZBAHIA);
   shaderProgram.intensidadLuzAmbienteBahia = gl.getUniformLocation(shaderProgram, UINTENSIDADLUZAMBIENTEBAHIA);
 
+  shaderProgram.posicionLuzTierra = gl.getUniformLocation(shaderProgram, UPOSICIONLUZTIERRA);
+  shaderProgram.intensidadLuzTierra = gl.getUniformLocation(shaderProgram, UINTENSIDADLUZTIERRA);
+  shaderProgram.iluminadoPorLaTierra = gl.getUniformLocation(shaderProgram, UILUMINADOPORLATIERRA);
+
 }
 Enlazador.prototype.comenzar=function(){
   gl.attachShader(shaderProgram, this.vertexShader);

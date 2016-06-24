@@ -13,6 +13,7 @@ ConstructorTierra.prototype.definirMaterial=function(){
 
 	material.cargarTextura(RUTAIMAGENTIERRA);
 	material.cargarCoordenadasDeTextura();
+	material.noEsIluminadoPorLaTierra();
 
 	Constructor.prototype.definirMaterial.call(this,material);
 
