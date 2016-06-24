@@ -4,6 +4,7 @@ function MoverNaveArriba(nave){
     this.nave=nave;
 }
 MoverNaveArriba.prototype.ejecutar=function(){
+	
   this.nave.moverArriba();
 }
 MoverNaveArriba.prototype.soltar=function(){

@@ -116,7 +116,7 @@ Nave.prototype.acelerar=function(){
 Nave.prototype.desacelerar=function(){
 
   var impulso=0;
-  impulso=-0.1;
+  impulso=-0.3;
   this.velocidad+=impulso;
   this.velocidad=Math.max(this.velocidad,0);
 

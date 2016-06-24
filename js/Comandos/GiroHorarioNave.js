@@ -4,8 +4,8 @@ function GiroHorarioNave(nave){
     this.nave=nave;
 }
 GiroHorarioNave.prototype.ejecutar=function(){
-  this.nave.giroHorarioNave();
+  this.nave.giroHorario();
 }
 GiroHorarioNave.prototype.soltar=function(){
-  this.nave.soltarTeclaNave(2);
+  this.nave.soltarTecla(2);
 }
