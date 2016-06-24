@@ -15,7 +15,8 @@ ConstructorTapaTraseraTurbina.prototype.definirMaterial=function(){
 
 	material.cargarTextura(RUTAIMAGENNAVE);
 	material.cargarCoordenadasDeTextura();
-	material.agregarTexturaIluminacion(RUTAIMAGENNAVE);
+	material.autoIluminacion();
+	//material.agregarTexturaIluminacion(RUTAIMAGENNAVE);
 
 	Constructor.prototype.definirMaterial.call(this,material);
 

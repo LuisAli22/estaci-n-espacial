@@ -18,6 +18,8 @@ function Material(rows,cols){
     this.rutaTexturaIluminacion;
     this.texturaIluminacion= null;
 
+    this.autoiluminacion = false;
+
     this.lucesBahia = [];
     this.intensidadLuzBahia;
     this.intensidadLuzAmbienteBahia;
@@ -36,6 +38,9 @@ function Material(rows,cols){
 	this.rows = rows;
 	this.cols = cols;
 
+}
+Material.prototype.autoIluminacion=function(){
+	this.autoiluminacion = true;
 }
 Material.prototype.noEsIluminadoPorLaTierra=function(){
 	this.esIluminadoPorLaTierra = false;
@@ -179,7 +184,7 @@ Material.prototype.agregarTexturaIluminacion=function(ruta){
 }
 Material.prototype.configurarPropiedades=function(){
 
-
+	gl.uniform1i(shaderProgram.autoiluminacion, this.autoiluminacion);
 	gl.uniform1i(shaderProgram.iluminacionTextura, this.tieneMapaIluminacion);
 	gl.uniform1i(shaderProgram.iluminadoPorLaTierra, this.esIluminadoPorLaTierra);
 

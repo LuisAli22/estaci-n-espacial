@@ -163,6 +163,7 @@
     uniform vec3 uIntensidadLuzAmbienteBahia;
     uniform vec3 uIntensidadLuzTierra;
     uniform bool uIluminadoPorLaTierra;
+    uniform bool uAutoIluminacion;
 
     /*vec4 obtenerColor(vec3 codigoColor,vec3 vLight){
       for (int index=0;index<3;index++){
@@ -237,6 +238,11 @@
       //vec3 intensidadLuzSol = vec3(0.04, 0.71, 0.94);
 
       vec3 iluinacionPorTextura = vec3(0.0,0.0,0.0);
+      vec3 autoiluminado = vec3(0.0,0.0,0.0);
+
+      if(uAutoIluminacion){
+        autoiluminado = vec3(6.0,6.0,6.0);
+      }
 
       if(uCalcularIluminacionTextura){
           iluinacionPorTextura = 6.0 * texture2D(uSamplerIluminacion, vec2(vTextureCoord.s, vTextureCoord.t)).rgb;
@@ -249,7 +255,7 @@
         float efectoLuz3 = max(dot(normal, normalize(vLuzBahia3)), 0.0)/dist3;
         float efectoLuz4 = max(dot(normal, normalize(vLuzBahia4)), 0.0)/dist4;
 
-        vec3 light  =  uIntensidadLuzAmbienteBahia + uIntensidadLuzBahia*(efectoLuz1+efectoLuz2+efectoLuz3+efectoLuz4);
+        vec3 light  =  autoiluminado+uIntensidadLuzAmbienteBahia + uIntensidadLuzBahia*(efectoLuz1+efectoLuz2+efectoLuz3+efectoLuz4);
 
         vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
 
@@ -261,7 +267,7 @@
 
         vec3 light = uIntensidadLuzAmbiente * uAmbientColor + uIntensidadLuzSolar* uDirectionalColor * directionalLightWeighting;
 
-        gl_FragColor= vec4(light,1);//tablaMateriales(vTextureCoord.z,light);
+        gl_FragColor= vec4(autoiluminado+light,1);//tablaMateriales(vTextureCoord.z,light);
 
       }else{
 
@@ -314,7 +320,7 @@
 
               }
 
-              light = luzEspecular + (textureColor.rgb+iluinacionPorTextura.rgb) * luzMaterial;
+              light = autoiluminado+luzEspecular + (textureColor.rgb+iluinacionPorTextura.rgb) * luzMaterial;
           }
 
           gl_FragColor = vec4(light, textureColor.a);

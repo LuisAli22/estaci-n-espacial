@@ -55,6 +55,7 @@ const UINTENSIDADLUZTIERRA = "uIntensidadLuzTierra";
 const UILUMINADOPORLATIERRA = "uIluminadoPorLaTierra";
 const USAMPLERILUMINACION = "uSamplerIluminacion";
 const UILUMINACIONTEXTURA = "uCalcularIluminacionTextura";
+const UAUTOILUMINACION = "uAutoIluminacion";
 const LUZBAHIA1="uLuzBahia1";
 const LUZBAHIA2="uLuzBahia2";
 const LUZBAHIA3="uLuzBahia3";
