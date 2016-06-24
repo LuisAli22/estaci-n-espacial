@@ -3,7 +3,7 @@ ConstructorEscotilla.prototype.constructor=ConstructorEscotilla;
 function ConstructorEscotilla(){
 
 	Constructor.call(this);
-	this.componente = new Cilindro(64,64,GRIS,0,1.0);
+	this.componente = new DecoradorObjetoGrafico(cilindroConTextura);
 
 }
 
