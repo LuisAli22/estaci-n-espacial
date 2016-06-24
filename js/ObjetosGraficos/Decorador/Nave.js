@@ -16,6 +16,7 @@ function Nave(){
   this.inercia=0.99;
   this.matrizPosicion=mat4.create();
   this.camara=null;
+
 }
 Nave.prototype.asignarCamara=function(camara){
   this.camara=camara;
@@ -42,8 +43,6 @@ Nave.prototype.estaEncendidaLaCamara=function(){
   return (this.camara.estaEncendida());
 }
 Nave.prototype.dibujar = function(){
-  //gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
-  //gl.uniform3f(shaderProgram.directionalColorUniform, 0.05, 0.05, 0.05);
   this.actualizarPosicion();
   pilaMatrizDeModelado.meter();
     mat4.multiply(mvMatrix, mvMatrix,this.matrizPosicion);
@@ -73,7 +72,7 @@ Nave.prototype.giroAntiHorario=function(){
 Nave.prototype.moverArriba=function(){
 
   this.angRolido=0;
-  this.angRolido= -0.005;
+  this.angRolido= -0.01;
   this.estadoTeclas[4] = true;
 
 }
@@ -81,7 +80,7 @@ Nave.prototype.moverArriba=function(){
 Nave.prototype.moverAbajo=function(){
 
   this.angRolido=0;
-  this.angRolido= 0.005;
+  this.angRolido= 0.01;
   this.estadoTeclas[5] = true;
 
 }
@@ -90,8 +89,7 @@ Nave.prototype.moverDerecha=function(){
 
   this.angRolido=0;
   this.angVirada=0;
-  this.angVirada=-0.005;
-  this.angRolido=0.001;
+  this.angVirada=-0.01;
   this.estadoTeclas[6] = true;
 
 }
@@ -100,8 +98,7 @@ Nave.prototype.moverIzquierda=function(){
 
   this.angRolido=0;
   this.angVirada=0;
-  this.angVirada=0.005;
-  this.angRolido=-0.001;
+  this.angVirada=0.01;
   this.estadoTeclas[7] = true;
 
 }
