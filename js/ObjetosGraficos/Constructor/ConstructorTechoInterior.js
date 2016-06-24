@@ -18,7 +18,7 @@ ConstructorTechoInterior.prototype.definirMaterial=function(){
 	var intervaloDelPaso = [30];
 
 	var puntosDeControlInterior = [-1.0, 0.5, 0.0, -0.25, 1.0, 0.0, 0.25, 1.0, 0.0, 1.0, 0.5, 0.0];
-	//this.componente.si = true;
+
 	ConstructorBahia.prototype.construirEstructura.call(this,puntosDeControlInterior,intervaloDelPaso,-1,material);
 
 }

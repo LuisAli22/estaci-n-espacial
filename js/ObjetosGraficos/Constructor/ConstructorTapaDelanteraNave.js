@@ -14,6 +14,7 @@ ConstructorTapaDelanteraNave.prototype.definirMaterial=function(){
 	material.cargarTextura(RUTAIMAGENNAVE);
 	material.conReflexionEspecular();
 	material.cargarCoordenadasDeTextura();
+	material.agregarTexturaReflexion(RUTAIMAGENREFLEXION);
 	this.componente.tapaDelantera();
 
 	Constructor.prototype.definirMaterial.call(this,material);

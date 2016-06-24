@@ -13,6 +13,7 @@ ConstructorCilindroRayos.prototype.definirMaterial=function(){
 
 	material.cargarTextura(RUTAIMAGENRAYOS);
 	material.cargarCoordenadasDeTextura();
+	material.agregarTexturaReflexion(RUTAIMAGENREFLEXION);
 
 	Constructor.prototype.definirMaterial.call(this,material);
 

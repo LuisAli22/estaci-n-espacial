@@ -14,6 +14,10 @@ function Material(rows,cols){
     this.rutaTexturaNormal;
     this.texturaNormal= null;
 
+    this.tieneMapaReflexion = false;
+    this.rutaTexturaReflexion;
+    this.texturaReflexion= null;
+
     this.tieneMapaIluminacion = false;
     this.rutaTexturaIluminacion;
     this.texturaIluminacion= null;
@@ -82,6 +86,9 @@ Material.prototype.inicializarTextura = function(){
 	if(this.tieneMapaIluminacion){
 		this.texturaIluminacion = this.inicializarTexturaFinal(this.rutaTexturaIluminacion);
 	}
+	if(this.tieneMapaReflexion){
+		this.texturaReflexion = this.inicializarTexturaFinal(this.rutaTexturaReflexion);
+	}
     
 }
 Material.prototype.generarMipMapFinal=function (textura){
@@ -100,6 +107,9 @@ Material.prototype.generarMipMap=function (){
 	}
 	if(this.tieneMapaIluminacion){
 		this.generarMipMapFinal(this.texturaIluminacion);
+	}
+	if(this.tieneMapaReflexion){
+		this.generarMipMapFinal(this.texturaReflexion);
 	}
 }
 Material.prototype.conReflexionEspecular=function(){
@@ -187,6 +197,12 @@ Material.prototype.agregarTexturaIluminacion=function(ruta){
     this.rutaTexturaIluminacion = ruta;
 
 }
+Material.prototype.agregarTexturaReflexion=function(ruta){
+
+	this.tieneMapaReflexion = true;
+    this.rutaTexturaReflexion = ruta;
+
+}
 Material.prototype.configurarPropiedades=function(){
 
 	gl.uniform1i(shaderProgram.autoiluminacion, this.autoiluminacion);
@@ -215,6 +231,7 @@ Material.prototype.configurarPropiedades=function(){
     gl.uniform1i(shaderProgram.samplerUniform, 0);
 
 	gl.uniform1i(shaderProgram.tieneNormal, this.tieneMapaNormal);
+	gl.uniform1i(shaderProgram.tieneReflexion, this.tieneMapaReflexion);
 
 	if(this.tieneMapaNormal){
 		gl.activeTexture(gl.TEXTURE1);
@@ -226,6 +243,11 @@ Material.prototype.configurarPropiedades=function(){
 		gl.activeTexture(gl.TEXTURE2);
     	gl.bindTexture(gl.TEXTURE_2D, this.texturaIluminacion);
     	gl.uniform1i(shaderProgram.samplerUniformIluminacion, 2);
+	}
+	if(this.tieneMapaReflexion){
+		gl.activeTexture(gl.TEXTURE3);
+    	gl.bindTexture(gl.TEXTURE_2D, this.texturaReflexion);
+    	gl.uniform1i(shaderProgram.samplerUniformReflexion, 3);
 	}
 
 	gl.uniform1i(shaderProgram.interiorBahia, this.interiorBahia);
@@ -241,5 +263,6 @@ Material.prototype.configurarPropiedades=function(){
     gl.bindTexture(gl.TEXTURE_2D, this.textura);
     if(this.tieneMapaNormal)gl.bindTexture(gl.TEXTURE_2D, this.texturaNormal);
     if(this.tieneMapaIluminacion)gl.bindTexture(gl.TEXTURE_2D, this.texturaIluminacion);
+    if(this.tieneMapaReflexion)gl.bindTexture(gl.TEXTURE_2D, this.texturaReflexion);
 
 }

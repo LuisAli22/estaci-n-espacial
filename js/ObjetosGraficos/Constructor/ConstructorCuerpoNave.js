@@ -14,6 +14,7 @@ ConstructorCuerpoNave.prototype.definirMaterial=function(){
 	material.cargarTextura(RUTAIMAGENNAVE);
 	material.cargarCoordenadasDeTextura();
 	material.conReflexionEspecular();
+	material.agregarTexturaReflexion(RUTAIMAGENREFLEXION);
 
 	Constructor.prototype.definirMaterial.call(this,material);
 

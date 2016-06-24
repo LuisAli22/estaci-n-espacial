@@ -149,9 +149,11 @@
     uniform sampler2D uSampler;
     uniform sampler2D uSamplerN;
     uniform sampler2D uSamplerIluminacion;
+    uniform sampler2D uSamplerReflexion;
     uniform bool uCalcularIluminacionTextura;
     uniform bool uTieneNormal;
     uniform bool uTieneEspecular;
+    uniform bool uTieneReflexion;
     uniform bool uInteriorBahia;
     uniform float uBrillo;
     uniform vec3 uEspecular;
@@ -236,13 +238,37 @@
 
       float difusa = 0.0;
       vec3 normal = normalize(vTransformedNormal);
-      //vec3 intensidadLuzSol = vec3(0.04, 0.71, 0.94);
 
       vec3 iluinacionPorTextura = vec3(0.0,0.0,0.0);
       vec3 autoiluminado = vec3(0.0,0.0,0.0);
 
+      vec3 reflexion = vec3(0.0,0.0,0.0);
+
+      if(uTieneNormal){
+
+          vec3 mapaNormal = texture2D(uSamplerN, vec2(vTextureCoord.s, vTextureCoord.t)).rgb;
+          mapaNormal = normalize(mapaNormal * 2.0 - 1.0);
+
+          vec3 T = normalize(vTransformedTangente);
+          vec3 B = normalize(vTransformedBinormal);
+
+          mat3 TBN = mat3(T, B, normal);
+
+          normal = normalize(TBN * mapaNormal);
+
+      }
+
       if(uAutoIluminacion){
         autoiluminado = vec3(6.0,6.0,6.0);
+      }
+
+      if(uTieneReflexion){
+        float D = max(dot(normal, vCam_pos.xyz), 0.0);
+        vec3 R = vCam_pos.xyz - 2.0 * D * normal;
+        float m = sqrt((pow(R.x,2.0) + pow(R.y,2.0) + pow(R.z+1.0,2.0)));
+        float u = ( R.x / m ) + 0.5;
+        float v = ( R.y / m ) + 0.5;
+        reflexion = 2.0*texture2D(uSamplerReflexion, vec2(u,v)).rgb;
       }
 
       if(uCalcularIluminacionTextura){
@@ -268,7 +294,7 @@
 
         vec3 light = uIntensidadLuzAmbiente * uAmbientColor + uIntensidadLuzSolar* uDirectionalColor * directionalLightWeighting;
 
-        gl_FragColor= vec4(autoiluminado+light,1);//tablaMateriales(vTextureCoord.z,light);
+        gl_FragColor= vec4(reflexion+autoiluminado+light,1);//tablaMateriales(vTextureCoord.z,light);
 
       }else{
 
@@ -285,7 +311,7 @@
 
           }else{
 
-              if(uTieneNormal){
+              /*if(uTieneNormal){
 
                   vec3 mapaNormal = texture2D(uSamplerN, vec2(vTextureCoord.s, vTextureCoord.t)).rgb;
                   mapaNormal = normalize(mapaNormal * 2.0 - 1.0);
@@ -297,7 +323,7 @@
 
                   normal = normalize(TBN * mapaNormal);
 
-              }
+              }*/
 
               float direccionLuzTierra = 0.0;
 
@@ -321,7 +347,7 @@
 
               }
 
-              light = autoiluminado+luzEspecular + (textureColor.rgb+iluinacionPorTextura.rgb) * luzMaterial;
+              light = autoiluminado+luzEspecular + (reflexion+textureColor.rgb+iluinacionPorTextura.rgb) * luzMaterial;
           }
 
           gl_FragColor = vec4(light, textureColor.a);

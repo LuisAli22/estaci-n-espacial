@@ -50,6 +50,9 @@ Enlazador.prototype.asignarUbicacionDeLasVariablesDelPrograma=function(){
 
   shaderProgram.autoiluminacion = gl.getUniformLocation(shaderProgram, UAUTOILUMINACION);
 
+  shaderProgram.samplerUniformReflexion = gl.getUniformLocation(shaderProgram, USAMPLERREFLEXION);
+  shaderProgram.tieneReflexion = gl.getUniformLocation(shaderProgram, UTIENEREFLEXION);
+
 }
 Enlazador.prototype.comenzar=function(){
   gl.attachShader(shaderProgram, this.vertexShader);
