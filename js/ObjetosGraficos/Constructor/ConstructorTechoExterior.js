@@ -12,6 +12,7 @@ ConstructorTechoExterior.prototype.definirMaterial=function(){
 	material.cargarRepeticionDeTextura(4,1);
 	material.cargarTextura(RUTAIMAGENEXTERIOR);
 	material.agregarTexturaNormal(RUTAIMAGENEXTERIORNORMAL);
+	material.cargarFactorIluminacion(6.0);
 
 	var intervaloDelPaso = [30];
 

@@ -11,6 +11,8 @@ ConstructorLateralIzquierdoExterior.prototype.definirMaterial=function(){
 	var material = new Material(120,30);
 	material.cargarRepeticionDeTextura(4,1);
 	material.cargarTextura(RUTAIMAGENVENTANALEXTERIOR);
+	material.agregarTexturaIluminacion(RUTAIMAGENVENTANALEXTERIORILUMINACION);
+	material.cargarFactorIluminacion(1.0);
 
 	var intervaloDelPaso = [10,10,10];
 

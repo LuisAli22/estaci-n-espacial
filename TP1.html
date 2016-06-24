@@ -164,6 +164,7 @@
     uniform vec3 uIntensidadLuzTierra;
     uniform bool uIluminadoPorLaTierra;
     uniform bool uAutoIluminacion;
+    uniform float uFactorIluminacion;
 
     /*vec4 obtenerColor(vec3 codigoColor,vec3 vLight){
       for (int index=0;index<3;index++){
@@ -245,7 +246,7 @@
       }
 
       if(uCalcularIluminacionTextura){
-          iluinacionPorTextura = 6.0 * texture2D(uSamplerIluminacion, vec2(vTextureCoord.s, vTextureCoord.t)).rgb;
+          iluinacionPorTextura = uFactorIluminacion * texture2D(uSamplerIluminacion, vec2(vTextureCoord.s, vTextureCoord.t)).rgb;
       }
 
       if(uInteriorBahia){

@@ -19,6 +19,7 @@ function Material(rows,cols){
     this.texturaIluminacion= null;
 
     this.autoiluminacion = false;
+    this.factorIluminacion = 1.0;
 
     this.lucesBahia = [];
     this.intensidadLuzBahia;
@@ -38,6 +39,10 @@ function Material(rows,cols){
 	this.rows = rows;
 	this.cols = cols;
 
+}
+
+Material.prototype.cargarFactorIluminacion=function(factor){
+	this.factorIluminacion = factor;
 }
 Material.prototype.autoIluminacion=function(){
 	this.autoiluminacion = true;
@@ -189,6 +194,10 @@ Material.prototype.configurarPropiedades=function(){
 	gl.uniform1i(shaderProgram.iluminadoPorLaTierra, this.esIluminadoPorLaTierra);
 
 	gl.uniform1i(shaderProgram.useLightingUniform, this.esIluminadoPorElSol);
+	
+
+	
+	gl.uniform1f(shaderProgram.factorIluminacion, this.factorIluminacion);
 	
 	gl.uniform3f(shaderProgram.ambientColorUniform, this.ambiente[0],this.ambiente[1],this.ambiente[2] );
 	gl.uniform3f(shaderProgram.directionalColorUniform, this.difusa[0],this.difusa[1],this.difusa[2]);

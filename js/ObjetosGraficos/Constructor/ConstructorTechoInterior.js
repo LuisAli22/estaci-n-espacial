@@ -12,7 +12,7 @@ ConstructorTechoInterior.prototype.definirMaterial=function(){
 	material.cargarRepeticionDeTextura(4,1);
 	material.cargarTextura(RUTAIMAGENTECHOINTERIOR);
 	material.agregarTexturaIluminacion(RUTAIMAGENTECHOINTERIORILUMINACION);
-	//material.noEsIluminadoPorElSol();
+	material.cargarFactorIluminacion(6.0);
 	material.agregarLuzBahia();
 
 	var intervaloDelPaso = [30];
