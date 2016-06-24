@@ -122,6 +122,8 @@ function ParabrisaNave(){
         var material = new Material(2.0,2.0);
         material.sinTextura(NEGRO);
         material.cargarCoordenadasDeTextura();
+        material.cargarAmbiente(vec3.fromValues(0.0,0.0,0.0));
+        material.cargarDifusa(vec3.fromValues(0.0,0.0,0.0));
 
         this.guardarMaterial(material);
 
