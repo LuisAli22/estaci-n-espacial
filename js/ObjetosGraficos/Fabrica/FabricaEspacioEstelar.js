@@ -6,6 +6,7 @@ function FabricaEspacioEstelar(){
   this.fabricaNave = new FabricaNave();
 }
 FabricaEspacioEstelar.prototype.crear=function(){
+  esferaConTextura = new Esfera(64, 64,AMARILLO,1.0);
   console.log("Crear espacio estelar");
   var espacioEstelar=new ObjetoGraficoCompuesto();
   var estacionEspacial = this.fabricaEstacionEspacial.crear();

@@ -3,7 +3,7 @@ ConstructorUniverso.prototype.constructor=ConstructorUniverso;
 function ConstructorUniverso(){
 
 	Constructor.call(this);
-	this.componente = new Esfera(64, 64,AMARILLO,1.0);
+	this.componente = new DecoradorObjetoGrafico(esferaConTextura);
 	
 }
 

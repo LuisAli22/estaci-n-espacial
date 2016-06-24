@@ -62,6 +62,7 @@
 <script type="text/javascript" src="js/ObjetosGraficos/Constructor/ConstructorTechoInterior.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Constructor/ConstructorLateralDerechoInterior.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Constructor/ConstructorPisoInterior.js"></script>
+<script type="text/javascript" src="js/ObjetosGraficos/Decorador/DecoradorObjetoGrafico.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/Astronauta.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/CilindrosLateralesEstacionEspacial.js"></script>
 <script type="text/javascript" src="js/ObjetosGraficos/Decorador/CuerpoNaveFinal.js"></script>
@@ -438,6 +439,7 @@
 <script type="text/javascript">
     var gl;
     var shaderProgram;
+    var esferaConTextura;
     function crearContextoDeDibujoEnCanvas(canvas){
       gl = canvas.getContext("experimental-webgl");
       if (!gl) throw new Error(ERRORCONTEXTOCANVAS);
