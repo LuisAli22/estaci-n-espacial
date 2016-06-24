@@ -11,7 +11,7 @@ ConstructorTapaCuboSuperiorPanel.prototype.definirMaterial=function(){
 
 	var material = new Material(this.componente.rows,this.componente.cols);
 	material.cargarTextura(RUTAIMAGENPANEL);
-	material.cargarRepeticionDeTextura(3,32);
+	material.cargarRepeticionDeTextura(3,10);
 	material.cargarCoordenadasDeTextura();
 	material.agregarTexturaNormal(RUTAIMAGENPANELNORMAL);
 	material.agregarTexturaReflexion(RUTAIMAGENREFLEXION);
