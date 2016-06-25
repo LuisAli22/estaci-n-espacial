@@ -39,7 +39,6 @@ Cubo.prototype.inicializarLosBuffer=function(){
 
   this.cargarPerfil(this.bufferInicialCoordenadas,this.bufferInicialNormales,this.bufferInicialTangentes,this.bufferInicialBinormales);
 
-  //this.texture_coord_buffer = [];
   this.position_buffer = [];
   this.normal_buffer = [];
 
@@ -170,7 +169,6 @@ function TapaCubo(material,altura,normal){
 
 TapaCubo.prototype.inicializarLosBuffer=function(){
 
-  //this.texture_coord_buffer = [];
   this.position_buffer = [];
   this.normal_buffer = [];
 

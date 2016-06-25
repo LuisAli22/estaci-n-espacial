@@ -22,7 +22,6 @@ function MangueraAstronauta(material){
     const FILAS = INTERVALODELPASO*((puntosDeControl.length/3));
     const COLUMNAS = 70;
 
-    //Seteo las dimensiones de la grilla
     ComponenteEstacionEspacial.call(this,FILAS,COLUMNAS,material);
 
     var material = new Material(FILAS,COLUMNAS);
@@ -135,10 +134,6 @@ function MangueraAstronauta(material){
                 vec4.set(vectorTangentes,this.bufferInicialTangentes[3*j],this.bufferInicialTangentes[3*j+1],this.bufferInicialTangentes[3*j+2],1.0);
                 vec4.set(vectorBinormales,this.bufferInicialBinormales[3*j],this.bufferInicialBinormales[3*j+1],this.bufferInicialBinormales[3*j+2],1.0);
 
-                /*vec4.normalize(vectorNormales,vectorNormales);
-                vec4.normalize(vectorNormales,vectorNormales);
-                vec4.normalize(vectorNormales,vectorNormales);
-*/
                 vec4.transformMat4(vectorCoordenadas,vectorCoordenadas,matrizFinal);
                 vec4.transformMat4(vectorNormales,vectorNormales,matrizRotacion);
                 vec4.transformMat4(vectorTangentes,vectorTangentes,matrizRotacion);
@@ -172,7 +167,6 @@ function MangueraAstronauta(material){
 
     this.inicializarLosBuffer = function(){
 
-        //this.texture_coord_buffer = [];
         this.position_buffer = [];
         this.normal_buffer = [];
 

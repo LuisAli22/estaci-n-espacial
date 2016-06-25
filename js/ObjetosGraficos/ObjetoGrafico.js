@@ -80,8 +80,6 @@ ObjetoGrafico.prototype.generarMipMap=function (){
 
 ObjetoGrafico.prototype.dibujar = function(){
 
-
-
     // Se configuran los buffers que alimentar�n el pipeline
     gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_position_buffer);
     gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, this.webgl_position_buffer.itemSize, gl.FLOAT, false, 0, 0);
@@ -98,13 +96,8 @@ ObjetoGrafico.prototype.dibujar = function(){
     gl.bindBuffer(gl.ARRAY_BUFFER, this.webgl_binormal_buffer);
     gl.vertexAttribPointer(shaderProgram.vertexBinormalAttribute, this.webgl_binormal_buffer.itemSize, gl.FLOAT, false, 0, 0);
 
-  
-
     this.materialAux.configurarPropiedades();
-    /*gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, this.materialAux.textura);
-    gl.uniform1i(shaderProgram.samplerUniform, 0);
-*/
+
     gl.uniformMatrix4fv(shaderProgram.ModelMatrixUniform, false, mvMatrix);
     var matrizNormal = mat3.create();
     mat3.fromMat4(matrizNormal, mvMatrix);
@@ -112,7 +105,6 @@ ObjetoGrafico.prototype.dibujar = function(){
     mat3.transpose(matrizNormal, matrizNormal);
     gl.uniformMatrix3fv(shaderProgram.nMatrixUniform, false, matrizNormal);
 
-    
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.webgl_index_buffer);
     gl.drawElements(gl.TRIANGLE_STRIP, this.webgl_index_buffer.numItems, gl.UNSIGNED_SHORT, 0);
 }

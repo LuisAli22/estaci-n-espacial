@@ -62,6 +62,7 @@ const UTIENEREFLEXION = "uTieneReflexion";
 const UILUMINACIONTEXTURA = "uCalcularIluminacionTextura";
 const UAUTOILUMINACION = "uAutoIluminacion";
 const UFACTORILUMINACION = "uFactorIluminacion";
+const UCOLORAUTOILUMINACION = "ucolorAutoIluminacion";
 const LUZBAHIA1="uLuzBahia1";
 const LUZBAHIA2="uLuzBahia2";
 const LUZBAHIA3="uLuzBahia3";

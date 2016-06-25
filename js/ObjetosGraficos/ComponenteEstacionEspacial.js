@@ -5,9 +5,6 @@ function ComponenteEstacionEspacial(rows,cols,material){
 	this.rows=rows;
 	this.cols=cols;
 	this.position_buffer = [];
-    /*this.normal_buffer = [];
-    this.tangente_buffer = [];
-    this.binormal_buffer = [];*/
     this.texture_coord_buffer =[];
     this.index_buffer = [];
 	this.indices=(this.rows-1) * (2*this.cols);

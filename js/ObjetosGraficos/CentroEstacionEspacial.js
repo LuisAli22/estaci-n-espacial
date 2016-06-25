@@ -114,7 +114,6 @@ function CentroEstacionEspacial(material){
 
     this.inicializarLosBuffer = function(){
 
-        //this.texture_coord_buffer = [];
         this.position_buffer = [];
         this.normal_buffer = [];
 

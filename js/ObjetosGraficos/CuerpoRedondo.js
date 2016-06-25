@@ -10,7 +10,6 @@ function CuerpoRedondo(bandasDeLatitud, bandasLongitudinales,material,conTextura
   this.phi =0;
   this.topeBandasDeLatitud=0;
   this.position_buffer=[];
-  //this.normal_buffer=[];
   this.texture_coord_buffer=[];
   this.index_buffer=[];
   ObjetoGrafico.call(this);

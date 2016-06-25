@@ -20,29 +20,6 @@ function Turbina(puntosDeControl){
         var calculardorDePuntosDeCurva = new CalcularCurva();
         calculardorDePuntosDeCurva.obtenerPuntosDeBSplineXY(puntosDeControl,INTERVALODELPASO,bufferInicialCoordenadas,bufferInicialNormales,bufferInicialTangentes,bufferInicialBinormales,-1);
 
-        //Cargo las coordenadas de textura
-        for (var i = 0.0; i < this.rows; i++){
-            for (var j = 0.0; j < this.cols; j++){
-
-                var u = 1.0 - (j / (this.cols-1.0));
-                var v = 1.0 - (i / (this.rows-1.0));
-
-                this.texture_coord_buffer.push(u);
-                this.texture_coord_buffer.push(v);
-                //Defino material 1 --> dorado
-                if(bufferInicialCoordenadas[3*j]>0.0 && bufferInicialCoordenadas[3*j]<0.5 && bufferInicialCoordenadas[3*j+1] > -0.876 && bufferInicialCoordenadas[3*j+1] < -0.874){
-                	this.texture_coord_buffer.push(3.0);
-                }else if(bufferInicialCoordenadas[3*j]>0.0 && bufferInicialCoordenadas[3*j]<0.25 && bufferInicialCoordenadas[3*j+1] < 0.876 && bufferInicialCoordenadas[3*j+1] > 0.874){
-                	this.texture_coord_buffer.push(3.0);
-                }else{
-                	this.texture_coord_buffer.push(7.0);
-                }
-
-                this.texture_coord_buffer.push(0);
-            };
-
-        };
-
         var matrizRotacion = mat4.create();
 
         //Calculo las coordenadas para el perfil rotado
@@ -115,7 +92,6 @@ function Turbina(puntosDeControl){
 
         this.texture_coord_buffer = [];
         this.position_buffer = [];
-        //this.normal_buffer = [];
 
         this.cargarTurbina();
 

@@ -167,73 +167,8 @@
     uniform vec3 uIntensidadLuzTierra;
     uniform bool uIluminadoPorLaTierra;
     uniform bool uAutoIluminacion;
+    uniform vec3 ucolorAutoIluminacion;
     uniform float uFactorIluminacion;
-
-    /*vec4 obtenerColor(vec3 codigoColor,vec3 vLight){
-      for (int index=0;index<3;index++){
-        codigoColor[index]*=(vLight[index]/255.0);
-      }
-      return vec4(codigoColor,1);
-    }*/
-    // material:
-    // 1 : dorado
-    // 2 : violeta
-    // 3 : celeste
-    // 4 : amarillo
-    // 5 : beis
-    // 6 : gris
-    // 7 : marron
-    // 8 : blanco
-    // 9 : negro
-    /*vec4 tablaMateriales(float material,vec3 vLight){
-      if (material == 1.0) return obtenerColor(vec3(255,215,0),vLight);
-      if (material == 2.0) return obtenerColor(vec3(216,145,239),vLight);
-      if (material == 3.0) return obtenerColor(vec3(0,204,255),vLight);
-      if (material == 4.0) return obtenerColor(vec3(255,255,0),vLight);
-      if (material == 5.0) return obtenerColor(vec3(232,195,158),vLight);
-      if (material == 6.0) return obtenerColor(vec3(82,82,82),vLight);
-      if (material == 7.0) return obtenerColor(vec3(78,59,49),vLight);
-      if (material == 8.0) return obtenerColor(vec3(255,255,255),vLight);
-      return obtenerColor(vec3(0,0,0),vLight);
-    }*/
-
-    /*void obtenerTexelNormal(vec3 vLight){
-
-      vec3 normal = texture2D(uSamplerN, vec2(vTextureCoord.s, vTextureCoord.t)).rgb;
-    // Transform normal vector to range [-1,1]
-      normal = normalize(normal * 2.0 - 1.0);
-      vec3 T = normalize(vTransformedTangente);
-      vec3 B = normalize(vTransformedBinormal);
-      vec3 N = normalize(vTransformedNormal);
-      mat3 TBN = mat3(T, B, N);
-
-      vec3 iluminacionTransformada = TBN * vLightWeighting;
-
-      float directionalLightWeighting =  max(dot(iluminacionTransformada, normal), 0.0);
-
-      vec3 iluminacionNormal = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-
-      vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-
-      gl_FragColor = vec4(textureColor.rgb*iluminacionNormal , textureColor.a);
-      
-    }
-
-    void obtenerTexel(vec3 vLight){
-      
-      vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-      
-      gl_FragColor = vec4(textureColor.rgb * vLight, textureColor.a);
-
-    }
-
-    void obtenerTexelFinal(vec3 vLight){
-      
-      vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-      
-      gl_FragColor = vec4(textureColor.rgb * vLight, textureColor.a);
-
-    }*/
 
     void main(void) {
 
@@ -260,7 +195,7 @@
       }
 
       if(uAutoIluminacion){
-        autoiluminado = vec3(6.0,6.0,6.0);
+        autoiluminado = ucolorAutoIluminacion;
       }
 
       if(uTieneReflexion){
@@ -287,20 +222,23 @@
 
         vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
 
-        gl_FragColor = vec4((textureColor.rgb+iluinacionPorTextura.rgb) * light, textureColor.a);
+        gl_FragColor = vec4((textureColor.rgb) * light+iluinacionPorTextura.rgb, textureColor.a);
 
       }else if(vTextureCoord[3]==0.0){
 
         float directionalLightWeighting = max(dot(normal, vLightWeighting), 0.0);
 
         vec3 light = uIntensidadLuzAmbiente * uAmbientColor + uIntensidadLuzSolar* uDirectionalColor * directionalLightWeighting;
+        vec3 autoiluminacionFinal = autoiluminado * uDirectionalColor;
 
-        gl_FragColor= vec4(reflexion+autoiluminado+light,1);//tablaMateriales(vTextureCoord.z,light);
+        gl_FragColor= vec4(reflexion+autoiluminacionFinal+light,1);
 
       }else{
 
           vec3 light;
           vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+
+          vec3 autoiluminacionFinal = autoiluminado * textureColor.rgb;
 
           if (textureColor.a < 0.5){
             discard;
@@ -311,20 +249,6 @@
               light = textureColor.rgb * light;
 
           }else{
-
-              /*if(uTieneNormal){
-
-                  vec3 mapaNormal = texture2D(uSamplerN, vec2(vTextureCoord.s, vTextureCoord.t)).rgb;
-                  mapaNormal = normalize(mapaNormal * 2.0 - 1.0);
-
-                  vec3 T = normalize(vTransformedTangente);
-                  vec3 B = normalize(vTransformedBinormal);
-        
-                  mat3 TBN = mat3(T, B, normal);
-
-                  normal = normalize(TBN * mapaNormal);
-
-              }*/
 
               float direccionLuzTierra = 0.0;
 
@@ -348,7 +272,7 @@
 
               }
 
-              light = autoiluminado+luzEspecular + (reflexion+textureColor.rgb+iluinacionPorTextura.rgb) * luzMaterial;
+              light = autoiluminacionFinal+luzEspecular +iluinacionPorTextura.rgb+ (reflexion+textureColor.rgb) * luzMaterial;
           }
 
           gl_FragColor = vec4(light, textureColor.a);

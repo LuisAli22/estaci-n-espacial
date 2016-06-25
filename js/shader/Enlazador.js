@@ -49,6 +49,7 @@ Enlazador.prototype.asignarUbicacionDeLasVariablesDelPrograma=function(){
   shaderProgram.factorIluminacion = gl.getUniformLocation(shaderProgram, UFACTORILUMINACION);
 
   shaderProgram.autoiluminacion = gl.getUniformLocation(shaderProgram, UAUTOILUMINACION);
+  shaderProgram.colorAutoiluminacion = gl.getUniformLocation(shaderProgram, UCOLORAUTOILUMINACION);
 
   shaderProgram.samplerUniformReflexion = gl.getUniformLocation(shaderProgram, USAMPLERREFLEXION);
   shaderProgram.tieneReflexion = gl.getUniformLocation(shaderProgram, UTIENEREFLEXION);

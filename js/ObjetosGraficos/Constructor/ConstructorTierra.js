@@ -16,8 +16,8 @@ ConstructorTierra.prototype.definirMaterial=function(){
 	material.noEsIluminadoPorLaTierra();
 	material.conReflexionEspecular();
 	material.cargarBrillo(50.0);
-	material.agregarTexturaIluminacion(RUTAIMAGENRESPLANDORTIERRA);
-	material.cargarFactorIluminacion(0.5);
+	material.autoIluminacion(vec3.fromValues(0.17,0.27,0.31));
+	material.agregarTexturaNormal("img/earthN.jpg");
 
 	Constructor.prototype.definirMaterial.call(this,material);
 

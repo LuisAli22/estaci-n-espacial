@@ -12,7 +12,7 @@ ConstructorLateralIzquierdoExterior.prototype.definirMaterial=function(){
 	material.cargarRepeticionDeTextura(4,1);
 	material.cargarTextura(RUTAIMAGENVENTANALEXTERIOR);
 	material.agregarTexturaIluminacion(RUTAIMAGENVENTANALEXTERIORILUMINACION);
-	material.cargarFactorIluminacion(1.0);
+	material.cargarFactorIluminacion(1.5);
 
 	var intervaloDelPaso = [10,10,10];
 

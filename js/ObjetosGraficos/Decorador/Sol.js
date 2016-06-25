@@ -40,8 +40,6 @@ Sol.prototype.aplicarTransformacionesALaMatrizDeModelado=function(){
   mat4.multiply(mvMatrix, mvMatrix,this.matrizDeEscaladoDelSol);
 }
 Sol.prototype.dibujar = function(){
-  //gl.uniform3f(shaderProgram.ambientColorUniform, 0.2, 0.2, 0.2 );
-  //gl.uniform3f(shaderProgram.directionalColorUniform, 0.5, 0.5, 0.5);
   pilaMatrizDeModelado.meter();
     this.calcularMatrizDeTraslacion();
     this.calcularMatrizDeRotacion();

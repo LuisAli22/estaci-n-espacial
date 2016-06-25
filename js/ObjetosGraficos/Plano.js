@@ -2,7 +2,7 @@ Plano.prototype=new ComponenteEstacionEspacial;
 Plano.prototype.constructor=Plano;
 function Plano(){
 
-  ComponenteEstacionEspacial.call(this,256,128,1.0);
+  ComponenteEstacionEspacial.call(this,4,4,1.0);
 
   this.inicializarLosBuffer();
 
@@ -48,7 +48,6 @@ Plano.prototype.inicializarLosBuffer=function(){
 
           this.texture_coord_buffer.push(u);
           this.texture_coord_buffer.push(v);
-          //Defino material 1 --> dorado
           this.texture_coord_buffer.push(this.material);
           this.texture_coord_buffer.push(1.0);
       };
