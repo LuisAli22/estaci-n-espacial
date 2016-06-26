@@ -37,13 +37,15 @@ Camara.prototype.soltaronUnBotonDelMouse = function(evento){
 Camara.prototype.habilitarDesplazamientoDePagina=function(){
 	$('html, body').css({
     'overflow': 'auto',
-    'height': 'auto'
+    'height': 'auto',
+		'padding-right':'0px'
 });
 }
 Camara.prototype.deshabilitarDesplazamientoDePagina=function(){
 	$('html, body').css({
     'overflow': 'hidden',
-    'height': 'auto'
+    'height': 'auto',
+		'padding-right':'6px'
 });
 }
 Camara.prototype.estaDentroDeLosMargenes=function(desplazamiento,limiteInferior,dimensionCanvas,posicionPuntero){

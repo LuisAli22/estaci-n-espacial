@@ -3,19 +3,19 @@
     font-size: 0.575em;
     background-color: black;
     text-align:center;
-    width: 600px;
+    width: 800px;
     padding:5px;
 }
 #ref{
   line-height:30px;
   background-color:#eeeeee;
   height:300px;
-  width:160px;
+  width:250px;
   float:left;
   padding:5px;
 }
 #section {
-    width:600px;
+    width:800px;
     float:left;
     padding:10px;
 }
@@ -24,7 +24,7 @@
     background-color:black;
     color:white;
     clear:both;
-    width: 600px;
+    width: 800px;
     padding:5px;
 }
 a:link    { color: #c00 }  /* unvisited links */
@@ -53,8 +53,8 @@ section {
     display: none;
 }
 
-#camaras { width: 600px; height: 300px; display: block;}
-#CamaraOrbital{ width: 600px;height: 300px; }
-#CamaraPrimeraPersona{ width: 600px;height: 300px; }
-#Nave { width: 600px;height: 300px;  }
-#Estacion { width: 600px;height: 300px;  }
+#camaras { width:800px; height: 300px; display: block;}
+#CamaraOrbital{ width: 800px;height: 300px; }
+#CamaraPrimeraPersona{ width: 800px;height: 300px; }
+#Nave { width: 800px;height: 300px;  }
+#Estacion { width: 800px;height: 300px;  }
